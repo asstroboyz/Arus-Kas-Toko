@@ -1,0 +1,17 @@
+CRITICAL - 2024-08-08 18:24:16 --> Trying to get property 'fullname' of non-object
+#0 C:\Users\Lenovo\Documents\GitHub\hera\app\Views\Admin\Templates\Topbar.php(48): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Trying to get p...', 'C:\\Users\\Lenovo...', 48, Array)
+#1 C:\Users\Lenovo\Documents\GitHub\hera\system\View\View.php(210): include('C:\\Users\\Lenovo...')
+#2 C:\Users\Lenovo\Documents\GitHub\hera\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\Users\Lenovo\Documents\GitHub\hera\system\View\View.php(424): CodeIgniter\View\View->render('Admin/Templates...', NULL, true)
+#4 C:\Users\Lenovo\Documents\GitHub\hera\app\Views\Admin\Templates\Index.php(104): CodeIgniter\View\View->include('Admin/Templates...')
+#5 C:\Users\Lenovo\Documents\GitHub\hera\system\View\View.php(210): include('C:\\Users\\Lenovo...')
+#6 C:\Users\Lenovo\Documents\GitHub\hera\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#7 C:\Users\Lenovo\Documents\GitHub\hera\system\View\View.php(226): CodeIgniter\View\View->render('Admin/Templates...', Array, true)
+#8 C:\Users\Lenovo\Documents\GitHub\hera\system\Common.php(1089): CodeIgniter\View\View->render('Admin/Satuan/In...', Array, true)
+#9 C:\Users\Lenovo\Documents\GitHub\hera\app\Controllers\Admin.php(308): view('Admin/Satuan/In...', Array)
+#10 C:\Users\Lenovo\Documents\GitHub\hera\system\CodeIgniter.php(832): App\Controllers\Admin->satuan()
+#11 C:\Users\Lenovo\Documents\GitHub\hera\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#12 C:\Users\Lenovo\Documents\GitHub\hera\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 C:\Users\Lenovo\Documents\GitHub\hera\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#14 C:\Users\Lenovo\Documents\GitHub\hera\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\Lenovo...')
+#15 {main}
