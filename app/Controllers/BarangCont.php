@@ -117,7 +117,7 @@ class BarangCont extends BaseController
         $idSatuan = $this->request->getPost('satuan_barang');
         $id_supplier = $this->request->getPost('id_supplier');
         $hargaBeli = $this->request->getPost('harga_beli'); // Get the purchase price
- $latestKas = $KasModel->getSaldoTerakhir();
+        $latestKas = $KasModel->getSaldoTerakhir();
         $saldoTerakhir = $latestKas ? $latestKas['saldo_terakhir'] : 0;
         // Check if the item already exists
         $barangExists = $this->BarangModel->where('kode_barang', $namaBarang)

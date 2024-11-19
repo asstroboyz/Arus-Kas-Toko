@@ -27,6 +27,9 @@ use App\Models\satuanModel;
 use App\Models\supplierModel;
 use App\Models\tipeBarangModel;
 use App\Models\TransaksiBarangModel;
+use App\Models\paketModel;
+use App\Models\pelangganWifiModel;
+use App\Models\tagihanModel;
 use Mpdf\Mpdf;
 use Myth\Auth\Entities\User;
 use Myth\Auth\Models\GroupModel;
@@ -35,6 +38,9 @@ use Myth\Auth\Models\UserModel;
 class Admin extends BaseController
 {
     protected $db;
+    protected $paketModel;
+    protected $tagihanModel;
+    protected $pelangganWifiModel;
     protected $builder;
     protected $BarangModel;
     protected $validation;
@@ -66,6 +72,9 @@ class Admin extends BaseController
     public function __construct()
     {
 
+        $this->pelangganWifiModel = new pelangganWifiModel();
+        $this->paketModel = new paketModel();
+        $this->tagihanModel = new tagihanModel();
         $this->riwayatSaldo = new riwayatSaldo();
         $this->pembayaranPiutangModel = new pembayaranPiutangModel();
         $this->piutangModel = new piutangModel();
@@ -167,8 +176,8 @@ class Admin extends BaseController
             'title' => 'Toko Hera - Home',
             'saldo_terakhir' => $saldoTerakhir,
             'stokdibawah10' => $stokdibawah10,
-             'totalKasMasuk' => $totalKasMasuk,
-        'totalKasKeluar' => $totalKasKeluar,
+            'totalKasMasuk' => $totalKasMasuk,
+            'totalKasKeluar' => $totalKasKeluar,
             'totalPenjualan24Jam' => $totalPenjualan24Jam,
             'dataPenjualan' => $dataPenjualan,
         ];
@@ -408,44 +417,56 @@ class Admin extends BaseController
         $data = [
             'title' => 'Daftar Nama Pelanggan',
 
-            'pelanggan' => $this->PelangganModel->findAll(),
+            'pelanggan' => $this->pelangganWifiModel->findAll(),
         ];
         return view('Admin/Pelanggan/Index', $data);
     }
 
-    public function tambah_pelanggan()
-    {
-        $data = [
-            'title' => 'Tambah Pelanggan',
-            'validation' => $this->validation,
-        ];
-        return view('Admin/Pelanggan/Tambah_pelanggan', $data);
-    }
-    public function simpanPelanggan()
-    {
-        if (!$this->validate([
+    // public function tambah_pelanggan()
+    // {
+    //     $data = [
+    //         'title' => 'Tambah Pelanggan',
+    //         'barangList' => $this->paketModel
+    //         ->select('paket.*')
+    //         ->findAll(),
+    //     'selectedBarang' => null,
+    //         'validation' => $this->validation,
+    //     ];
+    //     $kode_paket = $this->request->getPost('kode_paket');
+    //     if ($kode_paket) {
+    //         $selectedBarang = $this->paketModel->find($kode_paket);
+    //         if ($selectedBarang) {
+    //             $data['selectedBarang'] = $selectedBarang;
+    //         }
+    //     }
+        
+    //     return view('Admin/Pelanggan/Tambah_pelanggan', $data);
+    // }
+    // public function simpanPelanggan()
+    // {
+    //     if (!$this->validate([
 
-            'nama' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'nama satuan harus diisi',
+    //         'nama' => [
+    //             'rules' => 'required',
+    //             'errors' => [
+    //                 'required' => 'nama satuan harus diisi',
 
-                ],
-            ],
-        ])) {
-            return redirect()->to('/admin/tambah_pelanggan')->withInput();
-        }
-        $data = [
-            'nama' => $this->request->getPost('nama'),
-            'alamat' => $this->request->getPost('alamat'),
-            'kontak' => $this->request->getPost('kontak'),
-        ];
-        // dd($data);
-        $this->PelangganModel->insert($data);
+    //             ],
+    //         ],
+    //     ])) {
+    //         return redirect()->to('/admin/tambah_pelanggan')->withInput();
+    //     }
+    //     $data = [
+    //         'nama' => $this->request->getPost('nama'),
+    //         'alamat' => $this->request->getPost('alamat'),
+    //         'kontak' => $this->request->getPost('kontak'),
+    //     ];
+    //     // dd($data);
+    //     $this->PelangganModel->insert($data);
 
-        session()->setFlashdata('pesan', 'Data berhasil ditambahkan');
-        return redirect()->to('/admin/pelanggan');
-    }
+    //     session()->setFlashdata('pesan', 'Data berhasil ditambahkan');
+    //     return redirect()->to('/admin/pelanggan');
+    // }
     public function pelanggan_edit($id)
     {
         $data = [
@@ -786,7 +807,7 @@ class Admin extends BaseController
         ];
 
         // Simpan data penjualan barang terlebih dahulu
-        
+
         $this->PenjualanBarangModel->insert($penjualanData);
 
         // Simpan id transaksi untuk seluruh detail penjualan
@@ -841,7 +862,6 @@ class Admin extends BaseController
 
                 // Simpan data pemasukan ke kas
                 $KasModel->insert($dataPemasukan);
-
             } else {
                 // Jika stok tidak mencukupi, tampilkan pesan kesalahan
                 session()->setFlashdata('msg', 'Stok barang tidak mencukupi.');
@@ -1653,7 +1673,6 @@ class Admin extends BaseController
         $mpdf->WriteHtml($html);
         $this->response->setHeader('Content-Type', 'application/pdf');
         $mpdf->Output('Lap Barang Keluar Barang.pdf', 'I');
-
     }
 
     // peramalan
@@ -2143,7 +2162,7 @@ class Admin extends BaseController
             ->where('transaksi_barang.tanggal_barang_keluar <=', $tanggalAkhir)
             ->groupBy('barang.kode_barang') // Assuming kode_barang is the primary key of barang table
             ->findAll();
-        
+
         $db = \Config\Database::connect();
 
         $builder = $db->table('users');
@@ -2185,7 +2204,6 @@ class Admin extends BaseController
         $mpdf->WriteHtml($html);
         $this->response->setHeader('Content-Type', 'application/pdf');
         $mpdf->Output('Laporan Laba Rugi.pdf', 'I');
-
     }
 
     public function cetakLabaRugi()
@@ -2227,31 +2245,31 @@ class Admin extends BaseController
             ->where('tanggal <=', $tanggalAkhir)
             ->first()['jumlah'];
 
-      
+
         $gaji = $pengeluaranModel
-               ->selectSum('jumlah')
-               ->where('tanggal >=', $tanggalMulai)
-               ->where('tanggal <=', $tanggalAkhir)
-               ->where('keterangan', 'gaji')
-               ->first()['jumlah'];
+            ->selectSum('jumlah')
+            ->where('tanggal >=', $tanggalMulai)
+            ->where('tanggal <=', $tanggalAkhir)
+            ->where('keterangan', 'gaji')
+            ->first()['jumlah'];
 
-      
+
         $listrik = $pengeluaranModel
-               ->selectSum('jumlah')
-               ->where('tanggal >=', $tanggalMulai)
-               ->where('tanggal <=', $tanggalAkhir)
-               ->where('keterangan', 'listrik')
-               ->first()['jumlah'];
+            ->selectSum('jumlah')
+            ->where('tanggal >=', $tanggalMulai)
+            ->where('tanggal <=', $tanggalAkhir)
+            ->where('keterangan', 'listrik')
+            ->first()['jumlah'];
 
-      
+
         $air = $pengeluaranModel
-               ->selectSum('jumlah')
-               ->where('tanggal >=', $tanggalMulai)
-               ->where('tanggal <=', $tanggalAkhir)
-               ->where('keterangan', 'air')
-               ->first()['jumlah'];
+            ->selectSum('jumlah')
+            ->where('tanggal >=', $tanggalMulai)
+            ->where('tanggal <=', $tanggalAkhir)
+            ->where('keterangan', 'air')
+            ->first()['jumlah'];
 
-     
+
         // $pembelian_restok = $pengeluaranModel
         //     ->selectSum('jumlah')
         //     ->where('tanggal >=', $tanggalMulai)
@@ -2262,15 +2280,15 @@ class Admin extends BaseController
         //     })
         //     ->first()['jumlah'];
         $beliDanRestok = $pengeluaranModel
-        ->selectSum('jumlah')
-        ->where('tanggal >=', $tanggalMulai)
-        ->where('tanggal <=', $tanggalAkhir)
-        ->groupStart()
+            ->selectSum('jumlah')
+            ->where('tanggal >=', $tanggalMulai)
+            ->where('tanggal <=', $tanggalAkhir)
+            ->groupStart()
             ->like('keterangan', 'Pembelian')
             ->orLike('keterangan', 'Restok')
             ->orLike('keterangan', 'lainnya')
-        ->groupEnd()
-        ->first()['jumlah'];
+            ->groupEnd()
+            ->first()['jumlah'];
 
         $labaKotor = $totalPenjualan - $totalHPP;
         $labaBersih = $labaKotor - $totalBiayaOperasional;
@@ -2320,7 +2338,6 @@ class Admin extends BaseController
         $mpdf->WriteHtml($html);
         $this->response->setHeader('Content-Type', 'application/pdf');
         $mpdf->Output('Laporan Laba Rugi.pdf', 'I');
-
     }
 
     // Fungsi untuk mendapatkan stok barang saat ini
@@ -2466,7 +2483,6 @@ class Admin extends BaseController
         $mpdf->WriteHtml($html);
         $this->response->setHeader('Content-Type', 'application/pdf');
         $mpdf->Output('Laporan Laba Rugi.pdf', 'I');
-
     }
 
     // public function cetakArusKas()
@@ -3007,12 +3023,11 @@ class Admin extends BaseController
     public function aset()
     {
         $data = [
-    'title' => 'Aset Toko',
-    'aset' => $this->asetModel->orderBy('created_at', 'ASC')->findAll(),
-];
+            'title' => 'Aset Toko',
+            'aset' => $this->asetModel->orderBy('created_at', 'ASC')->findAll(),
+        ];
 
         return view('Admin/Aset/Index', $data);
-
     }
     public function tambahAset()
     {
@@ -3039,7 +3054,7 @@ class Admin extends BaseController
         $data = [
             'nama_aset' => $this->request->getPost('nama_aset'),
             'nilai' => $this->request->getPost('nilai'),
-                'created_at' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
 
         ];
         // dd($data);
@@ -3278,7 +3293,7 @@ class Admin extends BaseController
         // Validasi input
         if (!$this->validate([
             'keterangan' => 'required',
-        
+
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -3661,7 +3676,6 @@ class Admin extends BaseController
         // Redirect dan set pesan berhasil
         session()->setFlashdata('pesanBerhasil', 'Data restok berhasil ditambahkan');
         return redirect()->to('/admin/restok');
-
     }
 
     // public function simpanRestok()
@@ -3849,7 +3863,7 @@ class Admin extends BaseController
     public function updateModal()
     {
         $id = $this->request->getPost('id_modal');
-        
+
         // Validasi data yang diterima
         if (!$this->validate([
             'sumber' => 'required',
@@ -3857,7 +3871,7 @@ class Admin extends BaseController
         ])) {
             return redirect()->back()->withInput()->with('validation', $this->validator);
         }
-        
+
         $data = [
             'sumber' => $this->request->getPost('sumber'),
             'jumlah' => $this->request->getPost('jumlah'),
@@ -3870,7 +3884,7 @@ class Admin extends BaseController
         } else {
             session()->setFlashdata('msg', 'Data gagal diubah. ID atau data tidak valid.');
         }
-        
+
         return redirect()->to('/admin/modal');
     }
 
@@ -3948,7 +3962,7 @@ class Admin extends BaseController
 
         // Tambahkan jumlah masuk atau jumlah keluar berdasarkan jenis transaksi
         if ($data['jenis_transaksi'] === 'penerimaan') {
-            $data['jumlah_awal'] = $saldo_terakhir ;
+            $data['jumlah_awal'] = $saldo_terakhir;
             $data['jumlah_akhir'] = '+' . $this->request->getPost('jumlah_masuk');
             $data['jumlah_keluar'] = 0; // Atur jumlah keluar menjadi 0 untuk penerimaan
         } elseif ($data['jenis_transaksi'] === 'pengeluaran') {
@@ -4390,4 +4404,230 @@ class Admin extends BaseController
         return redirect()->to('/PenjualanBarangCont/piutang');
     }
 
+
+    // PAKET
+    public function paket()
+    {
+        $data = [
+            'title' => 'Paket Wifi',
+            'paket' => $this->paketModel->findAll(),
+        ];
+        return view('Admin/Paket/Index', $data);
+    }
+
+    public function savePaket()
+    {
+        // Validasi input
+        if (!$this->validate([
+            'nama_paket' => [
+                'rules' => 'required|is_unique[paket.nama_paket]',
+                'errors' => [
+                    'required' => 'Nama paket harus diisi.',
+                    'is_unique' => 'Nama paket sudah ada.',
+                ],
+            ],
+            'harga' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => 'Harga harus diisi.',
+                    'numeric' => 'Harga harus berupa angka.',
+                ],
+            ],
+        ])) {
+            return redirect()->to('/admin/paket')->withInput();
+        }
+
+        // Generate kode paket unik
+        do {
+            $prefix = 'PKG'; // Awalan kode
+            $randomNumber = str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT); // 4 digit angka acak
+            $kodePaket = $prefix . $randomNumber;
+            // Cek apakah kode sudah ada di database
+            $exists = $this->paketModel->where('kode_paket', $kodePaket)->first();
+        } while ($exists);  // Ulangi jika kode sudah ada
+
+        // Data yang akan disimpan
+        $data = [
+            'kode_paket' => $kodePaket,
+            'nama_paket' => $this->request->getPost('nama_paket'),
+            'harga' => $this->request->getPost('harga'),
+        ];
+
+        // Simpan ke database
+        if ($this->paketModel->insert($data)) {
+            session()->setFlashdata('pesan', 'Data berhasil ditambahkan.');
+        } else {
+            // Tampilkan error jika gagal insert
+            session()->setFlashdata('pesan', 'Gagal menyimpan data. Silakan coba lagi.');
+        }
+
+        // Redirect kembali ke halaman paket
+        return redirect()->to('/Admin/paket');
+    }
+    public function updatePaket($kodePaket)
+    {
+        // Validasi input
+        if (!$this->validate([
+            'nama_paket' => [
+                'rules' => 'required|is_unique[paket.nama_paket, id,{id}]', // Pastikan untuk menghindari validasi ganda pada nama yang sama
+                'errors' => [
+                    'required' => 'Nama paket harus diisi.',
+                    'is_unique' => 'Nama paket sudah ada.',
+                ],
+            ],
+            'harga' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => 'Harga harus diisi.',
+                    'numeric' => 'Harga harus berupa angka.',
+                ],
+            ],
+        ])) {
+            return redirect()->to('/admin/paket/edit/' . $kodePaket)->withInput();
+        }
+
+        // Cek apakah paket dengan kode tertentu ada
+        $paket = $this->paketModel->find($kodePaket);
+
+        if ($paket) {
+            // Data yang akan diperbarui
+            $data = [
+                'nama_paket' => $this->request->getPost('nama_paket'),
+                'harga' => $this->request->getPost('harga'),
+            ];
+
+            // Lakukan update
+            if ($this->paketModel->update($kodePaket, $data)) {
+                session()->setFlashdata('pesan', 'Data berhasil diperbarui.');
+            } else {
+                session()->setFlashdata('pesan', 'Gagal memperbarui data. Silakan coba lagi.');
+            }
+        } else {
+            // Jika paket tidak ditemukan
+            session()->setFlashdata('pesan', 'Paket tidak ditemukan.');
+        }
+
+        // Redirect kembali ke halaman paket
+        return redirect()->to('/Admin/paket');
+    }
+
+    public function deletePaket($kodePaket)
+    {
+        // Cek apakah paket dengan kode tertentu ada
+        $paket = $this->paketModel->find($kodePaket);
+
+        if ($paket) {
+            // Jika paket ditemukan, hapus data
+            if ($this->paketModel->delete($kodePaket)) {
+                session()->setFlashdata('pesan', 'Data berhasil dihapus.');
+            } else {
+                session()->setFlashdata('pesan', 'Gagal menghapus data. Silakan coba lagi.');
+            }
+        } else {
+            // Jika paket tidak ditemukan
+            session()->setFlashdata('pesan', 'Paket tidak ditemukan.');
+        }
+
+        // Redirect kembali ke halaman paket
+        return redirect()->to('/Admin/paket');
+    }
+
+    //pelanggan 
+    public function tambah_pelanggan()
+    {
+        $data = [
+            'title' => 'Tambah Pelanggan',
+            'barangList' => $this->paketModel
+            ->select('paket.*')
+            ->findAll(),
+        'selectedBarang' => null,
+            'validation' => $this->validation,
+        ];
+        $kode_paket = $this->request->getPost('kode_paket');
+        if ($kode_paket) {
+            $selectedBarang = $this->paketModel->find($kode_paket);
+            if ($selectedBarang) {
+                $data['selectedBarang'] = $selectedBarang;
+            }
+        }
+        
+        return view('Admin/Pelanggan/Tambah_pelanggan', $data);
+    }
+    public function simpanPelanggan()
+    {
+        // Validasi input form
+        if (!$this->validate([
+            'nama' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nama pelanggan harus diisi',
+                ],
+            ],
+            'kontak' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => 'Kontak pelanggan harus diisi',
+                    'numeric' => 'Kontak pelanggan harus berupa angka',
+                ],
+            ],
+            'alamat' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Alamat pelanggan harus diisi',
+                ],
+            ],
+            'nik' => [
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => 'NIK pelanggan harus diisi',
+                    'numeric' => 'NIK pelanggan harus berupa angka',
+                ],
+            ],
+            'foto_ktp' => [
+                'rules' => 'uploaded[foto_ktp]|is_image[foto_ktp]|mime_in[foto_ktp,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => 'Foto KTP harus diupload',
+                    'is_image' => 'File yang diupload harus berupa gambar',
+                    'mime_in' => 'File yang diupload harus berupa gambar dengan format JPG, JPEG, atau PNG',
+                ],
+            ],
+            'kode_paket' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Kode paket harus diisi',
+                ],
+            ],
+        ])) {
+            // Jika validasi gagal, kembalikan ke form dengan input yang sudah diisi sebelumnya
+            return redirect()->to('/admin/tambah_pelanggan')->withInput();
+        }
+    
+        // Mengambil data dari form
+        $fotoKTP = $this->request->getFile('foto_ktp');
+        $namaFile = $fotoKTP->getRandomName(); // Membuat nama file acak untuk foto KTP
+    
+        // Pindahkan file foto KTP ke folder yang ditentukan
+        $fotoKTP->move('uploads/foto_ktp', $namaFile);
+    
+        // Data pelanggan yang akan disimpan
+        $data = [
+            'nama' => $this->request->getPost('nama'),
+            'kontak' => $this->request->getPost('kontak'),
+            'alamat' => $this->request->getPost('alamat'),
+            'nik' => $this->request->getPost('nik'),
+            'foto_ktp' => $namaFile, // Menyimpan nama file foto KTP
+            'kode_paket' => $this->request->getPost('kode_paket'),
+        ];
+    
+        // Simpan data ke database
+        if ($this->pelangganWifiModel->insert($data)) {
+            session()->setFlashdata('pesan', 'Data pelanggan berhasil ditambahkan.');
+        } else {
+            session()->setFlashdata('pesan', 'Gagal menambahkan data pelanggan. Silakan coba lagi.');
+        }
+    
+        // Redirect ke halaman daftar pelanggan
+        return redirect()->to('/admin/pelanggan');
+    }
+    
 }

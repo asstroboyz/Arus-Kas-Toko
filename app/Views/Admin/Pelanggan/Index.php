@@ -59,17 +59,17 @@
                                         <?= $data['nama']; ?>
                                     </td>
                                     <td>
-                                        <?= $data['kontak']; ?>
+                                        <?= $data['no_hp']; ?>
                                     </td>
                                     <td>
                                         <?= $data['alamat']; ?>
                                     </td>
                                     <td style="text-align:center;">
-                                        <a href="/Admin/pelanggan_edit/<?= $data['id_pelanggan'] ?>"
+                                        <a href="/Admin/pelanggan_edit/<?= $data['id'] ?>"
                                             class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                         <a href="#" class="btn btn-danger btn-delete" data-toggle="modal"
                                             data-target="#modalKonfirmasiDelete"
-                                            data-delete-url="<?= site_url('/Admin/pelanggan_delete/' . $data['id_pelanggan']) ?>">
+                                            data-delete-url="<?= site_url('/Admin/pelanggan_delete/' . $data['id']) ?>">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>

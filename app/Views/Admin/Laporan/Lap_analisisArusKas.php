@@ -98,9 +98,7 @@
         <hr class="hr-custom">
                 <p style="margin-bottom: 20px;">
                             <span style="width: 200px; display: inline-block;">Periode :</span>
-                            <?php echo strftime('%d-%m-%Y', strtotime($tanggalMulai)); ?>
-                            Sampai Dengan
-                            <?php echo strftime('%d-%m-%Y', strtotime($tanggalAkhir)); ?>
+                         
                         </p>
         <div class="table-container">
             <table>
@@ -116,45 +114,45 @@
                 <tr>
                     <td>Penerimaan Penjualan</td>
                     <td>Rp.
-                        <?= number_format($totalPenjualanTahunSebelumnya, 0, ',', '.'); ?>
+                        <?= $totalPenjualanTahunSebelumnya; ?>
                     </td>
                     <td>Rp.
-                        <?= number_format($totalPenjualan, 0, ',', '.'); ?>
+                        <?= $totalPenjualan; ?>
                     </td>
-                    <td><?= ($totalPenjualan - $totalPenjualanTahunSebelumnya) >= 0 ? 'Positif' : 'Negatif'; ?>
+                    <td><?= $totalPenjualan - $totalPenjualanTahunSebelumnya >= 0 ? 'Positif' : 'Negatif'; ?>
                     </td>
                 </tr>
                 <tr>
                     <td>Pembayaran Pembelian Barang</td>
                     <td>Rp.
-                        <?= number_format($totalHargaBeliTahunSebelumnya, 0, ',', '.'); ?>
+                        <?= $totalHargaBeliTahunSebelumnya; ?>
                     </td>
                     <td>Rp.
-                        <?= number_format($totalHargaBeli, 0, ',', '.'); ?>
+                        <?= $totalHargaBeli; ?>
                     </td>
-                    <td><?= ($totalHargaBeli - $totalHargaBeliTahunSebelumnya) >= 0 ? 'Positif' : 'Negatif'; ?>
+                    <td><?= $totalHargaBeli - $totalHargaBeliTahunSebelumnya >= 0 ? 'Positif' : 'Negatif'; ?>
                     </td>
                 </tr>
                 <tr>
                     <td>Pembayaran Biaya Operasional</td>
                     <td>Rp.
-                        <?= number_format($totalBiayaOperasionalTahunSebelumnya, 0, ',', '.'); ?>
+                        <?= $totalBiayaOperasionalTahunSebelumnya; ?>
                     </td>
                     <td>Rp.
-                        <?= number_format($totalBiayaOperasional, 0, ',', '.'); ?>
+                        <?= $totalBiayaOperasional; ?>
                     </td>
-                    <td><?= ($totalBiayaOperasional - $totalBiayaOperasionalTahunSebelumnya) >= 0 ? 'Positif' : 'Negatif'; ?>
+                    <td><?= $totalBiayaOperasional - $totalBiayaOperasionalTahunSebelumnya >= 0 ? 'Positif' : 'Negatif'; ?>
                     </td>
                 </tr>
                 <tr class="subtotal">
                     <td>Total Aktivitas Operasional</td>
                     <td>Rp.
-                        <?= number_format($totalAktivitasOperasionalTahunSebelumnya, 0, ',', '.'); ?>
+                        <?= $totalAktivitasOperasionalTahunSebelumnya; ?>
                     </td>
                     <td>Rp.
-                        <?= number_format($totalAktivitasOperasional, 0, ',', '.'); ?>
+                        <?= $totalAktivitasOperasional; ?>
                     </td>
-                    <td><?= ($totalAktivitasOperasional - $totalAktivitasOperasionalTahunSebelumnya) >= 0 ? 'Positif' : 'Negatif'; ?>
+                    <td><?= $totalAktivitasOperasional - $totalAktivitasOperasionalTahunSebelumnya >= 0 ? 'Positif' : 'Negatif'; ?>
                     </td>
                 </tr>
                 <tr>
@@ -166,64 +164,64 @@
                 <tr>
                     <td>Penerimaan Penjualan Aset Tetap</td>
                     <td>Rp.
-                        <?= number_format($totalPenerimaanAsetTetapTahunSebelumnya, 0, ',', '.'); ?>
+                        <?= $totalPenerimaanAsetTetapTahunSebelumnya; ?>
                     </td>
                     <td>Rp.
-                        <?= number_format($totalPenerimaanAsetTetap, 0, ',', '.'); ?>
+                        <?= $totalPenerimaanAsetTetap; ?>
                     </td>
-                    <td><?= ($totalPenerimaanAsetTetap - $totalPenerimaanAsetTetapTahunSebelumnya) >= 0 ? 'Positif' : 'Negatif'; ?>
+                    <td><?= $totalPenerimaanAsetTetap - $totalPenerimaanAsetTetapTahunSebelumnya >= 0 ? 'Positif' : 'Negatif'; ?>
                     </td>
                 </tr>
                 <tr>
                     <td>Pembayaran Pembelian Aset Tetap</td>
                     <td>Rp.
-                        <?= number_format($totalPembayaranAsetTetapTahunSebelumnya, 0, ',', '.'); ?>
+                        <?= $totalPembayaranAsetTetapTahunSebelumnya; ?>
                     </td>
                     <td>Rp.
-                        <?= number_format($totalPembayaranAsetTetap, 0, ',', '.'); ?>
+                        <?= $totalPembayaranAsetTetap; ?>
                     </td>
-                    <td><?= ($totalPembayaranAsetTetap - $totalPembayaranAsetTetapTahunSebelumnya) >= 0 ? 'Positif' : 'Negatif'; ?>
+                    <td><?= $totalPembayaranAsetTetap - $totalPembayaranAsetTetapTahunSebelumnya >= 0 ? 'Positif' : 'Negatif'; ?>
                     </td>
                 </tr>
                 <tr class="subtotal">
                     <td>Total Aktivitas Investasi</td>
                     <td>Rp.
-                        <?= number_format($totalAktivitasInvestasiTahunSebelumnya, 0, ',', '.'); ?>
+                        <?= $totalAktivitasInvestasiTahunSebelumnya; ?>
                     </td>
                     <td>Rp.
-                        <?= number_format($totalAktivitasInvestasi, 0, ',', '.'); ?>
+                        <?= $totalAktivitasInvestasi; ?>
                     </td>
-                    <td><?= ($totalAktivitasInvestasi - $totalAktivitasInvestasiTahunSebelumnya) >= 0 ? 'Positif' : 'Negatif'; ?>
+                    <td><?= $totalAktivitasInvestasi - $totalAktivitasInvestasiTahunSebelumnya >= 0 ? 'Positif' : 'Negatif'; ?>
                     </td>
                 </tr>
                 <tr class="total">
                     <td>Arus Kas Bersih dari Operasi dan Investasi</td>
                     <td>Rp.
-                        <?= number_format($totalArusKasTahunSebelumnya, 0, ',', '.'); ?>
+                        <?= $totalArusKasTahunSebelumnya; ?>
                     </td>
                     <td>Rp.
-                        <?= number_format($totalArusKas, 0, ',', '.'); ?>
+                        <?= $totalArusKas; ?>
                     </td>
-                    <td><?= ($totalArusKas - $totalArusKasTahunSebelumnya) >= 0 ? 'Positif' : 'Negatif'; ?>
+                    <td><?= $totalArusKas - $totalArusKasTahunSebelumnya >= 0 ? 'Positif' : 'Negatif'; ?>
                     </td>
                 </tr>
                 <tr>
                     <td>Kas Awal</td>
                     <td>Rp.
-                        <?= number_format($kasAwalTahunSebelumnya, 0, ',', '.'); ?>
+                        <?= $kasAwalTahunSebelumnya; ?>
                     </td>
                     <td>Rp.
-                        <?= number_format($kasAwal, 0, ',', '.'); ?>
+                        <?= $kasAwal; ?>
                     </td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>Kas Akhir</td>
                     <td>Rp.
-                        <?= number_format($kasAkhirTahunSebelumnya, 0, ',', '.'); ?>
+                        <?= $kasAkhirTahunSebelumnya; ?>
                     </td>
                     <td>Rp.
-                        <?= number_format($kasAkhir, 0, ',', '.'); ?>
+                        <?= $kasAkhir; ?>
                     </td>
                     <td></td>
                 </tr>
@@ -240,7 +238,7 @@
                     </p>
                 </td>
                 <td class="footer-right">
-                             Pemilik : <?= esc($pemilikName); ?>
+                             Pemilik : <?= $pemilikName; ?>
 
                     <br>
                     <p>Kaliwungu,

@@ -118,9 +118,7 @@
         <hr class="hr-custom">
         <p style="margin-bottom: 20px;">
             <span style="width: 200px; display: inline-block;">Periode :</span>
-            <?php echo strftime('%d-%m-%Y', strtotime($tanggalMulai)); ?>
-            Sampai Dengan
-            <?php echo strftime('%d-%m-%Y', strtotime($tanggalAkhir)); ?>
+           
         </p>
         <table>
             <tr>
