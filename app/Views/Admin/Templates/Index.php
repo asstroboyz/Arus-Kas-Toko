@@ -34,56 +34,7 @@
         rel="stylesheet">
     <link rel="stylesheet" type="text/css"
         href="<?=base_url();?>/vendor/datatables/dataTables.bootstrap4.min.css">
-    <style>
-        #content {
-            background-image: url('<?=base_url()?>/img/lb/lb.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        /* Tambahkan bagian ini untuk mengatur tampilan footer */
-        .sticky-footer {
-            padding: 10px 0;
-            /* Sesuaikan padding untuk membuat footer lebih kecil */
-            background-color: #705425 !important;
-            /* Tambahkan !important */
-            color: #ffffff !important;
-            /* Tambahkan !important */
-            /* Pastikan warna latar belakang sesuai dengan tema Anda */
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            z-index: 1000;
-            /* Pastikan tetap di atas konten lainnya */
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-            /* Tambahkan bayangan untuk lebih jelas */
-        }
-
-        .sticky-footer .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .sticky-footer .copyright {
-            font-size: 14px;
-            /* Sesuaikan ukuran font jika diperlukan */
-            margin: 0;
-        }
-
-        /* Tambahkan margin-bottom ke body untuk mencegah tumpang tindih */
-        body {
-            margin-bottom: 60px;
-            /* Sesuaikan dengan tinggi footer */
-        }
-
-        /* Tambahkan padding-bottom ke konten utama jika diperlukan */
-        #content {
-            padding-bottom: 60px;
-            /* Sesuaikan dengan tinggi footer */
-        }
-    </style>
+   
 </head>
 
 <body id="page-top">

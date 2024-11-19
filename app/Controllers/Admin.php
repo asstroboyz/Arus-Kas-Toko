@@ -4563,7 +4563,7 @@ class Admin extends BaseController
                     'required' => 'Nama pelanggan harus diisi',
                 ],
             ],
-            'kontak' => [
+            'no_hp' => [
                 'rules' => 'required|numeric',
                 'errors' => [
                     'required' => 'Kontak pelanggan harus diisi',
@@ -4612,7 +4612,7 @@ class Admin extends BaseController
         // Data pelanggan yang akan disimpan
         $data = [
             'nama' => $this->request->getPost('nama'),
-            'kontak' => $this->request->getPost('kontak'),
+            'no_hp' => $this->request->getPost('no_hp'),
             'alamat' => $this->request->getPost('alamat'),
             'nik' => $this->request->getPost('nik'),
             'foto_ktp' => $namaFile, // Menyimpan nama file foto KTP

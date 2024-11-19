@@ -1,31 +1,4 @@
-<style>
-    .navbar {
-        background: linear-gradient(180deg, #705425, #825e3c);
-        /* Gradasi warna dari #C89361 ke #705425 */
-    }
 
-    .navbar {
-        background-color: #C89361;
-        /* Warna amber dari gambar */
-    }
-
-    .navbar .nav-item .nav-link {
-        color: #ffffff;
-        /* Warna teks putih untuk kontras lebih baik */
-    }
-
-    .navbar .nav-item .nav-link:hover {
-        background-color: #705425;
-        /* Warna gradasi yang lebih gelap untuk efek hover */
-        color: #ffffff;
-        /* Warna teks putih saat hover */
-    }
-
-    .navbar .navbar-brand {
-        color: #ffffff;
-        /* Warna teks putih untuk sidebar brand */
-    }
-</style>
 
 
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -45,9 +18,9 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span
-                    class="mr-2 d-none d-lg-inline text-white small"><?=user()->fullname;?></span>
+                    class="mr-2 d-none d-lg-inline text-dark small"><?=user()->fullname;?></span>
                 <img class="img-profile rounded-circle"
-                    src="<?= empty(user()->foto) ? '/sbassets/img/undraw_profile.svg' : '/uploads/profile/' . user()->foto; ?>">
+                    src="<?= empty(user()->foto) ? '/sbassets/img/undraw_profile1.svg' : '/uploads/profile/' . user()->foto; ?>">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
