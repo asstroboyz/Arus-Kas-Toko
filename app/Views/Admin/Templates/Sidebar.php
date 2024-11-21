@@ -1,8 +1,7 @@
-
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar Brand -->
- 
+
     <!-- Sidebar Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center"
         href="<?= base_url(); ?>">
@@ -20,52 +19,46 @@
             <span style="font-size: 16px;">Dashboard</span>
         </a>
     </li>
+<!-- Data Pelanggan -->
+<li class="nav-item">
+    <a class="nav-link" href="<?= base_url('Admin/pelanggan'); ?>">
+        <i class="fas fa-users"></i>
+        <span>Data Pelanggan</span>
+    </a>
+</li>
 
-     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#master" aria-expanded="true"
-            aria-controls="master">
-            <i class="fas fa-cash-register"></i>
-            <span>Master</span>
-        </a>
-        <!-- <div id="master" class="collapse" aria-labelledby="headingTransaksi" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/kelola_user'); ?>">Manjemen user</a>
-                    <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('BarangCont'); ?>">Daftar
-                    Barang</a>
-                <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/satuan'); ?>">Master
-                    Satuan</a>
-                    <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/pelanggan'); ?>">Data
-                    Pelanggan</a>
-                <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/supplier'); ?>">Data
-                    Supplier</a>
-               
-            </div>
-        </div> -->
-        <div id="master" class="collapse" aria-labelledby="headingTransaksi" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <!-- <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/kelola_user'); ?>">Manjemen user</a>
-                    <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('BarangCont'); ?>">Daftar
-                    Barang</a> -->
-                <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/paket'); ?>">Master
-                    Paket</a>
-                    <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/pelanggan'); ?>">Data
-                    Pelanggan</a>
-                <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/tagihan'); ?>">Data
-                    Tagihan</a>
-               
-            </div>
+<!-- Keuangan -->
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#keuanganMenu" aria-expanded="false"
+        aria-controls="keuanganMenu">
+        <i class="fas fa-wallet"></i>
+        <span>Keuangan</span>
+    </a>
+    <div id="keuanganMenu" class="collapse" aria-labelledby="headingKeuangan" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="<?= base_url('Admin/tagihan'); ?>">
+                <i class="fas fa-file-invoice-dollar"></i> Data Tagihan
+            </a>
+            <a class="collapse-item" href="<?= base_url('Admin/pengeluaran'); ?>">
+                <i class="fas fa-wallet"></i> Data Pengeluaran
+            </a>
+            <a class="collapse-item" href="<?= base_url('Admin/pemasukan'); ?>">
+                <i class="fas fa-hand-holding-usd"></i> Data Pemasukan
+            </a>
         </div>
-    </li>
+    </div>
+</li>
+
+<!-- Paket & Layanan -->
+<li class="nav-item">
+    <a class="nav-link" href="<?= base_url('Admin/paket'); ?>">
+        <i class="fas fa-box-open"></i>
+        <span>Master Paket</span>
+    </a>
+</li>
+
+
+
     <!-- Keuangan -->
     <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#keuanganMenu" aria-expanded="true"
@@ -153,7 +146,7 @@
 
     <!-- Logout -->
     <li class="nav-item">
-        <a class="nav-link" 
+        <a class="nav-link"
             href="<?= base_url('logout'); ?>">
             <i class="fas fa-sign-out-alt"></i>
             <span style="font-size: 16px;">Logout</span>

@@ -439,7 +439,7 @@ class Admin extends BaseController
     //             $data['selectedBarang'] = $selectedBarang;
     //         }
     //     }
-        
+
     //     return view('Admin/Pelanggan/Tambah_pelanggan', $data);
     // }
     // public function simpanPelanggan()
@@ -4538,9 +4538,9 @@ class Admin extends BaseController
         $data = [
             'title' => 'Tambah Pelanggan',
             'barangList' => $this->paketModel
-            ->select('paket.*')
-            ->findAll(),
-        'selectedBarang' => null,
+                ->select('paket.*')
+                ->findAll(),
+            'selectedBarang' => null,
             'validation' => $this->validation,
         ];
         $kode_paket = $this->request->getPost('kode_paket');
@@ -4550,7 +4550,7 @@ class Admin extends BaseController
                 $data['selectedBarang'] = $selectedBarang;
             }
         }
-        
+
         return view('Admin/Pelanggan/Tambah_pelanggan', $data);
     }
     public function simpanPelanggan()
@@ -4601,14 +4601,14 @@ class Admin extends BaseController
             // Jika validasi gagal, kembalikan ke form dengan input yang sudah diisi sebelumnya
             return redirect()->to('/admin/tambah_pelanggan')->withInput();
         }
-    
+
         // Mengambil data dari form
         $fotoKTP = $this->request->getFile('foto_ktp');
         $namaFile = $fotoKTP->getRandomName(); // Membuat nama file acak untuk foto KTP
-    
+
         // Pindahkan file foto KTP ke folder yang ditentukan
         $fotoKTP->move('uploads/foto_ktp', $namaFile);
-    
+
         // Data pelanggan yang akan disimpan
         $data = [
             'nama' => $this->request->getPost('nama'),
@@ -4618,16 +4618,36 @@ class Admin extends BaseController
             'foto_ktp' => $namaFile, // Menyimpan nama file foto KTP
             'kode_paket' => $this->request->getPost('kode_paket'),
         ];
-    
+
         // Simpan data ke database
         if ($this->pelangganWifiModel->insert($data)) {
             session()->setFlashdata('pesan', 'Data pelanggan berhasil ditambahkan.');
         } else {
             session()->setFlashdata('pesan', 'Gagal menambahkan data pelanggan. Silakan coba lagi.');
         }
-    
+
         // Redirect ke halaman daftar pelanggan
         return redirect()->to('/admin/pelanggan');
     }
-    
+
+    public function tagihan()
+    {
+        $tagihanModel = new tagihanModel();
+        $query = $tagihanModel->builder()
+            ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
+            ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
+            ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
+            ->get();
+
+        // Mendapatkan hasil query dalam bentuk array
+ 
+        $data = [
+            'title' => 'Paket Wifi',
+            'tagihan' => $query->getResultArray(),
+        ];
+
+
+        // dd($data['tagihan']);
+        return view('Admin/Tagihan/Index', $data);
+    }
 }

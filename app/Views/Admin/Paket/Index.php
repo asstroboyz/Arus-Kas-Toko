@@ -129,7 +129,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= site_url('/Admin/updatePaket/' . $data['kode_paket']) ?>"" method="post">
+            <form action="<?= site_url('/Admin/updatePaket/' . $data['kode_paket']) ?>"" method=" post">
                 <?= csrf_field() ?>
                 <input type="hidden" name="kode_paket" id="edit_kode_paket">
                 <div class="modal-body">
