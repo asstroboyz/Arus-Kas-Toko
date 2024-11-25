@@ -417,8 +417,13 @@ class Admin extends BaseController
         $data = [
             'title' => 'Daftar Nama Pelanggan',
 
-            'pelanggan' => $this->pelangganWifiModel->findAll(),
+            'pelanggan' => $this->pelangganWifiModel
+
+                ->select('pelanggan_wifi.*, paket.nama_paket, paket.harga')  // Selecting fields you want
+                ->join('paket', 'paket.kode_paket = pelanggan_wifi.kode_paket', 'left')  // Perform LEFT JOIN
+                ->findAll(),
         ];
+        // dd($data);
         return view('Admin/Pelanggan/Index', $data);
     }
 
@@ -4761,10 +4766,6 @@ class Admin extends BaseController
             'title'   => 'Paket Wifi',
             'tagihan' => $tagihanData, // Pastikan variabelnya konsisten
         ];
-        // dd($tagihanData);
-
-        // Debugging output
-        // dd($data['tagihan']);
 
         // Tampilkan halaman dengan data tagihan
         return view('Admin/Tagihan/Index', $data);

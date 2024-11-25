@@ -75,7 +75,7 @@
                                 <img src="<?= base_url('uploads/foto_ktp/' . $data['foto_ktp']); ?>" alt="Foto KTP" style="width: 100px; height: auto;">
                             </td>
                             <td>
-                                <?= $data['kode_paket']; ?>
+                                <?= $data['nama_paket']; ?>
                             </td>
                             <td style="text-align:center;">
                                 <a href="/Admin/pelanggan_edit/<?= $data['id'] ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>

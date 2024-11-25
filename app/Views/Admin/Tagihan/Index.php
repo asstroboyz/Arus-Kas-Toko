@@ -38,7 +38,7 @@ $tagihanModel = new TagihanModel();
         <div class="col-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <h3>Daftar Tagihan</h3>
+                    <h3>Daftar Pembayaran Wifi</h3>
                     <div>
                         <a href="<?php echo base_url('TagihanCont/tambahForm/'); ?>"
                             class="btn btn-primary">
@@ -88,18 +88,46 @@ $tagihanModel = new TagihanModel();
                                             <td><?= date('d-m-Y', strtotime($data['tanggal_tagihan'])); ?></td>
                                             <td>Rp <?= number_format(floatval($data['jumlah_tagihan']), 0, ',', '.'); ?></td>
                                             <td>
-                                                <?= $data['status_tagihan'] === 'Lunas'
-                                                    ? '<span class="btn btn-success text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>'
-                                                    : '<span class="btn btn-warning text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>'; ?>
+                                                <?php
+                                                if ($data['status_tagihan'] === 'Dibayar') {
+                                                    // Green color for 'Lunas' status
+                                                    echo '<span class="btn btn-success text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
+                                                } elseif ($data['status_tagihan'] === 'Belum Dibayar') {
+                                                    // Yellow color for 'Belum Lunas' status
+                                                    echo '<span class="btn btn-warning text-dark d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
+                                                } elseif ($data['status_tagihan'] === 'Tertunda') {
+                                                    // Red color for 'Tertunda' status
+                                                    echo '<span class="btn btn-danger text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
+                                                } else {
+                                                    // Default color for other statuses (gray)
+                                                    echo '<span class="btn btn-secondary text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
+                                                }
+                                                ?>
                                             </td>
                                             <td><?= $data['alamat']; ?></td>
-                                            <td>
-                                                <a href="#" class="btn btn-danger btn-sm btn-block" data-toggle="modal"
-                                                    data-target="#modalKonfirmasiDelete"
-                                                    data-id="<?= $data['id'] ?>">
-                                                    <i class="fa fa-trash"></i> Hapus Tagihan
+                                            <td >
+                                                <?php
+                                               
+                                                $message = "Halo, saya ingin menanyakan pembayaran bulanan wifi di VIP NET dengan rincian berikut:\n";
+                                                $message .= "Paket: " . $data['nama_paket'] . "\n";
+                                                $message .= "Nama Pelanggan: " . $data['nama'] . "\n";
+                                                $message .= "Jumlah Tagihan: Rp " . number_format(floatval($data['jumlah_tagihan']), 0, ',', '.') . "\n";
+
+
+                                                // URL-encode the message to ensure it's safe to pass in a URL
+                                                $encodedMessage = urlencode($message);
+                                                ?>
+                                                <a href="https://wa.me/<?= $data['no_hp']; ?>?text=<?= $encodedMessage; ?>"
+                                                    target="_blank" class="btn btn-success btn-sm btn-block" title="Hubungi via WhatsApp">
+                                                    <i class="fa fa-whatsapp"></i> WhatsApp
+                                                </a>
+
+                                          
+                                                <a href="#" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#modalKonfirmasiDelete" data-id="<?= $data['id'] ?>" title="Pembayaran Tagihan">
+                                                    <i class="fa fa-credit-card"></i> Pembayaran
                                                 </a>
                                             </td>
+                                          
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php } else { ?>
