@@ -52,67 +52,68 @@ $tagihanModel = new TagihanModel();
                 </div>
 
                 <div class="card-body">
-    <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <thead>
-                <tr>
-                    <th style="width: 5%;">No</th>
-                    <th style="width: 15%;">Nama</th>
-                    <th style="width: 15%;">Nama Paket</th>
-                    <th style="width: 10%;">Tanggal Tagihan</th>
-                    <th style="width: 10%;">Jumlah Tagihan</th>
-                    <th style="width: 10%;">Status</th>
-                    <th style="width: 20%;">Alamat</th>
-                    <th style="width: 15%;">Opsi</th>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <th style="width: 5%;">No</th>
-                    <th style="width: 15%;">Nama</th>
-                    <th style="width: 15%;">Nama Paket</th>
-                    <th style="width: 10%;">Tanggal Tagihan</th>
-                    <th style="width: 10%;">Jumlah Tagihan</th>
-                    <th style="width: 10%;">Status</th>
-                    <th style="width: 20%;">Alamat</th>
-                    <th style="width: 15%;">Opsi</th>
-                </tr>
-            </tfoot>
-            <tbody>
-                <?php if ($tagihan) { ?>
-                    <?php foreach ($tagihan as $num => $data) : ?>
-                        <tr>
-                            <td><?= $num + 1; ?></td>
-                            <td><?= $data['nama']; ?></td>
-                            <td><?= $data['nama_paket']; ?></td>
-                            <td><?= date('d-m-Y', strtotime($data['tanggal_tagihan'])); ?></td>
-                            <td>Rp <?= number_format(floatval($data['jumlah_tagihan']), 0, ',', '.'); ?></td>
-                            <td>
-                                <?= $data['status_tagihan'] === 'Lunas' 
-                                    ? '<span class="btn btn-success text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>' 
-                                    : '<span class="btn btn-warning text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>'; ?>
-                            </td>
-                            <td><?= $data['alamat']; ?></td>
-                            <td>
-                                <a href="#" class="btn btn-danger btn-sm btn-block" data-toggle="modal"
-                                   data-target="#modalKonfirmasiDelete"
-                                   data-id="<?= $data['id'] ?>">
-                                    <i class="fa fa-trash"></i> Hapus Tagihan
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php } else { ?>
-                    <tr>
-                        <td colspan="8">
-                            <h3 class="text-gray-900 text-center">Data belum ada.</h3>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
-</div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%;">No</th>
+                                    <th style="width: 15%;">Nama</th>
+                                    <th style="width: 15%;">Nama Paket</th>
+                                    <th style="width: 10%;">Tanggal Tagihan</th>
+                                    <th style="width: 10%;">Jumlah Tagihan</th>
+                                    <th style="width: 10%;">Status</th>
+                                    <th style="width: 20%;">Alamat</th>
+                                    <th style="width: 15%;">Opsi</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th style="width: 5%;">No</th>
+                                    <th style="width: 15%;">Nama</th>
+                                    <th style="width: 15%;">Nama Paket</th>
+                                    <th style="width: 10%;">Tanggal Tagihan</th>
+                                    <th style="width: 10%;">Jumlah Tagihan</th>
+                                    <th style="width: 10%;">Status</th>
+                                    <th style="width: 20%;">Alamat</th>
+                                    <th style="width: 15%;">Opsi</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <?php if ($tagihan) { ?>
+                                    <?php foreach ($tagihan as $num => $data) : ?>
+                                        <tr>
+                                            <td><?= $num + 1; ?></td>
+                                            <td><?= $data['nama']; ?></td> <!-- Nama Pelanggan -->
+                                            <td><?= $data['nama_paket']; ?></td>
+                                            <td><?= date('d-m-Y', strtotime($data['tanggal_tagihan'])); ?></td>
+                                            <td>Rp <?= number_format(floatval($data['jumlah_tagihan']), 0, ',', '.'); ?></td>
+                                            <td>
+                                                <?= $data['status_tagihan'] === 'Lunas'
+                                                    ? '<span class="btn btn-success text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>'
+                                                    : '<span class="btn btn-warning text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>'; ?>
+                                            </td>
+                                            <td><?= $data['alamat']; ?></td>
+                                            <td>
+                                                <a href="#" class="btn btn-danger btn-sm btn-block" data-toggle="modal"
+                                                    data-target="#modalKonfirmasiDelete"
+                                                    data-id="<?= $data['id'] ?>">
+                                                    <i class="fa fa-trash"></i> Hapus Tagihan
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php } else { ?>
+                                    <tr>
+                                        <td colspan="8">
+                                            <h3 class="text-gray-900 text-center">Data belum ada.</h3>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
 
 
             </div>

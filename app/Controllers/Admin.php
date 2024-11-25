@@ -4553,6 +4553,7 @@ class Admin extends BaseController
 
         return view('Admin/Pelanggan/Tambah_pelanggan', $data);
     }
+
     public function simpanPelanggan()
     {
         // Validasi input form
@@ -4597,6 +4598,20 @@ class Admin extends BaseController
                     'required' => 'Kode paket harus diisi',
                 ],
             ],
+            'tgl_pasang' => [
+                'rules' => 'required|valid_date',
+                'errors' => [
+                    'required' => 'Tanggal pasang harus diisi',
+                    'valid_date' => 'Tanggal pasang tidak valid',
+                ],
+            ],
+            'status_pelanggan' => [
+                'rules' => 'required|in_list[aktif,tidak aktif]',
+                'errors' => [
+                    'required' => 'Status pelanggan harus diisi',
+                    'in_list' => 'Status pelanggan tidak valid',
+                ],
+            ],
         ])) {
             // Jika validasi gagal, kembalikan ke form dengan input yang sudah diisi sebelumnya
             return redirect()->to('/admin/tambah_pelanggan')->withInput();
@@ -4609,18 +4624,52 @@ class Admin extends BaseController
         // Pindahkan file foto KTP ke folder yang ditentukan
         $fotoKTP->move('uploads/foto_ktp', $namaFile);
 
-        // Data pelanggan yang akan disimpan
+
+        $kodePaket = $this->request->getPost('kode_paket');
+        $tglPasang = $this->request->getPost('tgl_pasang');
+        $statusPelanggan = $this->request->getPost('status_pelanggan');
+
+        // Ambil harga dari kode paket
+        $paket = $this->paketModel->where('kode_paket', $kodePaket)->first();
+
+        if (!$paket) {
+            // Jika kode paket tidak ditemukan
+            session()->setFlashdata('pesan', 'Kode paket tidak valid.');
+            return redirect()->to('/admin/tambah_pelanggan')->withInput();
+        }
+
+        $hargaPaket = $paket['harga']; // Ambil harga paket
         $data = [
             'nama' => $this->request->getPost('nama'),
             'no_hp' => $this->request->getPost('no_hp'),
             'alamat' => $this->request->getPost('alamat'),
             'nik' => $this->request->getPost('nik'),
-            'foto_ktp' => $namaFile, // Menyimpan nama file foto KTP
-            'kode_paket' => $this->request->getPost('kode_paket'),
+            'foto_ktp' => $namaFile,
+            'tgl_pasang' => $tglPasang,
+            'status_pelanggan' => $statusPelanggan,
+            'kode_paket' => $kodePaket,
         ];
 
         // Simpan data ke database
+        // Simpan data pelanggan ke database
         if ($this->pelangganWifiModel->insert($data)) {
+            $pelangganId = $this->pelangganWifiModel->getInsertID(); // Dapatkan ID pelanggan yang baru ditambahkan
+
+            // Jika status pelanggan aktif, tambahkan data ke tabel tagihan
+            if ($statusPelanggan === 'aktif') {
+                $tanggalTagihan = date('Y-m-d', strtotime($tglPasang . ' +30 days'));
+                $dataTagihan = [
+                    'pelanggan_id' => $pelangganId,
+                    'kode_paket' => $kodePaket,
+                    'tanggal_tagihan' => $tanggalTagihan,
+                    'jumlah_tagihan' => $hargaPaket,
+                    'status_tagihan' => 'Belum Dibayar',
+                ];
+
+                // dd($dataTagihan);    
+                $this->tagihanModel->insert($dataTagihan);
+            }
+
             session()->setFlashdata('pesan', 'Data pelanggan berhasil ditambahkan.');
         } else {
             session()->setFlashdata('pesan', 'Gagal menambahkan data pelanggan. Silakan coba lagi.');
@@ -4630,24 +4679,94 @@ class Admin extends BaseController
         return redirect()->to('/admin/pelanggan');
     }
 
+    // public function tagihan()
+    // {
+    //     $tagihanModel = new tagihanModel();
+    //     $query = $tagihanModel->builder()
+    //         ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
+    //         ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
+    //         ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
+    //         ->get();
+
+    //     // Mendapatkan hasil query dalam bentuk array
+
+    //     $data = [
+    //         'title' => 'Paket Wifi',
+    //         'tagihan' => $query->getResultArray(),
+    //     ];
+
+
+    //     // dd($data['tagihan']);
+    //     return view('Admin/Tagihan/Index', $data);
+    // }
+
     public function tagihan()
     {
+        // Membuat instance model tagihan
         $tagihanModel = new tagihanModel();
+
+        // Ambil data tagihan dan join dengan tabel pelanggan dan paket
         $query = $tagihanModel->builder()
             ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
             ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
             ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
+            ->get(); // Ambil semua tagihan untuk ditampilkan
+
+        // Debugging untuk melihat hasil query
+        // dd($query->getResultArray());
+
+        // Cek pelanggan dengan status "Dibayar" dan durasi lebih dari 30 hari
+        $queryForNewTagihan = $tagihanModel->builder()
+            ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
+            ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
+            ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
+            ->where('tagihan.status_tagihan', 'Dibayar')
+            ->where('tagihan.tanggal_tagihan >=', date('Y-m-d', strtotime('-30 days'))) // Tanggal 30 hari kebelakang
+            ->where('tagihan.tanggal_tagihan <=', date('Y-m-d')) // Hari ini
             ->get();
 
-        // Mendapatkan hasil query dalam bentuk array
- 
+        // Ambil data pelanggan yang perlu dibuatkan tagihan baru
+        $pelanggan = $queryForNewTagihan->getResultArray();
+
+        // Periksa apakah ada pelanggan yang perlu dibuatkan tagihan baru
+        if (!empty($pelanggan)) {
+            foreach ($pelanggan as $p) {
+                // Cek apakah tagihan baru sudah ada berdasarkan pelanggan_id, kode_paket, dan status_tagihan
+                $existingTagihan = $tagihanModel->where('pelanggan_id', $p['pelanggan_id'])
+                    ->where('kode_paket', $p['kode_paket'])
+                    ->where('status_tagihan', 'Belum Dibayar')
+                    ->first(); // Mengambil data pertama yang ditemukan
+
+                if (!$existingTagihan) {  // Jika tagihan belum ada
+                    // Pastikan harga sudah ada dalam hasil query
+                    $dataTagihanBaru = [
+                        'pelanggan_id'    => $p['pelanggan_id'],
+                        'kode_paket'      => $p['kode_paket'],
+                        'tanggal_tagihan' => date('Y-m-d', strtotime('+30 days', strtotime($p['tanggal_tagihan']))),
+                        'jumlah_tagihan'  => $p['harga'],  // Pastikan harga dari paket digunakan
+                        'status_tagihan'  => 'Belum Dibayar',
+                    ];
+
+                    // Simpan tagihan baru
+                    $tagihanModel->insert($dataTagihanBaru);
+                }
+            }
+        }
+
+        // Ambil data tagihan terbaru setelah insert tagihan baru
+        $tagihanData = $query->getResultArray();
+
+        // Kirimkan data ke view
         $data = [
-            'title' => 'Paket Wifi',
-            'tagihan' => $query->getResultArray(),
+            'title'   => 'Paket Wifi',
+            'tagihan' => $tagihanData, // Pastikan variabelnya konsisten
         ];
+        // dd($tagihanData);
 
-
+        // Debugging output
         // dd($data['tagihan']);
+
+        // Tampilkan halaman dengan data tagihan
         return view('Admin/Tagihan/Index', $data);
     }
 }

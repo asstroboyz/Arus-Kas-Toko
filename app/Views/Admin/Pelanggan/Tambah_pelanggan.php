@@ -127,12 +127,33 @@
                                             <?= $validation->getError('foto_ktp'); ?>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="tgl_pasang">Tanggal Pasang</label>
+                                        <input name="tgl_pasang" type="date"
+                                            class="form-control form-control-user <?= ($validation->hasError('tgl_pasang')) ? 'is-invalid' : ''; ?>"
+                                            id="input-tgl-pasang" value="<?= old('tgl_pasang'); ?>" />
+                                        <div id="tglPasangFeedback" class="invalid-feedback">
+                                            <?= $validation->getError('tgl_pasang'); ?>
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group">
+                                        <label for="status_pelanggan">Status Pelanggan</label>
+                                        <select name="status_pelanggan"
+                                            class="form-control form-control-user <?= ($validation->hasError('status_pelanggan')) ? 'is-invalid' : ''; ?>"
+                                            id="input-status-pelanggan">
+                                            <option value="aktif" <?= (old('status_pelanggan') == 'aktif') ? 'selected' : ''; ?>>Aktif</option>
+                                            <option value="tidak aktif" <?= (old('status_pelanggan') == 'tidak aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
+                                        </select>
+                                        <div id="statusPelangganFeedback" class="invalid-feedback">
+                                            <?= $validation->getError('status_pelanggan'); ?>
+                                        </div>
+                                    </div>
                                     <!-- Kode Paket -->
                                     <div class="form-group">
                                         <label for="kode_paket">Kode Paket</label>
                                         <select name="kode_paket[]" id="kode_paket" class="form-control select2 <?= ($validation->hasError('kode_paket')) ? 'is-invalid' : ''; ?>" required>
-                                            <option value="">Pilih Barang</option>
+                                            <option value="">Pilih Paket</option>
                                             <?php foreach ($barangList as $brg): ?>
                                                 <option
                                                     value="<?= $brg['kode_paket']; ?>"

@@ -9,7 +9,7 @@ class tagihanModel extends Model
 {
     protected $table = 'tagihan';
     protected $primaryKey = 'id';
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $allowedFields = ['pelanggan_id', 'kode_paket', 'tanggal_tagihan', 'jumlah_tagihan','status_tagihan'];
 
     public function getPaket($id = false)
