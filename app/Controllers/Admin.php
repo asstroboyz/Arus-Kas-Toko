@@ -1048,6 +1048,7 @@ class Admin extends BaseController
             'keterangan' => $this->request->getPost('keterangan'),
             'jumlah' => $jumlah_pengeluaran,
         ];
+        // dd($pengeluaranData);
         $pengeluaranModel->insert($pengeluaranData);
 
         // Mengupdate saldo terakhir
@@ -4730,7 +4731,7 @@ class Admin extends BaseController
             ->where('tagihan.tanggal_tagihan <=', date('Y-m-d')) // Hari ini
             ->get();
 
-        // Ambil data pelanggan yang perlu dibuatkan tagihan baru
+       
         $pelanggan = $queryForNewTagihan->getResultArray();
 
         // Periksa apakah ada pelanggan yang perlu dibuatkan tagihan baru
@@ -4769,5 +4770,54 @@ class Admin extends BaseController
 
         // Tampilkan halaman dengan data tagihan
         return view('Admin/Tagihan/Index', $data);
+    }
+
+    public function tagihanbelumbayar(){
+         // Membuat instance model tagihan
+    $tagihanModel = new tagihanModel();
+
+    // Ambil data tagihan dengan status "Belum Dibayar" dan join dengan tabel pelanggan dan paket
+    $query = $tagihanModel->builder()
+        ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
+        ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
+        ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
+        ->where('tagihan.status_tagihan', 'Belum Dibayar') // Tambahkan kondisi status "Belum Dibayar"
+        ->get(); // Ambil semua tagihan dengan status "Belum Dibayar"
+
+    // Ambil data tagihan terbaru
+    $tagihanData = $query->getResultArray();
+
+    // Kirimkan data ke view
+    $data = [
+        'title'   => 'Paket Wifi',
+        'tagihan' => $tagihanData,
+    ];
+
+    // Tampilkan halaman dengan data tagihan
+    return view('Admin/Tagihan/Index', $data);
+    }
+    public function tagihandibayar(){
+         // Membuat instance model tagihan
+    $tagihanModel = new tagihanModel();
+
+    // Ambil data tagihan dengan status "Belum Dibayar" dan join dengan tabel pelanggan dan paket
+    $query = $tagihanModel->builder()
+        ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
+        ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
+        ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
+        ->where('tagihan.status_tagihan', 'Dibayar') // Tambahkan kondisi status "Belum Dibayar"
+        ->get(); // Ambil semua tagihan dengan status "Belum Dibayar"
+
+    // Ambil data tagihan terbaru
+    $tagihanData = $query->getResultArray();
+
+    // Kirimkan data ke view
+    $data = [
+        'title'   => 'Paket Wifi',
+        'tagihan' => $tagihanData,
+    ];
+
+    // Tampilkan halaman dengan data tagihan
+    return view('Admin/Tagihan/Index', $data);
     }
 }

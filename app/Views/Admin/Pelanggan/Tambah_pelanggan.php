@@ -87,13 +87,21 @@
                                     <!-- Kontak Pelanggan -->
                                     <div class="form-group">
                                         <label for="kontak">Kontak Pelanggan</label>
-                                        <input name="no_hp" type="text"
-                                            class="form-control form-control-user <?= ($validation->hasError('no_hp')) ? 'is-invalid' : ''; ?>"
-                                            id="input-no_hp" placeholder="Masukkan no_hp Pelanggan" value="<?= old('no_hp'); ?>" />
-                                        <div id="no_hpFeedback" class="invalid-feedback">
-                                            <?= $validation->getError('no_hp'); ?>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">+62</span>
+                                            </div>
+                                            <input name="no_hp" type="text"
+                                                class="form-control form-control-user <?= ($validation->hasError('no_hp')) ? 'is-invalid' : ''; ?>"
+                                                id="input-no_hp"
+                                                placeholder="Masukkan nomor HP"
+                                                value="<?= old('no_hp'); ?>" />
+                                            <div id="no_hpFeedback" class="invalid-feedback">
+                                                <?= $validation->getError('no_hp'); ?>
+                                            </div>
                                         </div>
                                     </div>
+
 
                                     <!-- Alamat Pelanggan -->
                                     <div class="form-group">

@@ -39,7 +39,7 @@ $tagihanModel = new TagihanModel();
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                     <h3>Daftar Pembayaran Wifi</h3>
-                    <div>
+                    <!-- <div>
                         <a href="<?php echo base_url('TagihanCont/tambahForm/'); ?>"
                             class="btn btn-primary">
                             <i class="fa fa-plus"></i> Tambah Tagihan
@@ -48,7 +48,7 @@ $tagihanModel = new TagihanModel();
                             class="btn btn-success">
                             <i class="fa fa-archive"></i> Arsip Tagihan
                         </a>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="card-body">
@@ -119,7 +119,7 @@ $tagihanModel = new TagihanModel();
                                                 ?>
                                                 <a href="https://wa.me/<?= $data['no_hp']; ?>?text=<?= $encodedMessage; ?>"
                                                     target="_blank" class="btn btn-success btn-sm btn-block" title="Hubungi via WhatsApp">
-                                                    <i class="fa fa-whatsapp"></i> WhatsApp
+                                                    <i class="fab fa-whatsapp"></i></i> WhatsApp
                                                 </a>
 
                                           
