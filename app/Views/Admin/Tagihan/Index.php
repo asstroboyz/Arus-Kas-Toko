@@ -105,9 +105,9 @@ $tagihanModel = new TagihanModel();
                                                 ?>
                                             </td>
                                             <td><?= $data['alamat']; ?></td>
-                                            <td >
+                                            <td>
                                                 <?php
-                                               
+
                                                 $message = "Halo, saya ingin menanyakan pembayaran bulanan wifi di VIP NET dengan rincian berikut:\n";
                                                 $message .= "Paket: " . $data['nama_paket'] . "\n";
                                                 $message .= "Nama Pelanggan: " . $data['nama'] . "\n";
@@ -122,12 +122,17 @@ $tagihanModel = new TagihanModel();
                                                     <i class="fab fa-whatsapp"></i></i> WhatsApp
                                                 </a>
 
-                                          
+
                                                 <a href="#" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#modalKonfirmasiDelete" data-id="<?= $data['id'] ?>" title="Pembayaran Tagihan">
                                                     <i class="fa fa-credit-card"></i> Pembayaran
                                                 </a>
+                                                <a href="<?= base_url('admin/cetakTagihanById/' . $data['id']); ?>" class="btn btn-warning btn-sm btn-block" title="Cetak Struk">
+                                                    <i class="fa fa-print"></i> Cetak Struk
+                                                </a>
+
                                             </td>
-                                          
+
+
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php } else { ?>

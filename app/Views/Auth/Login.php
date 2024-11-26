@@ -2,7 +2,6 @@
 
 <?= $this->section('content'); ?>
 <div class="container">
-
     <!-- Outer Row -->
     <div class="row justify-content-center">
 

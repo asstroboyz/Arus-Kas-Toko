@@ -4455,7 +4455,7 @@ class Admin extends BaseController
         // Data yang akan disimpan
         $data = [
             'kode_paket' => $kodePaket,
-            'nama_paket' => $this->request->getPost('nama_paket'),
+            'nama_paket' => $this->request->getPost('nama_paket') . ' MBPS',
             'harga' => $this->request->getPost('harga'),
         ];
 
@@ -4705,7 +4705,100 @@ class Admin extends BaseController
     //     // dd($data['tagihan']);
     //     return view('Admin/Tagihan/Index', $data);
     // }
+    public function cetakTagihan()
+    {
+        // Membuat instance model tagihan
+        $tagihanModel = new tagihanModel();
 
+        // Ambil data tagihan dan join dengan tabel pelanggan dan paket
+        $query = $tagihanModel->builder()
+            ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
+            ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
+            ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
+            ->get(); // Ambil semua tagihan untuk ditampilkan
+
+        // Ambil hasil query
+        $tagihanData = $query->getResultArray();
+
+        // Siapkan data yang akan dikirim ke view untuk laporan
+        $data = [
+            'title'   => 'Laporan Tagihan',
+            'tagihan' => $tagihanData, // Mengirim data tagihan ke view
+        ];
+        // dd($data);
+        // Load view untuk laporan tagihan
+        $html = view('Admin/Tagihan/Lap_tagihan', $data);
+
+        // Membuat instance mPDF
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->showImageErrors = true;
+
+        // Menambahkan alias untuk nomor halaman
+        $mpdf->AliasNbPages();
+
+        // Mengatur header dan footer
+        $mpdf->SetFooter('Halaman {PAGENO} dari {nbpg}');
+
+        // Menambahkan halaman dan menulis HTML ke file PDF
+        $mpdf->WriteHtml($html);
+
+        // Mengirimkan file PDF ke browser
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output('Laporan_Tagihan.pdf', 'I');
+    }
+    public function cetakTagihanById($id)
+    {
+        // Membuat instance model tagihan
+        $tagihanModel = new tagihanModel();
+    
+        // Ambil data tagihan berdasarkan ID yang dipilih
+        $query = $tagihanModel->builder()
+            ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
+            ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
+            ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
+            ->where('tagihan.id', $id) // Menambahkan kondisi untuk ID tagihan
+            ->get(); // Ambil tagihan berdasarkan ID
+    
+        // Ambil hasil query
+        $tagihanData = $query->getRowArray(); // Mengambil satu data berdasarkan ID
+    
+        if (!$tagihanData) {
+            // Jika data tidak ditemukan, redirect dengan pesan error
+            return redirect()->to('/admin/tagihan')->with('error', 'Tagihan tidak ditemukan.');
+        }
+    
+        // Siapkan data untuk laporan
+        $data = [
+            'title'   => 'Nota Tagihan',
+            'tagihan' => $tagihanData, // Mengirimkan data tagihan ke view
+        ];
+    
+        // Load view untuk laporan tagihan
+        $html = view('Admin/Tagihan/Nota_tagihan', $data);
+    
+        // Membuat instance mPDF dengan ukuran kertas khusus 10.5cm x 10.5cm
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => [105, 105],  // Ukuran kertas 10.5 cm x 10.5 cm (dalam milimeter)
+            'orientation' => 'P'      // Orientasi Portrait
+        ]);
+    
+        $mpdf->showImageErrors = true;
+    
+        // Menambahkan alias untuk nomor halaman
+        $mpdf->AliasNbPages();
+    
+        // Mengatur header dan footer
+        $mpdf->SetFooter('Halaman {PAGENO} dari {nbpg}');
+    
+        // Menambahkan halaman dan menulis HTML ke file PDF
+        $mpdf->WriteHtml($html);
+    
+        // Mengirimkan file PDF ke browser
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output('Nota_Tagihan_' . $id . '.pdf', 'I');
+    }
+    
+    
     public function tagihan()
     {
         // Membuat instance model tagihan
@@ -4731,7 +4824,7 @@ class Admin extends BaseController
             ->where('tagihan.tanggal_tagihan <=', date('Y-m-d')) // Hari ini
             ->get();
 
-       
+
         $pelanggan = $queryForNewTagihan->getResultArray();
 
         // Periksa apakah ada pelanggan yang perlu dibuatkan tagihan baru
@@ -4767,57 +4860,59 @@ class Admin extends BaseController
             'title'   => 'Paket Wifi',
             'tagihan' => $tagihanData, // Pastikan variabelnya konsisten
         ];
-
+// dd($data);
         // Tampilkan halaman dengan data tagihan
         return view('Admin/Tagihan/Index', $data);
     }
 
-    public function tagihanbelumbayar(){
-         // Membuat instance model tagihan
-    $tagihanModel = new tagihanModel();
+    public function tagihanbelumbayar()
+    {
+        // Membuat instance model tagihan
+        $tagihanModel = new tagihanModel();
 
-    // Ambil data tagihan dengan status "Belum Dibayar" dan join dengan tabel pelanggan dan paket
-    $query = $tagihanModel->builder()
-        ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
-        ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
-        ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
-        ->where('tagihan.status_tagihan', 'Belum Dibayar') // Tambahkan kondisi status "Belum Dibayar"
-        ->get(); // Ambil semua tagihan dengan status "Belum Dibayar"
+        // Ambil data tagihan dengan status "Belum Dibayar" dan join dengan tabel pelanggan dan paket
+        $query = $tagihanModel->builder()
+            ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
+            ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
+            ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
+            ->where('tagihan.status_tagihan', 'Belum Dibayar') // Tambahkan kondisi status "Belum Dibayar"
+            ->get(); // Ambil semua tagihan dengan status "Belum Dibayar"
 
-    // Ambil data tagihan terbaru
-    $tagihanData = $query->getResultArray();
+        // Ambil data tagihan terbaru
+        $tagihanData = $query->getResultArray();
 
-    // Kirimkan data ke view
-    $data = [
-        'title'   => 'Paket Wifi',
-        'tagihan' => $tagihanData,
-    ];
+        // Kirimkan data ke view
+        $data = [
+            'title'   => 'Paket Wifi',
+            'tagihan' => $tagihanData,
+        ];
 
-    // Tampilkan halaman dengan data tagihan
-    return view('Admin/Tagihan/Index', $data);
+        // Tampilkan halaman dengan data tagihan
+        return view('Admin/Tagihan/Index', $data);
     }
-    public function tagihandibayar(){
-         // Membuat instance model tagihan
-    $tagihanModel = new tagihanModel();
+    public function tagihandibayar()
+    {
+        // Membuat instance model tagihan
+        $tagihanModel = new tagihanModel();
 
-    // Ambil data tagihan dengan status "Belum Dibayar" dan join dengan tabel pelanggan dan paket
-    $query = $tagihanModel->builder()
-        ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
-        ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
-        ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
-        ->where('tagihan.status_tagihan', 'Dibayar') // Tambahkan kondisi status "Belum Dibayar"
-        ->get(); // Ambil semua tagihan dengan status "Belum Dibayar"
+        // Ambil data tagihan dengan status "Belum Dibayar" dan join dengan tabel pelanggan dan paket
+        $query = $tagihanModel->builder()
+            ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
+            ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
+            ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
+            ->where('tagihan.status_tagihan', 'Dibayar') // Tambahkan kondisi status "Belum Dibayar"
+            ->get(); // Ambil semua tagihan dengan status "Belum Dibayar"
 
-    // Ambil data tagihan terbaru
-    $tagihanData = $query->getResultArray();
+        // Ambil data tagihan terbaru
+        $tagihanData = $query->getResultArray();
 
-    // Kirimkan data ke view
-    $data = [
-        'title'   => 'Paket Wifi',
-        'tagihan' => $tagihanData,
-    ];
+        // Kirimkan data ke view
+        $data = [
+            'title'   => 'Paket Wifi',
+            'tagihan' => $tagihanData,
+        ];
 
-    // Tampilkan halaman dengan data tagihan
-    return view('Admin/Tagihan/Index', $data);
+        // Tampilkan halaman dengan data tagihan
+        return view('Admin/Tagihan/Index', $data);
     }
 }

@@ -13,12 +13,14 @@
 
 
     <!-- Dashboard -->
-    <li class="nav-item">
-        <a class="nav-link" href="<?= base_url(); ?>">
-            <i class="fas fa-home"></i>
-            <span style="font-size: 16px;">Dashboard</span>
-        </a>
-    </li>
+   <!-- Dashboard -->
+<li class="nav-item">
+    <a class="nav-link" href="<?= base_url(); ?>">
+        <i class="fas fa-home"></i>
+        <span style="font-size: 16px;">Dashboard</span>
+    </a>
+</li>
+
 <!-- Data Pelanggan -->
 <li class="nav-item">
     <a class="nav-link" href="<?= base_url('Admin/pelanggan'); ?>">
@@ -28,6 +30,7 @@
 </li>
 
 <!-- Keuangan -->
+<!-- Keuangan -->
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#keuanganMenu" aria-expanded="false"
         aria-controls="keuanganMenu">
@@ -36,18 +39,37 @@
     </a>
     <div id="keuanganMenu" class="collapse" aria-labelledby="headingKeuangan" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?= base_url('Admin/tagihan'); ?>">
+            
+            <!-- Sub-menu Data Tagihan -->
+            <a class="collapse-item collapsed" href="#" data-toggle="collapse" data-target="#tagihanMenu"
+                aria-expanded="false" aria-controls="tagihanMenu">
                 <i class="fas fa-file-invoice-dollar"></i> Data Tagihan
             </a>
+            <div id="tagihanMenu" class="collapse pl-3" aria-labelledby="headingTagihan" data-parent="#keuanganMenu">
+                <a class="collapse-item" href="<?= base_url('Admin/tagihan'); ?>">
+                    <i class="fas fa-check-circle"></i> Semua Tagihan
+                </a>
+                <a class="collapse-item" href="<?= base_url('Admin/tagihanbelumbayar'); ?>">
+                    <i class="fas fa-times-circle"></i> Belum Bayar
+                </a>
+                <a class="collapse-item" href="<?= base_url('Admin/tagihandibayar'); ?>">
+                    <i class="fas fa-check-circle"></i> Di Bayar
+                </a>
+            </div>
+            
+            <!-- Pengeluaran -->
             <a class="collapse-item" href="<?= base_url('Admin/pengeluaran'); ?>">
                 <i class="fas fa-wallet"></i> Data Pengeluaran
             </a>
+            
+            <!-- Pemasukan -->
             <a class="collapse-item" href="<?= base_url('Admin/pemasukan'); ?>">
                 <i class="fas fa-hand-holding-usd"></i> Data Pemasukan
             </a>
         </div>
     </div>
 </li>
+
 
 <!-- Paket & Layanan -->
 <li class="nav-item">
@@ -56,6 +78,7 @@
         <span>Master Paket</span>
     </a>
 </li>
+>
 
 
 
