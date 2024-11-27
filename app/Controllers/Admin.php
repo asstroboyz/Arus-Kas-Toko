@@ -477,22 +477,77 @@ class Admin extends BaseController
         $data = [
             'title' => 'Ubah Pelanggan',
             'validation' => $this->validation,
-            'pelanggan' => $this->PelangganModel->find($id),
+            'pelanggan' => $this->pelangganWifiModel->find($id),
         ];
+
+        // dd($data);
         return view('Admin/Pelanggan/Edit_pelanggan', $data);
     }
     public function updatePelanggan()
     {
         $id = $this->request->getPost('id_pelanggan');
-        $data = [
-            'nama' => $this->request->getPost('nama'),
-            'alamat' => $this->request->getPost('alamat'),
-            'kontak' => $this->request->getPost('kontak'),
-        ];
-        $this->PelangganModel->update($id, $data);
-        session()->setFlashdata('pesan', 'Data berhasil diubah');
+
+    // Validasi input
+    if (!$this->validate([
+        'nama' => 'required',
+        'alamat' => 'required',
+        'no_hp' => 'required',
+        'foto_ktp' => [
+            'rules' => 'is_image[foto_ktp]|mime_in[foto_ktp,image/jpg,image/jpeg,image/png]|max_size[foto_ktp,2048]',
+            'errors' => [
+                'is_image' => 'File harus berupa gambar.',
+                'mime_in' => 'Format file harus jpg, jpeg, atau png.',
+                'max_size' => 'Ukuran file maksimal 2MB.',
+            ],
+        ],
+    ])) {
+        return redirect()->to("/admin/pelanggan/edit/$id")->withInput()->with('validation', $this->validator);
+    }
+
+    // Ambil data pelanggan lama
+    $pelanggan = $this->pelangganWifiModel->find($id);
+
+    if (!$pelanggan) {
+        session()->setFlashdata('pesan', 'Data pelanggan tidak ditemukan.');
         return redirect()->to('/admin/pelanggan');
     }
+
+    // Jika ada file baru
+    $fotoKTP = $this->request->getFile('foto_ktp');
+    if ($fotoKTP && $fotoKTP->isValid()) {
+        $namaFile = $fotoKTP->getRandomName();
+        $fotoKTP->move('uploads/foto_ktp', $namaFile);
+
+        // Hapus foto KTP lama jika ada
+        if ($pelanggan['foto_ktp'] && file_exists('uploads/foto_ktp/' . $pelanggan['foto_ktp'])) {
+            unlink('uploads/foto_ktp/' . $pelanggan['foto_ktp']);
+        }
+    } else {
+        $namaFile = $pelanggan['foto_ktp']; // Tetap gunakan file lama
+    }
+
+    // Update data sesuai allowedFields
+    $data = [
+        'nama' => $this->request->getPost('nama'),
+        'alamat' => $this->request->getPost('alamat'),
+        'no_hp' => $this->request->getPost('no_hp'),
+        'nik' => $this->request->getPost('nik'),
+        'foto_ktp' => $namaFile,
+        'kode_paket' => $this->request->getPost('kode_paket'),
+        'tgl_pasang' => $this->request->getPost('tgl_pasang'),
+        'status_pelanggan' => $this->request->getPost('status_pelanggan'),
+        'updated_at' => date('Y-m-d H:i:s'),
+    ];
+
+    if ($this->pelangganWifiModel->update($id, $data)) {
+        session()->setFlashdata('pesan', 'Data pelanggan berhasil diubah.');
+    } else {
+        session()->setFlashdata('pesan', 'Gagal mengubah data pelanggan.');
+    }
+
+    return redirect()->to('/admin/pelanggan');
+    }
+
     public function pelanggan_delete($id)
     {
         $this->PelangganModel->delete($id);

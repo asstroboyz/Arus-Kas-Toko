@@ -1,6 +1,6 @@
-<?= $this->extend('Admin/Templates/Index'); ?>
+<?=$this->extend('Admin/Templates/Index');?>
 
-<?= $this->section('page-content'); ?>
+<?=$this->section('page-content');?>
 <?php
 
 use App\Models\TagihanModel;
@@ -10,29 +10,29 @@ $tagihanModel = new TagihanModel();
 <div class="container-fluid">
     <h1 class="h3 mb-4 text-gray-900"></h1>
 
-    <?php if (session()->getFlashdata('error-msg')) : ?>
+    <?php if (session()->getFlashdata('error-msg')): ?>
         <div class="row">
             <div class="col-12">
                 <div class="alert alert-danger" role="alert">
-                    <?= session()->getFlashdata('error-msg'); ?>
+                    <?=session()->getFlashdata('error-msg');?>
                 </div>
             </div>
         </div>
-    <?php endif; ?>
+    <?php endif;?>
 
-    <?php if (session()->getFlashdata('msg')) : ?>
+    <?php if (session()->getFlashdata('msg')): ?>
         <div class="row">
             <div class="col-12">
                 <div class="alert alert-success alert-dismissible show fade" role="alert">
                     <div class="alert-body">
                         <button class="close" data-dismiss>x</button>
                         <b><i class="fa fa-check"></i></b>
-                        <?= session()->getFlashdata('msg'); ?>
+                        <?=session()->getFlashdata('msg');?>
                     </div>
                 </div>
             </div>
         </div>
-    <?php endif; ?>
+    <?php endif;?>
 
     <div class="row">
         <div class="col-12">
@@ -79,69 +79,88 @@ $tagihanModel = new TagihanModel();
                                 </tr>
                             </tfoot>
                             <tbody>
-                                <?php if ($tagihan) { ?>
-                                    <?php foreach ($tagihan as $num => $data) : ?>
+                                <?php if ($tagihan) {?>
+                                    <?php foreach ($tagihan as $num => $data): ?>
                                         <tr>
-                                            <td><?= $num + 1; ?></td>
-                                            <td><?= $data['nama']; ?></td> <!-- Nama Pelanggan -->
-                                            <td><?= $data['nama_paket']; ?></td>
-                                            <td><?= date('d-m-Y', strtotime($data['tanggal_tagihan'])); ?></td>
-                                            <td>Rp <?= number_format(floatval($data['jumlah_tagihan']), 0, ',', '.'); ?></td>
+                                            <td><?=$num + 1;?></td>
+                                            <td><?=$data['nama'];?></td> <!-- Nama Pelanggan -->
+                                            <td><?=$data['nama_paket'];?></td>
+                                            <td><?=date('d-m-Y', strtotime($data['tanggal_tagihan']));?></td>
+                                            <td>Rp <?=number_format(floatval($data['jumlah_tagihan']), 0, ',', '.');?></td>
                                             <td>
                                                 <?php
-                                                if ($data['status_tagihan'] === 'Dibayar') {
-                                                    // Green color for 'Lunas' status
-                                                    echo '<span class="btn btn-success text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
-                                                } elseif ($data['status_tagihan'] === 'Belum Dibayar') {
-                                                    // Yellow color for 'Belum Lunas' status
-                                                    echo '<span class="btn btn-warning text-dark d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
-                                                } elseif ($data['status_tagihan'] === 'Tertunda') {
-                                                    // Red color for 'Tertunda' status
-                                                    echo '<span class="btn btn-danger text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
-                                                } else {
-                                                    // Default color for other statuses (gray)
-                                                    echo '<span class="btn btn-secondary text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
-                                                }
-                                                ?>
+if ($data['status_tagihan'] === 'Dibayar') {
+    // Green color for 'Lunas' status
+    echo '<span class="btn btn-success text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
+} elseif ($data['status_tagihan'] === 'Belum Dibayar') {
+    // Yellow color for 'Belum Lunas' status
+    echo '<span class="btn btn-warning text-dark d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
+} elseif ($data['status_tagihan'] === 'Tertunda') {
+    // Red color for 'Tertunda' status
+    echo '<span class="btn btn-danger text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
+} else {
+    // Default color for other statuses (gray)
+    echo '<span class="btn btn-secondary text-white d-flex justify-content-center align-items-center">' . $data['status_tagihan'] . '</span>';
+}
+    ?>
                                             </td>
-                                            <td><?= $data['alamat']; ?></td>
-                                            <td>
+                                            <td><?=$data['alamat'];?></td>
+                                            <td style="text-align:center;">
+                                            <?php
+
+    $message = "Halo, saya ingin menanyakan pembayaran bulanan wifi di VIP NET dengan rincian berikut:\n";
+    $message .= "Paket: " . $data['nama_paket'] . "\n";
+    $message .= "Nama Pelanggan: " . $data['nama'] . "\n";
+    $message .= "Jumlah Tagihan: Rp " . number_format(floatval($data['jumlah_tagihan']), 0, ',', '.') . "\n";
+
+    
+    $encodedMessage = urlencode($message);
+    ?>
+                                <a href="https://wa.me/<?=$data['no_hp'];?>?text=<?=$encodedMessage;?>"
+                                                    target="_blank"" class="btn btn-success"> <i class="fab fa-whatsapp"></i></i> </a>
+                                                    <a href="#" class="btn btn-primary " data-toggle="modal" data-target="#modalKonfirmasiDelete" data-id="<?=$data['id']?>" title="Pembayaran Tagihan">
+                                                    <i class="fa fa-credit-card"></i>
+                                                </a>
+                                <a href="<?=base_url('admin/cetakTagihanById/' . $data['id']);?>" class="btn btn-danger btn-delete" >
+                                <i class="fa fa-print"></i>
+                                </a>
+                            </td>
+                                            <!-- <!-- <td> -->
                                                 <?php
 
-                                                $message = "Halo, saya ingin menanyakan pembayaran bulanan wifi di VIP NET dengan rincian berikut:\n";
-                                                $message .= "Paket: " . $data['nama_paket'] . "\n";
-                                                $message .= "Nama Pelanggan: " . $data['nama'] . "\n";
-                                                $message .= "Jumlah Tagihan: Rp " . number_format(floatval($data['jumlah_tagihan']), 0, ',', '.') . "\n";
+    // $message = "Halo, saya ingin menanyakan pembayaran bulanan wifi di VIP NET dengan rincian berikut:\n";
+    // $message .= "Paket: " . $data['nama_paket'] . "\n";
+    // $message .= "Nama Pelanggan: " . $data['nama'] . "\n";
+    // $message .= "Jumlah Tagihan: Rp " . number_format(floatval($data['jumlah_tagihan']), 0, ',', '.') . "\n";
 
-
-                                                // URL-encode the message to ensure it's safe to pass in a URL
-                                                $encodedMessage = urlencode($message);
-                                                ?>
-                                                <a href="https://wa.me/<?= $data['no_hp']; ?>?text=<?= $encodedMessage; ?>"
-                                                    target="_blank" class="btn btn-success btn-sm btn-block" title="Hubungi via WhatsApp">
-                                                    <i class="fab fa-whatsapp"></i></i> WhatsApp
+ 
+    // $encodedMessage = urlencode($message);
+    ?>
+                                                <!-- <a href="https://wa.me/<?=$data['no_hp'];?>?text=<?=$encodedMessage;?>"
+                                                    target="_blank" class="btn btn-success btn-sm " title="Hubungi via WhatsApp">
+                                                    <i class="fab fa-whatsapp"></i></i>
                                                 </a>
 
 
-                                                <a href="#" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#modalKonfirmasiDelete" data-id="<?= $data['id'] ?>" title="Pembayaran Tagihan">
-                                                    <i class="fa fa-credit-card"></i> Pembayaran
+                                                <a href="#" class="btn btn-primary btn-sm " data-toggle="modal" data-target="#modalKonfirmasiDelete" data-id="<?=$data['id']?>" title="Pembayaran Tagihan">
+                                                    <i class="fa fa-credit-card"></i>
                                                 </a>
-                                                <a href="<?= base_url('admin/cetakTagihanById/' . $data['id']); ?>" class="btn btn-warning btn-sm btn-block" title="Cetak Struk">
-                                                    <i class="fa fa-print"></i> Cetak Struk
+                                                <a href="<?=base_url('admin/cetakTagihanById/' . $data['id']);?>" class="btn btn-warning btn-sm " title="Cetak Struk">
+                                                    <i class="fa fa-print"></i>
                                                 </a>
 
-                                            </td>
+                                            </td> -->
 
 
                                         </tr>
-                                    <?php endforeach; ?>
-                                <?php } else { ?>
+                                    <?php endforeach;?>
+                                <?php } else {?>
                                     <tr>
                                         <td colspan="8">
                                             <h3 class="text-gray-900 text-center">Data belum ada.</h3>
                                         </td>
                                     </tr>
-                                <?php } ?>
+                                <?php }?>
                             </tbody>
 
                         </table>
@@ -175,9 +194,9 @@ $tagihanModel = new TagihanModel();
     </div>
 </div>
 
-<?= $this->endSection(); ?>
+<?=$this->endSection();?>
 
-<?= $this->section('additional-js'); ?>
+<?=$this->section('additional-js');?>
 <script>
     window.setTimeout(function() {
         $(".alert").fadeTo(500, 0).slideUp(500, function() {
@@ -187,8 +206,8 @@ $tagihanModel = new TagihanModel();
     $('#modalKonfirmasiDelete').on('show.bs.modal', function(e) {
         var id = $(e.relatedTarget).data('id');
         $('#deleteLink').attr('href',
-            '<?= base_url("/TagihanCont/softDelete/") ?>' + '/' + id);
+            '<?=base_url("/TagihanCont/softDelete/")?>' + '/' + id);
     });
 </script>
 
-<?= $this->endSection(); ?>
+<?=$this->endSection();?>
