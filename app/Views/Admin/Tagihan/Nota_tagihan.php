@@ -4,138 +4,128 @@
     <meta charset="UTF-8">
     <title><?= $title; ?></title>
     <style>
-        /* Global body styles */
         body { 
             font-family: 'Arial', sans-serif; 
-            font-size: 12px; 
+            font-size: 9px; 
             margin: 0; 
             padding: 0; 
-            background-color: #f9f9f9; /* Background light grey */
         }
 
-        /* Contain the main content in the center */
         .container {
-            width: 90%;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff; /* White background for the note */
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin: 0 auto;
+            padding: 2px;
         }
 
-        /* Title style */
         h2 {
             text-align: center;
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 20px;
+            font-size: 10px;
+            margin: 2px 0;
         }
 
-        /* Table styling */
         table { 
             width: 100%; 
             border-collapse: collapse; 
-            margin-bottom: 20px;
+            margin: 5px 0; 
         }
 
         th, td { 
-            padding: 8px; 
-            text-align: left; 
-            border-bottom: 1px solid #ddd;
+            padding: 1px 2px; 
+            vertical-align: top;
         }
 
         th {
-            background-color: #4CAF50;
-            color: #fff;
-            font-weight: bold;
+            font-weight: normal;
+            text-align: left;
         }
 
         td {
-            background-color: #f9f9f9;
+            text-align: left;
         }
 
         .total {
-            font-size: 16px;
+            font-size: 10px;
             font-weight: bold;
             color: #333;
+            text-align: right;
         }
 
         .note {
-            font-size: 12px;
+            font-size: 8px;
             color: #555;
-            margin-top: 20px;
+            margin: 5px 0;
+            text-align: center;
         }
 
-        /* Footer with a clear line */
         .footer {
-            margin-top: 30px;
+            margin-top: 3px;
             text-align: center;
-            font-size: 12px;
+            font-size: 8px;
             color: #777;
         }
 
         .footer hr {
-            margin: 10px 0;
+            margin: 3px 0;
             border: none;
             border-top: 1px solid #ddd;
         }
 
         .footer span {
-            display: block;
-            margin-top: 5px;
+            margin-top: 2px;
+        }
+
+        .separator {
+            border-bottom: 1px solid #ddd;
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>NOTA TAGIHAN - VIP NET</h2>
+        <div class="separator"></div>
         <table>
             <tr>
-                <td><strong>Nama Pelanggan</strong></td>
+                <th>Nama Pelanggan</th>
                 <td><?= $tagihan['nama']; ?></td>
             </tr>
             <tr>
-                <td><strong>Alamat</strong></td>
+                <th>Alamat</th>
                 <td><?= $tagihan['alamat']; ?></td>
             </tr>
             <tr>
-                <td><strong>No HP</strong></td>
+                <th>No HP</th>
                 <td><?= $tagihan['no_hp']; ?></td>
             </tr>
             <tr>
-                <td><strong>NIK</strong></td>
-                <td><?= $tagihan['nik']; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Nama Paket</strong></td>
+                <th>Nama Paket</th>
                 <td><?= $tagihan['nama_paket']; ?></td>
             </tr>
             <tr>
-                <td><strong>Harga Paket</strong></td>
+                <th>Harga Paket</th>
                 <td>Rp. <?= number_format($tagihan['harga'], 0, ',', '.'); ?></td>
             </tr>
             <tr>
-                <td><strong>Status Tagihan</strong></td>
+                <th>Status Tagihan</th>
                 <td><?= $tagihan['status_tagihan']; ?></td>
             </tr>
             <tr>
-                <td><strong>Tanggal Tagihan</strong></td>
+                <th>Tanggal Tagihan</th>
                 <td><?= date('d-m-Y', strtotime($tagihan['tanggal_tagihan'])); ?></td>
             </tr>
             <tr>
-                <td><strong>Jumlah Tagihan</strong></td>
+                <th>Jumlah Tagihan</th>
                 <td><span class="total">Rp. <?= number_format($tagihan['jumlah_tagihan'], 0, ',', '.'); ?></span></td>
             </tr>
         </table>
 
         <p class="note">
-            Terima kasih telah menggunakan layanan VIP NET. Jika ada pertanyaan, silakan hubungi kami melalui nomor yang tercantum.
+            Terima kasih telah menggunakan layanan VIP NET.
         </p>
 
         <div class="footer">
             <hr>
-            <span>&copy; 2024 VIP NET. Semua hak cipta dilindungi.</span>
+            <span>&copy; 2024 VIP NET</span>
         </div>
     </div>
 </body>

@@ -4803,49 +4803,47 @@ class Admin extends BaseController
     }
     public function cetakTagihanById($id)
     {
-        // Membuat instance model tagihan
         $tagihanModel = new tagihanModel();
     
-        // Ambil data tagihan berdasarkan ID yang dipilih
         $query = $tagihanModel->builder()
             ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
             ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
             ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
-            ->where('tagihan.id', $id) // Menambahkan kondisi untuk ID tagihan
-            ->get(); // Ambil tagihan berdasarkan ID
+            ->where('tagihan.id', $id)
+            ->get();
     
-        // Ambil hasil query
-        $tagihanData = $query->getRowArray(); // Mengambil satu data berdasarkan ID
+        $tagihanData = $query->getRowArray();
     
         if (!$tagihanData) {
-            // Jika data tidak ditemukan, redirect dengan pesan error
             return redirect()->to('/admin/tagihan')->with('error', 'Tagihan tidak ditemukan.');
         }
     
-        // Siapkan data untuk laporan
         $data = [
             'title'   => 'Nota Tagihan',
-            'tagihan' => $tagihanData, // Mengirimkan data tagihan ke view
+            'tagihan' => $tagihanData,
         ];
     
-        // Load view untuk laporan tagihan
         $html = view('Admin/Tagihan/Nota_tagihan', $data);
     
-        // Membuat instance mPDF dengan ukuran kertas khusus 10.5cm x 10.5cm
+        // $mpdf = new \Mpdf\Mpdf([
+        //     'format' => [105, 105],  // Ukuran kertas 10.5 cm x 10.5 cm
+        //     'orientation' => 'P',
+        //     'margin_top' => 2,  // Margin atas minimal
+        //     'margin_bottom' => 2, // Margin bawah minimal
+        //     'margin_left' => 2, // Margin kiri minimal
+        //     'margin_right' => 2, // Margin kanan minimal
+        // ]);
         $mpdf = new \Mpdf\Mpdf([
-            'format' => [105, 105],  // Ukuran kertas 10.5 cm x 10.5 cm (dalam milimeter)
-            'orientation' => 'P'      // Orientasi Portrait
+            'format' => [58, 50],  // Ukuran kertas 58 mm x 50 mm
+            'orientation' => 'P',
+            'margin_top' => 1,  // Margin atas minimal
+            'margin_bottom' => 1, // Margin bawah minimal
+            'margin_left' => 1, // Margin kiri minimal
+            'margin_right' => 1, // Margin kanan minimal
         ]);
-    
         $mpdf->showImageErrors = true;
     
-        // Menambahkan alias untuk nomor halaman
-        $mpdf->AliasNbPages();
-    
-        // Mengatur header dan footer
-        $mpdf->SetFooter('Halaman {PAGENO} dari {nbpg}');
-    
-        // Menambahkan halaman dan menulis HTML ke file PDF
+        // Menulis HTML ke file PDF
         $mpdf->WriteHtml($html);
     
         // Mengirimkan file PDF ke browser
