@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 27, 2024 at 01:22 PM
+-- Generation Time: Nov 28, 2024 at 07:31 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `toko_hera`
+-- Database: `vip_net`
 --
 
 -- --------------------------------------------------------
@@ -977,7 +977,12 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `succ
 (824, '::1', 'admin', NULL, '2024-11-27 06:03:05', 0);
 INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `success`) VALUES
 (825, '::1', 'admin@gmail.com', 1, '2024-11-27 06:03:37', 1),
-(826, '::1', 'admin@gmail.com', 1, '2024-11-27 06:08:07', 1);
+(826, '::1', 'admin@gmail.com', 1, '2024-11-27 06:08:07', 1),
+(827, '::1', 'admin@gmail.com', 1, '2024-11-28 07:38:42', 1),
+(828, '::1', 'admin', NULL, '2024-11-28 11:15:38', 0),
+(829, '::1', 'admin@gmail.com', 1, '2024-11-28 11:15:44', 1),
+(830, '::1', 'admin@gmail.com', 1, '2024-11-28 13:00:17', 1),
+(831, '::1', 'admin@gmail.com', 1, '2024-11-28 14:19:39', 1);
 
 -- --------------------------------------------------------
 
@@ -1042,239 +1047,6 @@ CREATE TABLE `auth_users_permissions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `barang`
---
-
-CREATE TABLE `barang` (
-  `kode_barang` varchar(255) NOT NULL,
-  `nama_brg` varchar(255) NOT NULL,
-  `jenis_brg` varchar(50) NOT NULL,
-  `merk` varchar(50) NOT NULL,
-  `id_satuan` int NOT NULL,
-  `tanggal_barang_masuk` datetime NOT NULL,
-  `stok` int NOT NULL,
-  `harga_beli` varchar(900) NOT NULL,
-  `harga_jual` varchar(900) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `deleted_at` datetime NOT NULL,
-  `id_supplier` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `barang`
---
-
-INSERT INTO `barang` (`kode_barang`, `nama_brg`, `jenis_brg`, `merk`, `id_satuan`, `tanggal_barang_masuk`, `stok`, `harga_beli`, `harga_jual`, `created_at`, `deleted_at`, `id_supplier`) VALUES
-('AA2070', 'aa', 'aa', 'aasd', 20, '2024-07-22 11:04:17', 30, '1200', '13000', '0000-00-00 00:00:00', '2024-07-22 11:08:06', 2),
-('ALA3949', 'Bolpoint', 'Alat Tulis', 'Apel', 20, '2024-07-21 11:04:24', 21, '1000', '2000', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 6),
-('ALA7205', 'TipeX', 'Alat Tulis', 'Kenko', 20, '2024-07-22 11:05:23', 16, '5000', '6000', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2),
-('ALA7608', 'Pensil ', 'Alat Tulis', '2B', 20, '2024-07-22 19:40:03', 15, '2000', '3000', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 5),
-('BAH9438', 'Sabun', 'Bahan Pokok', 'Lifeboy', 20, '2024-07-08 09:32:34', 77, '2200', '3000', '2024-07-16 20:38:15', '0000-00-00 00:00:00', 1),
-('HH8267', 'hgh', 'hh', 'hjj', 20, '2024-08-07 12:32:03', 7, '700', '1000', '0000-00-00 00:00:00', '2024-08-07 12:32:09', 2),
-('MIN0819', 'Susu Fullcream', 'Minuman', '(Ultramilk)', 20, '2024-07-23 12:04:37', 39, '5000', '7000', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 10),
-('MIN1327', 'Susu Strawberry', 'Minuman', '(Ultramilk)', 20, '2024-07-23 12:19:38', 40, '5000', '7000', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 6),
-('MIN3023', 'golda', 'minuman', 'qwd', 21, '2024-07-22 11:06:10', 12, '2000', '3000', '0000-00-00 00:00:00', '2024-07-22 11:08:00', 1),
-('MIN4944', 'Susu LowFat', 'Minuman', '(Ultramilk)', 20, '2024-07-23 12:20:25', 23, '6000', '8000', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 7),
-('MIN8777', 'Susu Coklat', 'Minuman', '(Ultramilk)', 20, '2024-07-23 12:18:47', 30, '5000', '7000', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 7),
-('OBA2271', 'Frescare', 'Obat', 'Freshcare', 20, '2024-07-22 20:16:43', 26, '7000', '10000', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 8),
-('OBA4331', 'Madu', 'Obat', 'Tj', 20, '2024-07-22 11:04:35', 126, '20000', '100000', '2024-07-17 20:38:21', '0000-00-00 00:00:00', 4),
-('SEM2861', 'Mie Instan', 'Sembako', 'Sedaap', 20, '2024-07-21 08:23:08', 18, '2500', '3000', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 5),
-('SEM6779', 'Mie Aceh Goreng', 'Sembako', 'Indomie', 20, '2024-07-22 06:14:11', 29, '2000', '3000', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 7),
-('SEM8794', 'beras', 'Sembako', 'pak tani', 23, '2024-07-22 11:07:17', 14, '10000', '15000', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1),
-('SNA5565', 'Chitato', 'Snack', 'Pota', 20, '2024-07-17 06:18:16', 50, '2000', '3000', '2024-07-14 20:38:26', '0000-00-00 00:00:00', 2),
-('T4180', 'tes', 't', 't', 20, '2024-07-22 19:40:51', 20, '100', '2000', '0000-00-00 00:00:00', '2024-07-22 19:41:01', 2),
-('TES8321', 'tes', 'Tes', 'ayam', 20, '2024-07-22 04:26:26', 10, '10', '100', '0000-00-00 00:00:00', '2024-07-22 10:46:26', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `detail_master`
---
-
-CREATE TABLE `detail_master` (
-  `detail_master_id` int NOT NULL,
-  `master_barang` varchar(255) NOT NULL,
-  `tipe_barang` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `detail_master`
---
-
-INSERT INTO `detail_master` (`detail_master_id`, `master_barang`, `tipe_barang`) VALUES
-(47, 'atk-20240401205', '2B'),
-(48, 'atk-20240401226', 'isi 38 '),
-(49, 'atk-20240401226', 'isi 58'),
-(50, 'atk-20240401240', 'AE7'),
-(51, 'atk-20240401256', '12mm'),
-(52, 'atk-20240401283', '1 inch'),
-(53, 'atk-20240401283', '2 inch'),
-(54, 'atk-20240401360', 'Pen'),
-(55, 'atk-20240401360', 'Tape'),
-(56, 'atk-20240401401', 'Kecil'),
-(57, 'atk-20240401401', 'Besar'),
-(58, 'atk-20240401469', 'White'),
-(59, 'atk-20240401469', 'Hitam'),
-(60, 'atk-20240401497', '2B'),
-(61, 'atk-20240401497', 'Mechanical'),
-(62, 'atk-20240401497', 'HB'),
-(63, 'atk-20240401497', 'Warna'),
-(64, 'atk-20240401609', '1 inch'),
-(65, 'atk-20240401609', '2 inch'),
-(66, 'atk-20240401625', 'isi 42'),
-(69, 'atk-20240401682', 'Kecil (1 Ply)'),
-(70, 'atk-20240401694', '2B'),
-(71, 'atk-20240401694', '2H'),
-(72, 'atk-20240401754', 'Isi 38'),
-(73, 'atk-20240401754', 'isi 58'),
-(74, 'atk-20240401770', '2B'),
-(75, 'atk-20240401811', 'GEL PEN'),
-(76, 'atk-20240401950', 'isi 58'),
-(77, 'bpok-20240401214', ' Goreng Original'),
-(78, 'bpok-20240401214', 'Kuah Rasa Soto '),
-(79, 'bpok-20240401214', 'Kuah Rasa Kari Ayam'),
-(80, 'bpok-20240401214', 'Kuah Rasa Ayam Bawang'),
-(81, 'bpok-20240401275', 'Kuah Pedes Dower'),
-(82, 'bpok-20240401275', 'Kuah Bakso'),
-(83, 'bpok-20240401275', 'Kuah Soto Ayam'),
-(84, 'bpok-20240401275', 'Kuah Kari Ayam'),
-(85, 'bpok-20240401445', 'Kuah Rasa Ayam Bawang'),
-(86, 'bpok-20240401445', 'Kuah Rasa Bakso'),
-(87, 'bpok-20240401445', 'Rasa Soto'),
-(88, 'bpok-20240401519', 'Original'),
-(89, 'bpok-20240401536', 'Goreng'),
-(90, 'bpok-20240401654', 'Goreng'),
-(91, 'bpok-20240401654', 'Kuah Rasa Soto'),
-(92, 'bpok-20240401654', 'Ayam Bawang'),
-(93, 'bpok-20240401789', 'Full Cream'),
-(95, 'bpok-20240401789', 'Coklat'),
-(96, 'bpok-20240401979', 'Original Ayam Bawang'),
-(97, 'bpok-20240401979', 'Goreng Ayam Bawang'),
-(99, 'bpok-20240402823', '500 gr'),
-(100, 'bpok-20240402823', '1 kg'),
-(101, 'bpok-20240402466', '500ml'),
-(102, 'bpok-20240402466', '1 Liter'),
-(103, 'perkap-20240523970', 'powder'),
-(104, 'snack-20240526352', 'Balado'),
-(105, 'snack-20240526190', 'coklat'),
-(106, 'obt-20240527400', 'aaaaaaaaaaaaaaaaaaaaaaa');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `detail_penjualan_barang`
---
-
-CREATE TABLE `detail_penjualan_barang` (
-  `id` int NOT NULL,
-  `id_penjualan_barang` varchar(255) NOT NULL,
-  `jumlah` int NOT NULL,
-  `sub_total` varchar(255) NOT NULL,
-  `kode_barang` varchar(255) DEFAULT NULL,
-  `id_kas` int DEFAULT NULL,
-  `keuntungan` varchar(255) NOT NULL,
-  `id_transaksi` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `detail_penjualan_barang`
---
-
-INSERT INTO `detail_penjualan_barang` (`id`, `id_penjualan_barang`, `jumlah`, `sub_total`, `kode_barang`, `id_kas`, `keuntungan`, `id_transaksi`) VALUES
-(1, 'NHR-4534', 1, '25000', 'OBA4331', 248, '5000', 57),
-(3, 'NHR-6789', 9, '27000', 'BAH9438', 258, '7200', 61),
-(4, 'NHR-1049', 10, '250000', 'OBA4331', 260, '50000', 62),
-(5, 'NHR-1049', 20, '60000', 'SNA5565', 261, '20000', 63),
-(6, 'NHR-6309', 23, '69000', 'BAH9438', 267, '18400', 64),
-(7, 'NHR-6309', 2, '50000', 'OBA4331', 268, '10000', 65),
-(8, 'NHR-6256', 77, '231000', 'BAH9438', 270, '61600', 66),
-(10, 'NHR-9185', 4, '400000', 'OBA4331', 290, '320000', 68),
-(11, 'NHR-3490', 5, '15000', 'BAH9438', 293, '4000', 69),
-(12, 'NHR-4684', 3, '300000', 'OBA4331', 301, '240000', 71),
-(13, 'NHR-5713', 1, '100000', 'OBA4331', 305, '80000', 72),
-(14, 'NHR-2242', 30, '90000', 'SEM2861', 309, '15000', 73),
-(15, 'NHR-3787', 2, '12000', 'ALA7205', 320, '2000', 81),
-(16, 'NHR-6043', 1, '3000', 'BAH9438', 322, '800', 82),
-(17, 'NHR-1063', 1, '15000', 'SEM8794', 324, '5000', 83),
-(18, 'NHR-6691', 13, '26000', 'ALA3949', 332, '13000', 84),
-(19, 'NHR-8016', 6, '36000', 'ALA7205', 334, '6000', 85),
-(20, 'NHR-1713', 10, '30000', 'SEM2861', 336, '5000', 86),
-(21, 'NHR-5972', 10, '30000', 'SEM6779', 338, '10000', 87),
-(22, 'NHR-1084', 3, '45000', 'SEM8794', 340, '15000', 88),
-(23, 'NHR-5066', 6, '12000', 'ALA3949', 342, '6000', 89),
-(24, 'NHR-8828', 7, '14000', 'ALA3949', 344, '7000', 90),
-(25, 'NHR-5340', 4, '12000', 'SEM6779', 347, '4000', 91),
-(26, 'NHR-5340', 8, '24000', 'SEM2861', 348, '4000', 92),
-(27, 'NHR-8208', 1, '100000', 'OBA4331', 350, '80000', 93),
-(28, 'NHR-5685', 1, '3000', 'BAH9438', 352, '800', 94),
-(29, 'NHR-7474', 1, '6000', 'ALA7205', 354, '1000', 95),
-(30, 'NHR-7939', 1, '100000', 'OBA4331', 356, '80000', 96),
-(31, 'NHR-3067', 1, '3000', 'BAH9438', 358, '800', 97),
-(32, 'NHR-4634', 5, '500000', 'OBA4331', 360, '400000', 98),
-(33, 'NHR-1029', 1, '2000', 'ALA3949', 362, '1000', 99),
-(34, 'NHR-3559', 1, '3000', 'BAH9438', 364, '800', 100),
-(35, 'NHR-9298', 12, '1200000', 'OBA4331', 366, '960000', 101),
-(36, 'NHR-3328', 14, '42000', 'SEM2861', 368, '7000', 102),
-(37, 'NHR-9720', 5, '15000', 'ALA7608', 377, '5000', 105),
-(38, 'NHR-3243', 2, '20000', 'OBA2271', 383, '6000', 107),
-(39, 'NHR-7180', 5, '35000', 'MIN0819', 390, '10000', 109),
-(40, 'NHR-5794', 9, '900000', 'OBA4331', 392, '720000', 110),
-(41, 'NHR-6208', 9, '900000', 'OBA4331', 394, '720000', 111),
-(42, 'NHR-3008', 5, '35000', 'MIN0819', 399, '10000', 115),
-(43, 'NHR-3008', 5, '35000', 'MIN1327', 400, '10000', 116),
-(44, 'NHR-3008', 7, '56000', 'MIN4944', 401, '14000', 117),
-(45, 'NHR-3008', 10, '70000', 'MIN8777', 402, '20000', 118),
-(46, 'NHR-3008', 5, '15000', 'SEM6779', 403, '5000', 119),
-(47, 'NHR-3008', 5, '15000', 'SEM2861', 404, '2500', 120),
-(48, 'NHR-3008', 5, '500000', 'OBA4331', 405, '400000', 121),
-(49, 'NHR-9849', 10, '70000', 'MIN8777', 408, '20000', 123),
-(50, 'NHR-9849', 5, '35000', 'MIN1327', 409, '10000', 124),
-(51, 'NHR-9849', 3, '9000', 'SEM2861', 410, '1500', 125),
-(52, 'NHR-3892', 13, '39000', 'BAH9438', 419, '10400', 126),
-(53, 'NHR-1799', 9, '900000', 'OBA4331', 421, '720000', 127),
-(54, 'NHR-6261', 5, '500000', 'OBA4331', 423, '400000', 128),
-(55, 'NHR-8472', 2, '6000', 'SEM6779', 430, '2000', 129),
-(56, 'NHR-4313', 3, '9000', 'BAH9438', 432, '2400', 130),
-(57, 'NHR-3562', 1, '7000', 'MIN0819', 434, '2000', 131),
-(58, 'NHR-9722', 2, '4000', 'ALA3949', 436, '2000', 132);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `detail_restok`
---
-
-CREATE TABLE `detail_restok` (
-  `id` int NOT NULL,
-  `id_restok` varchar(255) NOT NULL,
-  `kode_barang` varchar(255) NOT NULL,
-  `harga_beli` varchar(255) NOT NULL,
-  `jumlah_restok` int NOT NULL,
-  `sub_total` varchar(255) NOT NULL,
-  `status_bayar` enum('lunas','hutang') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `detail_restok`
---
-
-INSERT INTO `detail_restok` (`id`, `id_restok`, `kode_barang`, `harga_beli`, `jumlah_restok`, `sub_total`, `status_bayar`) VALUES
-(4, 'RST-20240714104122783', 'BAH9438', '2200', 1, '2200', 'lunas'),
-(5, 'RST-20240714104247450', 'BAH9438', '2200', 1, '2200', 'lunas'),
-(6, 'RST-20240714104523971', 'BAH9438', '2200', 1, '2200', 'lunas'),
-(7, 'RST-20240714105227162', 'OBA4331', '20000', 8, '160000', 'lunas'),
-(9, 'RST-20240714105244106', 'OBA4331', '20000', 8, '160000', 'lunas'),
-(11, 'RST-20240721113626177', 'SNA5565', '2000', 50, '100000', 'hutang'),
-(12, 'RST-20240722112632152', 'ALA7205', '5000', 5, '25000', 'hutang'),
-(13, 'RST-20240722082314126', 'SEM8794', '10000', 5, '50000', 'lunas'),
-(14, 'RST-20240722091850644', 'ALA3949', '1000', 2, '2000', 'lunas'),
-(15, 'RST-20240807010204426', 'SEM6779', '2000', 20, '40000', 'hutang'),
-(16, 'RST-20240808091052862', 'SEM8794', '10000', 3, '30000', 'hutang'),
-(17, 'RST-20240808064155910', 'SEM2861', '2500', 7, '17500', 'lunas');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `hutang`
 --
 
@@ -1335,7 +1107,7 @@ CREATE TABLE `inventaris` (
 
 CREATE TABLE `kas_toko` (
   `id_kas` int NOT NULL,
-  `tanggal` date NOT NULL,
+  `tanggal` datetime NOT NULL,
   `jenis_transaksi` enum('penerimaan','pengeluaran') NOT NULL,
   `keterangan` text NOT NULL,
   `jumlah_awal` varchar(255) NOT NULL,
@@ -1348,259 +1120,7 @@ CREATE TABLE `kas_toko` (
 --
 
 INSERT INTO `kas_toko` (`id_kas`, `tanggal`, `jenis_transaksi`, `keterangan`, `jumlah_awal`, `jumlah_akhir`, `saldo_terakhir`) VALUES
-(248, '2024-07-04', 'penerimaan', 'Penjualan barang tes- Madu', '275000', '300000', '300000'),
-(249, '2024-07-04', 'penerimaan', 'Penjualan barang - NHR-4534', '300000', '325000', '325000'),
-(250, '2024-07-08', 'pengeluaran', 'Pembelian barang: Sabun', '300000', '297800', '297800'),
-(251, '2024-07-08', 'pengeluaran', 'Pembelian barang: Chitato', '297800', '295800', '295800'),
-(252, '2024-07-08', 'penerimaan', 'Penjualan barang tes- Sabun', '295800', '298800', '298800'),
-(253, '2024-07-08', 'penerimaan', 'Penjualan barang - NHR-6519', '298800', '302800', '302800'),
-(254, '2024-07-11', 'penerimaan', 'Pembayaran piutang', '302800', '303800', '303800'),
-(255, '2024-07-11', 'penerimaan', 'Pembayaran piutang', '302800', '303800', '303800'),
-(256, '2024-07-11', 'pengeluaran', 'gaji', '303800', '200000', '103800'),
-(257, '2024-07-11', 'pengeluaran', 'lainnya', '103800', '20000', '83800'),
-(258, '2024-07-11', 'penerimaan', 'Penjualan barang tes- Sabun', '83800', '110800', '110800'),
-(259, '2024-07-11', 'penerimaan', 'Penjualan barang - NHR-6789', '110800', '137800', '137800'),
-(260, '2024-07-11', 'penerimaan', 'Penjualan barang tes- Madu', '137800', '387800', '387800'),
-(261, '2024-07-11', 'penerimaan', 'Penjualan barang tes- Chitato', '387800', '447800', '447800'),
-(262, '2024-07-11', 'penerimaan', 'Penjualan barang - NHR-1049', '447800', '757800', '757800'),
-(263, '2024-07-11', 'pengeluaran', 'Restok barang', '757800', '250000', '507800'),
-(264, '2024-07-11', '', 'Update last balance after deletion', '103800', '507800', '507800'),
-(265, '2024-07-11', 'pengeluaran', 'Restok barang', '507800', '600000', '-92200'),
-(266, '2024-07-11', '', 'Update last balance after deletion', '103800', '-92200', '-92200'),
-(267, '2024-07-11', 'penerimaan', 'Penjualan barang tes- Sabun', '-92200', '-23200', '-23200'),
-(268, '2024-07-11', 'penerimaan', 'Penjualan barang tes- Madu', '-23200', '26800', '26800'),
-(269, '2024-07-11', 'penerimaan', 'Penjualan barang - NHR-6309', '26800', '145800', '145800'),
-(270, '2024-07-14', 'penerimaan', 'Penjualan barang tes- Sabun', '145800', '376800', '376800'),
-(271, '2024-07-14', 'penerimaan', 'Penjualan barang - NHR-6256', '376800', '607800', '607800'),
-(272, '2024-07-14', 'pengeluaran', 'Pembayaran hutang: Hutang Restok RST-20240711065335871(Sabun)', '607800', '220000', '387800'),
-(273, '2024-07-15', 'pengeluaran', 'Listrik', '-20000', '-20000', '367800'),
-(274, '2024-07-14', 'penerimaan', 'Penjualan barang tes- Sabun', '367800', '370800', '370800'),
-(275, '2024-07-14', 'penerimaan', 'Penjualan barang - NHR-8780', '370800', '374800', '374800'),
-(276, '2024-07-14', 'pengeluaran', 'Restok barang', '374800', '1000', '373800'),
-(277, '2024-07-14', '', 'Update last balance after deletion', '367800', '373800', '373800'),
-(278, '2024-07-14', 'pengeluaran', 'Restok barang', '373800', '1', '373799'),
-(279, '2024-07-14', '', 'Update last balance after deletion', '367800', '373799', '373799'),
-(280, '2024-07-14', 'pengeluaran', 'Restok barang', '373799', '2000', '371799'),
-(281, '2024-07-14', '', 'Update last balance after deletion', '367800', '371799', '371799'),
-(282, '2024-07-14', 'pengeluaran', 'Restok barang', '371799', '120000', '251799'),
-(283, '2024-07-14', '', 'Update last balance after deletion', '367800', '251799', '251799'),
-(284, '2024-07-14', 'pengeluaran', 'Restok barang', '251799', '1', '251798'),
-(285, '2024-07-14', '', 'Update last balance after deletion', '367800', '251798', '251798'),
-(286, '2024-07-14', 'pengeluaran', 'Pembayaran hutang: Hutang dari restok dengan ID RST-20240714105606938', '251798', '19999', '231799'),
-(287, '2024-07-14', 'pengeluaran', 'Pembayaran hutang: ugiy', '231799', '12000', '219799'),
-(288, '2024-07-14', 'pengeluaran', 'Pembayaran hutang: Hutang dari restok dengan ID RST-20240714105244106', '219799', '40000', '179799'),
-(289, '2024-07-17', 'pengeluaran', 'Pembayaran hutang: jajan', '179799', '12000', '167799'),
-(290, '2024-07-17', 'penerimaan', 'Penjualan barang tes- Madu', '167799', '567799', '567799'),
-(291, '2024-07-17', 'penerimaan', 'Penjualan barang - NHR-9185', '567799', '967799', '967799'),
-(292, '2024-07-17', 'pengeluaran', 'Pembatalan penjualan barang - NHR-8780', '967799', '964799', '964799'),
-(293, '2024-07-21', 'penerimaan', 'Penjualan barang tes- Sabun', '964799', '979799', '979799'),
-(294, '2024-07-21', 'penerimaan', 'Penjualan barang - NHR-3490', '979799', '994799', '994799'),
-(295, '2024-07-21', 'pengeluaran', 'Pembelian barang: Mie Instan', '979799', '977299', '977299'),
-(296, '2024-07-21', 'pengeluaran', 'Pembatalan penjualan barang - NHR-6519', '977299', '974299', '974299'),
-(297, '2024-07-21', 'pengeluaran', 'Restok barang', '974299', '100000', '874299'),
-(298, '2024-07-21', '', 'Update last balance after deletion', '979799', '874299', '874299'),
-(299, '2024-07-21', 'pengeluaran', 'Pembayaran hutang: Hutang Restok RST-20240721113626177(Chitato)', '874299', '100000', '774299'),
-(300, '2024-07-22', 'pengeluaran', 'Pembayaran hutang: tes', '774299', '2000', '772299'),
-(301, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Madu', '772299', '1072299', '1072299'),
-(302, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-4684', '1072299', '1472299', '1472299'),
-(303, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '1472299', '1572299', '1572299'),
-(304, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '1472299', '1572299', '1572299'),
-(305, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Madu', '1572299', '1672299', '1672299'),
-(306, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-5713', '1672299', '1782299', '1782299'),
-(307, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '1782299', '1792299', '1792299'),
-(308, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '1782299', '1792299', '1792299'),
-(309, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Mie Instan', '1792299', '1882299', '1882299'),
-(310, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-2242', '1882299', '2012299', '2012299'),
-(311, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '2012299', '2052299', '2052299'),
-(312, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '2012299', '2052299', '2052299'),
-(313, '2024-07-22', 'pengeluaran', 'Pembelian barang: Bolpoint', '772299', '771299', '771299'),
-(314, '2024-07-22', 'pengeluaran', 'Pembelian barang: tes', '772299', '772289', '772289'),
-(315, '2024-07-22', 'pengeluaran', 'Pembelian barang: Mie Aceh Goreng', '772299', '770299', '770299'),
-(316, '2024-07-22', 'pengeluaran', 'Pembelian barang: TipeX', '772299', '767299', '767299'),
-(317, '2024-07-22', 'pengeluaran', 'Pembelian barang: aa', '772299', '771099', '771099'),
-(318, '2024-07-22', 'pengeluaran', 'Pembelian barang: golda', '772299', '770299', '770299'),
-(319, '2024-07-22', 'pengeluaran', 'Pembelian barang: beras', '772299', '762299', '762299'),
-(320, '2024-07-22', 'penerimaan', 'Penjualan barang tes- TipeX', '762299', '774299', '774299'),
-(321, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-3787', '774299', '788299', '788299'),
-(322, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Sabun', '788299', '791299', '791299'),
-(323, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-6043', '791299', '794299', '794299'),
-(324, '2024-07-22', 'penerimaan', 'Penjualan barang tes- beras', '794299', '809299', '809299'),
-(325, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-1063', '809299', '824299', '824299'),
-(326, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '824299', '826299', '826299'),
-(327, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '824299', '826299', '826299'),
-(328, '2024-07-22', 'pengeluaran', 'Pembayaran hutang: y', '826299', '2000', '824299'),
-(329, '2024-07-22', 'pengeluaran', 'listrik', '772299', '2000', '770299'),
-(330, '2024-07-22', 'pengeluaran', 'Restok barang', '770299', '25000', '745299'),
-(331, '2024-07-22', '', 'Update last balance after deletion', '772299', '745299', '745299'),
-(332, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Bolpoint', '745299', '771299', '771299'),
-(333, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-6691', '771299', '797299', '797299'),
-(334, '2024-07-22', 'penerimaan', 'Penjualan barang tes- TipeX', '797299', '833299', '833299'),
-(335, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-8016', '833299', '869299', '869299'),
-(336, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Mie Instan', '869299', '899299', '899299'),
-(337, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-1713', '899299', '929299', '929299'),
-(338, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Mie Aceh Goreng', '929299', '959299', '959299'),
-(339, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-5972', '959299', '989299', '989299'),
-(340, '2024-07-22', 'penerimaan', 'Penjualan barang tes- beras', '989299', '1034299', '1034299'),
-(341, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-1084', '1034299', '1079299', '1079299'),
-(342, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Bolpoint', '1079299', '1091299', '1091299'),
-(343, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-5066', '1091299', '1103299', '1103299'),
-(344, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Bolpoint', '1103299', '1117299', '1117299'),
-(345, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-8828', '1117299', '1131299', '1131299'),
-(346, '2024-07-22', 'pengeluaran', 'listrik', '772299', '5000', '767299'),
-(347, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Mie Aceh Goreng', '767299', '779299', '779299'),
-(348, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Mie Instan', '779299', '803299', '803299'),
-(349, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-5340', '803299', '863299', '863299'),
-(350, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Madu', '863299', '963299', '963299'),
-(351, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-8208', '963299', '1063299', '1063299'),
-(352, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Sabun', '1063299', '1066299', '1066299'),
-(353, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-5685', '1066299', '1072298', '1072298'),
-(354, '2024-07-22', 'penerimaan', 'Penjualan barang tes- TipeX', '1072298', '1078298', '1078298'),
-(355, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-7474', '1078298', '1090297', '1090297'),
-(356, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Madu', '1090297', '1190297', '1190297'),
-(357, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-7939', '1190297', '1390296', '1390296'),
-(358, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Sabun', '1390296', '1393296', '1393296'),
-(359, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-3067', '1393296', '1399295', '1399295'),
-(360, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Madu', '1399295', '1899295', '1899295'),
-(361, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-4634', '1899295', '2899287', '2899287'),
-(362, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Bolpoint', '2899287', '2901287', '2901287'),
-(363, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-1029', '2901287', '2905286', '2905286'),
-(364, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Sabun', '2905286', '2908286', '2908286'),
-(365, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-3559', '2908286', '2914274', '2914274'),
-(366, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Madu', '2914274', '4114274', '4114274'),
-(367, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-9298', '4114274', '6514272', '6514272'),
-(368, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Mie Instan', '6514272', '6556272', '6556272'),
-(369, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-3328', '6556272', '6598272', '6598272'),
-(370, '2024-07-22', 'pengeluaran', 'Pembelian barang: Pensil ', '772299', '770299', '770299'),
-(371, '2024-07-22', 'pengeluaran', 'Pembelian barang: tes', '772299', '772199', '772199'),
-(372, '2024-07-22', 'pengeluaran', 'Pembayaran hutang: Testes', '772199', '1000', '771199'),
-(373, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '771199', '773198', '773198'),
-(374, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '771199', '773198', '773198'),
-(375, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '773198', '776197', '776197'),
-(376, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '773198', '776197', '776197'),
-(377, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Pensil ', '776197', '791197', '791197'),
-(378, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-9720', '791197', '806197', '806197'),
-(379, '2024-07-22', 'pengeluaran', 'air', '772299', '2000', '770299'),
-(380, '2024-07-22', 'pengeluaran', 'Pembelian barang: Frescare', '772299', '765299', '765299'),
-(381, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '765299', '768287', '768287'),
-(382, '2024-07-22', 'penerimaan', 'Pembayaran piutang', '765299', '768287', '768287'),
-(383, '2024-07-22', 'penerimaan', 'Penjualan barang tes- Frescare', '768287', '788287', '788287'),
-(384, '2024-07-22', 'penerimaan', 'Penjualan barang - NHR-3243', '788287', '808287', '808287'),
-(385, '2024-07-22', 'pengeluaran', 'Restok barang', '808287', '50000', '758287'),
-(386, '2024-07-22', '', 'Update last balance after deletion', '772299', '758287', '758287'),
-(387, '2024-07-22', 'pengeluaran', 'Restok barang', '758287', '2000', '756287'),
-(388, '2024-07-22', '', 'Update last balance after deletion', '772299', '756287', '756287'),
-(389, '2024-07-23', 'pengeluaran', 'Pembelian barang: Susu Fullcream', '772299', '767299', '767299'),
-(390, '2024-07-23', 'penerimaan', 'Penjualan barang tes- Susu Fullcream', '767299', '802299', '802299'),
-(391, '2024-07-23', 'penerimaan', 'Penjualan barang - NHR-7180', '802299', '837299', '837299'),
-(392, '2024-07-23', 'penerimaan', 'Penjualan barang tes- Madu', '837299', '1737299', '1737299'),
-(393, '2024-07-23', 'penerimaan', 'Penjualan barang - NHR-5794', '1737299', '2637299', '2637299'),
-(394, '2024-07-23', 'penerimaan', 'Penjualan barang tes- Madu', '2637299', '3537299', '3537299'),
-(395, '2024-07-23', 'penerimaan', 'Penjualan barang - NHR-6208', '3537299', '4437299', '4437299'),
-(396, '2024-07-23', 'pengeluaran', 'Pembelian barang: Susu Coklat', '767299', '762299', '762299'),
-(397, '2024-07-23', 'pengeluaran', 'Pembelian barang: Susu Strawberry', '767299', '762299', '762299'),
-(398, '2024-07-23', 'pengeluaran', 'Pembelian barang: Susu LowFat', '767299', '761299', '761299'),
-(399, '2024-07-23', 'penerimaan', 'Penjualan barang tes- Susu Fullcream', '761299', '796299', '796299'),
-(400, '2024-07-23', 'penerimaan', 'Penjualan barang tes- Susu Strawberry', '796299', '831299', '831299'),
-(401, '2024-07-23', 'penerimaan', 'Penjualan barang tes- Susu LowFat', '831299', '887299', '887299'),
-(402, '2024-07-23', 'penerimaan', 'Penjualan barang tes- Susu Coklat', '887299', '957299', '957299'),
-(403, '2024-07-23', 'penerimaan', 'Penjualan barang tes- Mie Aceh Goreng', '957299', '972299', '972299'),
-(404, '2024-07-23', 'penerimaan', 'Penjualan barang tes- Mie Instan', '972299', '987299', '987299'),
-(405, '2024-07-23', 'penerimaan', 'Penjualan barang tes- Madu', '987299', '1487299', '1487299'),
-(406, '2024-07-23', 'penerimaan', 'Penjualan barang - NHR-3008', '1487299', '2213299', '2213299'),
-(407, '2024-08-07', 'pengeluaran', 'Pembelian barang: hgh', '767299', '766599', '766599'),
-(408, '2024-08-07', 'penerimaan', 'Penjualan barang tes- Susu Coklat', '766599', '836599', '836599'),
-(409, '2024-08-07', 'penerimaan', 'Penjualan barang tes- Susu Strawberry', '836599', '871599', '871599'),
-(410, '2024-08-07', 'penerimaan', 'Penjualan barang tes- Mie Instan', '871599', '880599', '880599'),
-(411, '2024-08-07', 'penerimaan', 'Penjualan barang - NHR-9849', '880599', '1008599', '1008599'),
-(412, '2024-08-07', 'penerimaan', 'Pembayaran piutang', '1008599', '1014598', '1014598'),
-(413, '2024-08-07', 'penerimaan', 'Pembayaran piutang', '1008599', '1014598', '1014598'),
-(414, '2024-08-07', 'penerimaan', 'Pembayaran piutang', '1014598', '1017597', '1017597'),
-(415, '2024-08-07', 'penerimaan', 'Pembayaran piutang', '1014598', '1017597', '1017597'),
-(416, '2024-08-07', 'pengeluaran', 'gaji', '766599', '200000', '566599'),
-(417, '2024-08-07', 'pengeluaran', 'Restok barang', '566599', '40000', '526599'),
-(418, '2024-08-07', '', 'Update last balance after deletion', '766599', '526599', '526599'),
-(419, '2024-08-08', 'penerimaan', 'Penjualan barang tes- Sabun', '526599', '565599', '565599'),
-(420, '2024-08-08', 'penerimaan', 'Penjualan barang - NHR-3892', '565599', '604599', '604599'),
-(421, '2024-08-08', 'penerimaan', 'Penjualan barang tes- Madu', '604599', '1504599', '1504599'),
-(422, '2024-08-08', 'penerimaan', 'Penjualan barang - NHR-1799', '1504599', '2404599', '2404599'),
-(423, '2024-08-08', 'penerimaan', 'Penjualan barang tes- Madu', '2404599', '2904599', '2904599'),
-(424, '2024-08-08', 'penerimaan', 'Penjualan barang - NHR-6261', '2904599', '3604599', '3604599'),
-(425, '2024-08-08', 'pengeluaran', 'listrik', '565599', '10000', '555599'),
-(426, '2024-08-08', 'pengeluaran', 'Restok barang', '555599', '30000', '525599'),
-(427, '2024-08-08', '', 'Update last balance after deletion', '565599', '525599', '525599'),
-(428, '2024-08-08', 'pengeluaran', 'Restok barang', '525599', '20000', '505599'),
-(429, '2024-08-08', '', 'Update last balance after deletion', '565599', '505599', '505599'),
-(430, '2024-08-08', 'penerimaan', 'Penjualan barang tes- Mie Aceh Goreng', '505599', '511599', '511599'),
-(431, '2024-08-08', 'penerimaan', 'Penjualan barang - NHR-8472', '511599', '517599', '517599'),
-(432, '2024-08-08', 'penerimaan', 'Penjualan barang tes- Sabun', '517599', '526599', '526599'),
-(433, '2024-08-08', 'penerimaan', 'Penjualan barang - NHR-4313', '526599', '535599', '535599'),
-(434, '2024-08-08', 'penerimaan', 'Penjualan barang tes- Susu Fullcream', '535599', '542599', '542599'),
-(435, '2024-08-08', 'penerimaan', 'Penjualan barang - NHR-3562', '542599', '549599', '549599'),
-(436, '2024-08-08', 'penerimaan', 'Penjualan barang tes- Bolpoint', '549599', '553599', '553599'),
-(437, '2024-08-08', 'penerimaan', 'Penjualan barang - NHR-9722', '553599', '557599', '557599'),
-(438, '2024-08-08', 'pengeluaran', 'Pembayaran hutang: Hutang Restok RST-20240722112632152(TipeX)', '557599', '25000', '532599'),
-(439, '2024-08-08', 'penerimaan', 'Pembayaran piutang', '532599', '632598', '632598'),
-(440, '2024-08-08', 'penerimaan', 'Pembayaran piutang', '532599', '632598', '632598'),
-(441, '2024-11-25', 'pengeluaran', 'teknisi', '565599', '150000', '415599'),
-(442, '2024-11-25', 'pengeluaran', 'air', '415599', '232', '415367'),
-(443, '2024-11-25', 'pengeluaran', 'lainnya', '415367', '2323', '413044'),
-(444, '2024-11-25', 'pengeluaran', 'Lainnya: Lainnya: beli jajan', '413044', '90000', '323044'),
-(445, '2024-11-25', 'pengeluaran', 'Lainnya: permen', '323044', '1200', '321844'),
-(446, '2024-11-25', 'pengeluaran', 'listrik', '321844', '2324', '319520'),
-(447, '2024-11-25', 'pengeluaran', 'Lainnya: eskrim', '319520', '232323', '87197');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `master_barang`
---
-
-CREATE TABLE `master_barang` (
-  `kode_brg` varchar(255) NOT NULL,
-  `nama_brg` varchar(255) NOT NULL,
-  `jenis_brg` enum('obat','shampo','bahan_pokok','atk','sabun','minuman','snack','gas','galon','perlengkapan') NOT NULL,
-  `merk` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `master_barang`
---
-
-INSERT INTO `master_barang` (`kode_brg`, `nama_brg`, `jenis_brg`, `merk`, `created_at`, `updated_at`) VALUES
-('bpok-20240402466', 'Minyak Goreng', 'bahan_pokok', 'Bimoli', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('bpok-20240402823', 'Telur', 'bahan_pokok', 'Ayam ', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('gas-20240401800', 'Gas LPG', 'gas', 'Pertamina', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('minuman-20240401188', 'Minuman Isotonic', 'minuman', 'Pocari Sweat', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('minuman-20240401260', 'Minuman Isotonic', 'minuman', 'Mizone', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('minuman-20240401433', 'SUSU UHT', 'minuman', 'Ultra Milk', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('minuman-20240401756', 'Yogurt Cimory', 'minuman', 'Cimory', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('minuman-20240401842', 'Teh Botol', 'minuman', 'Sosro', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('minuman-20240401860', 'Yakult', 'minuman', 'Yaklut', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('minuman-20240401913', 'Sari Kacang Hijau', 'minuman', 'ABC', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('obt-20240402219', 'Minyak Angin', 'obat', 'Freshcare', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('obt-20240527400', 'aaaaaaaaaa', 'obat', 'aaaaaaaaaaaa', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('perkap-20240402130', 'Cat Rambut', 'perlengkapan', 'Miranda', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('perkap-20240402212', 'Cat Rambut', 'perlengkapan', 'Garnier', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('perkap-20240402484', 'Bedak Bayi', 'perlengkapan', 'My Baby', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('perkap-20240402833', 'Cat Rambut', 'perlengkapan', 'Nyu', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('perkap-20240402866', 'Pembalut', 'perlengkapan', 'Charm', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('perkap-20240402984', 'Pembalut', 'perlengkapan', 'Laurier', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('perkap-20240523970', 'Cat Rambut', 'perlengkapan', 'Mira', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('sabun-20240402164', 'Rexona Sachet Girl', 'sabun', 'Rexona', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('sabun-20240402209', 'Sabun Batang', 'sabun', 'Nuvo', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('sabun-20240402242', 'Facial Wash', 'sabun', 'Fair n Lovely', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('sabun-20240402269', 'Facial Wash', 'sabun', 'Garnier', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('sabun-20240402272', 'Sabun Pembersih Lantai', 'sabun', 'So Klin', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('sabun-20240402302', 'Sabun Batang', 'sabun', 'Lifeboy', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('sabun-20240402307', 'Sabun Cair', 'sabun', 'Lifeboy', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('sabun-20240402483', 'Sabun Cair', 'sabun', 'Nuvo', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('shampo-20240402822', 'Shampoo Clear ', 'shampo', 'Clear', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('snack-20240402153', 'Malkist Roma', 'snack', 'Roma', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('snack-20240402634', 'Go Potato', 'snack', 'Deo', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('snack-20240526190', 'eskrim', 'snack', 'padle pop', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-('snack-20240526352', 'Makaroni', 'snack', 'ABC', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(1, '2024-11-28 07:29:04', 'penerimaan', '-', '0', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -1722,7 +1242,7 @@ CREATE TABLE `pelanggan_wifi` (
 --
 
 INSERT INTO `pelanggan_wifi` (`id`, `nama`, `alamat`, `no_hp`, `nik`, `foto_ktp`, `kode_paket`, `tgl_pasang`, `status_pelanggan`, `created_at`, `updated_at`) VALUES
-(11, 'bidoi', '786876876', '6281973549727', '68768768', '1732497340_12bb599593b7428d269d.jpg', 'PKG8971', '2024-11-25', 'aktif', NULL, NULL),
+(11, 'bidoi', '786876876', '6281973549727', '68768768', '1732756788_fcd028c4d0bb0f276b35.jpeg', 'PKG8971', '2024-11-25', 'aktif', NULL, '2024-11-28 08:19:48'),
 (12, 'Istiqomah', 'Pekalongan', '82135379961', '248783657635', '1732546579_b67b2a80c7e97cff9728.jpg', 'PKG8971', '2024-10-22', 'aktif', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -1739,70 +1259,6 @@ CREATE TABLE `pemasukan` (
   `id_detail_penjualan_barang` varchar(255) NOT NULL,
   `id_kas` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `pemasukan`
---
-
-INSERT INTO `pemasukan` (`id`, `tanggal`, `keterangan`, `jumlah`, `id_detail_penjualan_barang`, `id_kas`) VALUES
-(54, '2024-07-04', 'Penjualan barang tes- Madu', NULL, '', 248),
-(55, '2024-07-08', 'Penjualan barang tes- Sabun', NULL, '', 252),
-(56, '2024-07-11', 'Penjualan barang tes- Sabun', NULL, '', 258),
-(57, '2024-07-11', 'Penjualan barang tes- Madu', NULL, '', 260),
-(58, '2024-07-11', 'Penjualan barang tes- Chitato', NULL, '', 261),
-(59, '2024-07-11', 'Penjualan barang tes- Sabun', NULL, '', 267),
-(60, '2024-07-11', 'Penjualan barang tes- Madu', NULL, '', 268),
-(61, '2024-07-14', 'Penjualan barang tes- Sabun', NULL, '', 270),
-(62, '2024-07-14', 'Penjualan barang tes- Sabun', NULL, '', 274),
-(63, '2024-07-17', 'Penjualan barang tes- Madu', NULL, '', 290),
-(64, '2024-07-21', 'Penjualan barang tes- Sabun', NULL, '', 293),
-(65, '2024-07-22', 'Penjualan barang tes- Madu', NULL, '', 301),
-(66, '2024-07-22', 'Penjualan barang tes- Madu', NULL, '', 305),
-(67, '2024-07-22', 'Penjualan barang tes- Mie Instan', NULL, '', 309),
-(68, '2024-07-22', 'Penjualan barang tes- TipeX', NULL, '', 320),
-(69, '2024-07-22', 'Penjualan barang tes- Sabun', NULL, '', 322),
-(70, '2024-07-22', 'Penjualan barang tes- beras', NULL, '', 324),
-(71, '2024-07-22', 'Penjualan barang tes- Bolpoint', NULL, '', 332),
-(72, '2024-07-22', 'Penjualan barang tes- TipeX', NULL, '', 334),
-(73, '2024-07-22', 'Penjualan barang tes- Mie Instan', NULL, '', 336),
-(74, '2024-07-22', 'Penjualan barang tes- Mie Aceh Goreng', NULL, '', 338),
-(75, '2024-07-22', 'Penjualan barang tes- beras', NULL, '', 340),
-(76, '2024-07-22', 'Penjualan barang tes- Bolpoint', NULL, '', 342),
-(77, '2024-07-22', 'Penjualan barang tes- Bolpoint', NULL, '', 344),
-(78, '2024-07-22', 'Penjualan barang tes- Mie Aceh Goreng', NULL, '', 347),
-(79, '2024-07-22', 'Penjualan barang tes- Mie Instan', NULL, '', 348),
-(80, '2024-07-22', 'Penjualan barang tes- Madu', NULL, '', 350),
-(81, '2024-07-22', 'Penjualan barang tes- Sabun', NULL, '', 352),
-(82, '2024-07-22', 'Penjualan barang tes- TipeX', NULL, '', 354),
-(83, '2024-07-22', 'Penjualan barang tes- Madu', NULL, '', 356),
-(84, '2024-07-22', 'Penjualan barang tes- Sabun', NULL, '', 358),
-(85, '2024-07-22', 'Penjualan barang tes- Madu', NULL, '', 360),
-(86, '2024-07-22', 'Penjualan barang tes- Bolpoint', NULL, '', 362),
-(87, '2024-07-22', 'Penjualan barang tes- Sabun', NULL, '', 364),
-(88, '2024-07-22', 'Penjualan barang tes- Madu', NULL, '', 366),
-(89, '2024-07-22', 'Penjualan barang tes- Mie Instan', NULL, '', 368),
-(90, '2024-07-22', 'Penjualan barang tes- Pensil ', NULL, '', 377),
-(91, '2024-07-22', 'Penjualan barang tes- Frescare', NULL, '', 383),
-(92, '2024-07-23', 'Penjualan barang tes- Susu Fullcream', NULL, '', 390),
-(93, '2024-07-23', 'Penjualan barang tes- Madu', NULL, '', 392),
-(94, '2024-07-23', 'Penjualan barang tes- Madu', NULL, '', 394),
-(95, '2024-07-23', 'Penjualan barang tes- Susu Fullcream', NULL, '', 399),
-(96, '2024-07-23', 'Penjualan barang tes- Susu Strawberry', NULL, '', 400),
-(97, '2024-07-23', 'Penjualan barang tes- Susu LowFat', NULL, '', 401),
-(98, '2024-07-23', 'Penjualan barang tes- Susu Coklat', NULL, '', 402),
-(99, '2024-07-23', 'Penjualan barang tes- Mie Aceh Goreng', NULL, '', 403),
-(100, '2024-07-23', 'Penjualan barang tes- Mie Instan', NULL, '', 404),
-(101, '2024-07-23', 'Penjualan barang tes- Madu', NULL, '', 405),
-(102, '2024-08-07', 'Penjualan barang tes- Susu Coklat', NULL, '', 408),
-(103, '2024-08-07', 'Penjualan barang tes- Susu Strawberry', NULL, '', 409),
-(104, '2024-08-07', 'Penjualan barang tes- Mie Instan', NULL, '', 410),
-(105, '2024-08-08', 'Penjualan barang tes- Sabun', NULL, '', 419),
-(106, '2024-08-08', 'Penjualan barang tes- Madu', NULL, '', 421),
-(107, '2024-08-08', 'Penjualan barang tes- Madu', NULL, '', 423),
-(108, '2024-08-08', 'Penjualan barang tes- Mie Aceh Goreng', NULL, '', 430),
-(109, '2024-08-08', 'Penjualan barang tes- Sabun', NULL, '', 432),
-(110, '2024-08-08', 'Penjualan barang tes- Susu Fullcream', NULL, '', 434),
-(111, '2024-08-08', 'Penjualan barang tes- Bolpoint', NULL, '', 436);
 
 -- --------------------------------------------------------
 
@@ -1848,127 +1304,6 @@ CREATE TABLE `pengeluaran` (
   `id_kas` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `pengeluaran`
---
-
-INSERT INTO `pengeluaran` (`id`, `tanggal`, `keterangan`, `jumlah`, `id_saldo`, `id_kas`) VALUES
-(119, '2024-11-25', 'teknisi', '150000', NULL, NULL),
-(120, '2024-11-25', 'air', '232', NULL, NULL),
-(121, '2024-11-25', 'lainnya', '2323', NULL, NULL),
-(122, '2024-11-25', 'Lainnya: Lainnya: beli jajan', '90000', NULL, NULL),
-(123, '2024-11-25', 'Lainnya: permen', '1200', NULL, NULL),
-(124, '2024-11-25', 'listrik', '2324', NULL, NULL),
-(125, '2024-11-25', 'Lainnya: eskrim', '232323', NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `penjualan_barang`
---
-
-CREATE TABLE `penjualan_barang` (
-  `penjualan_barang_id` varchar(255) NOT NULL,
-  `tanggal_penjualan` datetime NOT NULL,
-  `id_pelanggan` int NOT NULL,
-  `total_penjualan` varchar(255) DEFAULT NULL,
-  `jumlah_uang` varchar(255) DEFAULT NULL,
-  `status_piutang` enum('belum_lunas','lunas') DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `penjualan_barang`
---
-
-INSERT INTO `penjualan_barang` (`penjualan_barang_id`, `tanggal_penjualan`, `id_pelanggan`, `total_penjualan`, `jumlah_uang`, `status_piutang`) VALUES
-('NHR-1029', '2024-07-22 00:00:00', 2, '2000', '2000', 'lunas'),
-('NHR-1049', '2024-07-22 11:14:13', 1, '310000', '320000', 'lunas'),
-('NHR-1063', '2024-07-22 11:20:30', 8, '15000', '15000', 'lunas'),
-('NHR-1084', '2024-07-22 11:30:55', 7, '45000', '50000', 'lunas'),
-('NHR-1713', '2024-07-22 11:30:04', 8, '30000', '50000', 'lunas'),
-('NHR-1799', '2024-08-08 09:05:57', 1, '900000', '1000000', 'lunas'),
-('NHR-2242', '2024-07-22 05:00:00', 9, '90000', '90000', 'lunas'),
-('NHR-3008', '2024-07-23 12:22:45', 7, '726000', '800000', 'lunas'),
-('NHR-3067', '2024-07-22 00:00:00', 5, '3000', '3000', 'lunas'),
-('NHR-3243', '2024-07-22 20:21:38', 10, '20000', '20000', 'lunas'),
-('NHR-3328', '2024-07-22 17:21:28', 1, '42000', '50000', 'lunas'),
-('NHR-3490', '2024-07-21 18:23:00', 1, '15000', '15000', 'lunas'),
-('NHR-3559', '2024-07-22 00:00:00', 5, '3000', '3000', 'lunas'),
-('NHR-3562', '2024-08-08 19:05:42', 6, '7000', '10000', 'lunas'),
-('NHR-3787', '2024-07-22 04:00:00', 5, '12000', '12000', 'lunas'),
-('NHR-3892', '2024-08-08 09:04:51', 12, '39000', '50000', 'lunas'),
-('NHR-4313', '2024-08-08 19:05:20', 11, '9000', '10000', 'lunas'),
-('NHR-4534', '2024-07-04 10:00:00', 2, '25000', '30000', 'lunas'),
-('NHR-4634', '2024-07-22 00:00:00', 5, '500000', '8', 'belum_lunas'),
-('NHR-4684', '2024-07-22 08:26:00', 6, '300000', '300000', 'lunas'),
-('NHR-5066', '2024-07-22 00:00:00', 2, '12000', '15000', 'lunas'),
-('NHR-5340', '2024-07-22 00:00:00', 1, '36000', '12000', 'belum_lunas'),
-('NHR-5685', '2024-07-22 00:00:00', 8, '3000', '3000', 'lunas'),
-('NHR-5713', '2024-07-22 07:43:00', 8, '100000', '100000', 'lunas'),
-('NHR-5794', '2024-07-23 12:16:27', 5, '900000', '1000000', 'lunas'),
-('NHR-5972', '2024-07-22 11:30:25', 8, '30000', '30000', 'lunas'),
-('NHR-6043', '2024-07-22 11:16:21', 1, '3000', '3000', 'lunas'),
-('NHR-6208', '2024-07-23 12:17:18', 2, '900000', '1000000', 'lunas'),
-('NHR-6256', '2024-07-14 06:12:00', 2, '231000', '240000', 'lunas'),
-('NHR-6261', '2024-08-08 09:06:38', 7, '500000', '300000', 'belum_lunas'),
-('NHR-6309', '2024-07-11 06:00:00', 1, '119000', '120000', 'lunas'),
-('NHR-6691', '2024-07-22 11:29:17', 6, '26000', '30000', 'lunas'),
-('NHR-6789', '2024-07-11 05:37:00', 2, '27000', '30000', 'lunas'),
-('NHR-7180', '2024-07-23 12:09:47', 6, '35000', '50000', 'lunas'),
-('NHR-7474', '2024-07-22 00:00:00', 6, '6000', '6000', 'lunas'),
-('NHR-7939', '2024-07-22 00:00:00', 5, '100000', '100000', 'lunas'),
-('NHR-8016', '2024-07-22 11:29:38', 5, '36000', '40000', 'lunas'),
-('NHR-8208', '2024-07-22 00:00:00', 5, '100000', '100000', 'lunas'),
-('NHR-8472', '2024-08-08 19:00:33', 7, '6000', '10000', 'lunas'),
-('NHR-8828', '2024-07-22 00:00:00', 1, '14000', '15000', 'lunas'),
-('NHR-9185', '2024-07-17 05:10:00', 2, '400000', '500000', 'lunas'),
-('NHR-9298', '2024-07-22 17:20:22', 6, '1200000', '2', 'belum_lunas'),
-('NHR-9720', '2024-07-22 20:12:07', 7, '15000', '20000', 'lunas'),
-('NHR-9722', '2024-08-08 19:08:56', 5, '4000', '5000', 'lunas'),
-('NHR-9849', '2024-08-07 12:56:17', 11, '114000', '100000', 'belum_lunas');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `perkiraan_penjualan`
---
-
-CREATE TABLE `perkiraan_penjualan` (
-  `id` int NOT NULL,
-  `kode_barang` varchar(255) NOT NULL,
-  `id_satuan` int NOT NULL,
-  `metode_perkiraan` varchar(50) NOT NULL,
-  `periode_perkiraan` varchar(50) NOT NULL,
-  `hasil_perkiraan` int NOT NULL,
-  `created_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `perkiraan_penjualan`
---
-
-INSERT INTO `perkiraan_penjualan` (`id`, `kode_barang`, `id_satuan`, `metode_perkiraan`, `periode_perkiraan`, `hasil_perkiraan`, `created_at`) VALUES
-(39, 'ATK5201', 21, 'exponential_smoothing', '12', 1, '2024-07-31 19:16:02'),
-(43, 'OBA4331', 20, 'moving_average', '6', 6, '2024-07-17 19:19:06'),
-(45, 'OBA4331', 20, 'moving_average', '4', 3, '2024-07-22 19:07:00'),
-(56, 'ALA3949', 20, 'moving_average', '3', 7, '2024-07-22 19:10:09'),
-(57, 'SEM8794', 23, 'moving_average', '3', 2, '2024-07-22 19:05:27'),
-(58, 'ALA3949', 20, 'exponential_smoothing', '3', 6, '2024-07-22 19:13:49'),
-(59, 'ALA3949', 20, 'exponential_smoothing', '4', 6, '0000-00-00 00:00:00'),
-(60, 'ALA3949', 20, 'moving_average', '7', 7, '2024-07-22 19:27:36'),
-(61, 'ALA3949', 20, 'exponential_smoothing', '7', 6, '2024-07-22 19:28:39'),
-(62, 'ALA3949', 20, 'exponential_smoothing', '5', 6, '2024-07-22 19:34:35'),
-(63, 'SEM6779', 20, 'time_series', '18', 7, '2024-07-22 19:34:52'),
-(64, 'ALA7608', 20, 'moving_average', '3', 5, '2024-07-22 20:13:52'),
-(65, 'ALA7608', 20, 'exponential_smoothing', '3', 5, '2024-07-22 20:14:13'),
-(66, 'OBA2271', 20, 'moving_average', '4', 2, '2024-07-22 20:25:40'),
-(67, 'OBA2271', 20, 'exponential_smoothing', '4', 2, '2024-07-22 20:25:58'),
-(68, 'MIN0819', 20, 'moving_average', '4', 5, '2024-07-23 12:12:17'),
-(69, 'MIN0819', 20, 'exponential_smoothing', '4', 5, '2024-07-23 12:12:38'),
-(70, 'MIN1327', 20, 'time_series', '7', 5, '2024-08-07 13:03:07'),
-(71, 'OBA4331', 20, 'time_series', '3', 7, '2024-08-08 09:12:35'),
-(72, 'ALA3949', 20, 'moving_average', '44', 6, '2024-08-08 19:10:09');
-
 -- --------------------------------------------------------
 
 --
@@ -2011,39 +1346,6 @@ INSERT INTO `piutang` (`id_piutang`, `id_penjualan_barang`, `id_pelanggan`, `tan
 -- --------------------------------------------------------
 
 --
--- Table structure for table `restok`
---
-
-CREATE TABLE `restok` (
-  `restok_id` varchar(255) NOT NULL,
-  `tanggal` datetime DEFAULT NULL,
-  `id_supplier` int NOT NULL,
-  `jumlah_pembayaran` varchar(255) DEFAULT NULL,
-  `jumlah_uang` varchar(255) NOT NULL,
-  `kembalian` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `restok`
---
-
-INSERT INTO `restok` (`restok_id`, `tanggal`, `id_supplier`, `jumlah_pembayaran`, `jumlah_uang`, `kembalian`) VALUES
-('RST-20240714104122783', '2024-07-14 00:00:00', 2, '2200', '1000', '1200'),
-('RST-20240714104247450', '2024-07-14 00:00:00', 2, '2200', '1000', '-1200'),
-('RST-20240714104523971', '2024-07-14 00:00:00', 1, '2200', '1', '-2199'),
-('RST-20240714105227162', '2024-07-22 11:20:00', 2, '160000', '120000', '-40000'),
-('RST-20240714105244106', '2024-07-14 15:15:00', 2, '160000', '120000', '-40000'),
-('RST-20240721113626177', '2024-07-21 07:21:00', 1, '100000', '100000', '0'),
-('RST-20240722082314126', '2024-07-22 10:13:00', 1, '50000', '50000', '0'),
-('RST-20240722091850644', '2024-07-22 21:18:50', 10, '2000', '2000', '0'),
-('RST-20240722112632152', '2024-07-22 00:00:00', 7, '25000', '25000', '0'),
-('RST-20240807010204426', '2024-08-07 13:02:04', 5, '40000', '40000', '0'),
-('RST-20240808064155910', '2024-08-08 18:41:55', 2, '17500', '20000', '2500'),
-('RST-20240808091052862', '2024-08-08 09:10:52', 13, '30000', '30000', '0');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `satuan`
 --
 
@@ -2069,34 +1371,6 @@ INSERT INTO `satuan` (`satuan_id`, `nama_satuan`, `created_at`, `updated_at`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `supplier`
---
-
-CREATE TABLE `supplier` (
-  `id_supplier` int NOT NULL,
-  `nama` varchar(255) DEFAULT NULL,
-  `alamat` text,
-  `kontak` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `supplier`
---
-
-INSERT INTO `supplier` (`id_supplier`, `nama`, `alamat`, `kontak`) VALUES
-(1, 'Abidin', 'Semarang', '08197988765'),
-(2, 'Yudi', 'Perum Bukit Indah 1', '08987544256'),
-(5, 'Yusril', 'Perum PKS', '0822468976'),
-(6, 'Bunadi', 'Sumberejo', '0879647863'),
-(7, 'Bombom', 'Ngaglik', '085434675'),
-(8, 'Agus', 'Mangkang', '0897756547'),
-(10, 'Rozikin', 'Mangkang', '081736224367'),
-(12, 'Turisman', 'Mangir', '08976445221'),
-(13, 'Zam', 'Suropadan', '087655345678');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tagihan`
 --
 
@@ -2115,165 +1389,11 @@ CREATE TABLE `tagihan` (
 
 INSERT INTO `tagihan` (`id`, `pelanggan_id`, `kode_paket`, `tanggal_tagihan`, `jumlah_tagihan`, `status_tagihan`) VALUES
 (2, 11, 'PKG8971', '2024-11-18', '120000', 'Dibayar'),
-(8, 11, 'PKG8971', '2024-12-18', '120000', 'Belum Dibayar'),
-(9, 12, 'PKG8971', '2024-11-21', '120000', 'Belum Dibayar');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `transaksi_barang`
---
-
-CREATE TABLE `transaksi_barang` (
-  `id` int NOT NULL,
-  `kode_barang` varchar(255) DEFAULT NULL,
-  `tanggal_barang_masuk` date DEFAULT NULL,
-  `tanggal_barang_keluar` date DEFAULT NULL,
-  `stok` int NOT NULL,
-  `jenis_transaksi` varchar(20) NOT NULL,
-  `informasi_tambahan` text,
-  `jumlah_perubahan` int NOT NULL,
-  `keuntungan` varchar(255) NOT NULL,
-  `deleted_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `transaksi_barang`
---
-
-INSERT INTO `transaksi_barang` (`id`, `kode_barang`, `tanggal_barang_masuk`, `tanggal_barang_keluar`, `stok`, `jenis_transaksi`, `informasi_tambahan`, `jumlah_perubahan`, `keuntungan`, `deleted_at`) VALUES
-(1, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(2, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(3, 'BAH7376', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Minyak goreng', 1, '', '0000-00-00 00:00:00'),
-(4, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(5, 'BAH7376', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Minyak goreng', 1, '', '0000-00-00 00:00:00'),
-(6, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(7, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(8, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(9, 'BAH7376', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Minyak goreng', 1, '', '0000-00-00 00:00:00'),
-(10, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(11, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(12, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(13, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(14, 'ATK5201', '2024-06-16', NULL, 100, 'masuk', 'Penambahan stok.', 100, '', '0000-00-00 00:00:00'),
-(15, 'ATK5201', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(16, 'SNA7216', NULL, '2024-06-16', 2, 'pengeluaran', 'Penjualan barang tes- Eskrim', 2, '', '2024-06-23 15:16:31'),
-(17, 'ATK5201', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(18, 'SNA7216', NULL, '2024-06-16', 2, 'pengeluaran', 'Penjualan barang tes- Eskrim', 2, '', '2024-06-23 15:16:31'),
-(19, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(20, 'ATK5201', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(21, 'ATK5201', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(22, 'ATK5201', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(23, 'ATK5201', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(24, 'ATK5201', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(25, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(26, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(27, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(28, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(29, 'ATK5201', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(30, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(31, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(32, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(33, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes penjualan- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(34, 'SNA7216', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(35, 'ATK5201', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(36, 'ATK5201', NULL, '2024-06-16', 2, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 2, '', '0000-00-00 00:00:00'),
-(37, 'ATK5201', NULL, '2024-06-16', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(38, 'BAH7376', NULL, '2024-06-16', 3, 'pengeluaran', 'Penjualan barang tes- Minyak goreng', 3, '', '0000-00-00 00:00:00'),
-(39, 'SNA7216', NULL, '2024-06-16', 6, 'pengeluaran', 'Penjualan barang tes- Eskrim', 6, '', '2024-06-23 15:16:31'),
-(40, 'ATK5201', NULL, '2024-06-20', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(41, 'SNA7216', NULL, '2024-06-21', 2, 'pengeluaran', 'Penjualan barang tes- Eskrim', 2, '', '2024-06-23 15:16:31'),
-(42, 'ATK5201', NULL, '2024-06-21', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(43, 'SNA7216', NULL, '2024-06-21', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(44, 'ATK5201', NULL, '2024-06-21', 2, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 2, '', '0000-00-00 00:00:00'),
-(45, 'ATK5201', NULL, '2024-06-21', 2, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 2, '', '0000-00-00 00:00:00'),
-(46, 'ATK5201', NULL, '2024-06-21', 2, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 2, '', '0000-00-00 00:00:00'),
-(47, 'ATK5201', NULL, '2024-06-21', 2, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 2, '', '0000-00-00 00:00:00'),
-(48, 'SNA7216', NULL, '2024-06-21', 2, 'pengeluaran', 'Penjualan barang tes- Eskrim', 2, '', '2024-06-23 15:16:31'),
-(49, 'ATK5201', NULL, '2024-06-22', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(50, 'ATK5201', NULL, '2024-06-22', 9, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 9, '', '0000-00-00 00:00:00'),
-(51, 'SNA7216', NULL, '2024-06-22', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(52, 'SNA7216', NULL, '2024-06-22', 1, 'pengeluaran', 'Penjualan barang tes- Eskrim', 1, '', '2024-06-23 15:16:31'),
-(53, 'ATK5201', NULL, '2024-06-22', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(54, 'SNA7216', NULL, '2024-06-23', 2, 'pengeluaran', 'Penjualan barang tes- Eskrim', 2, '', '2024-06-23 15:16:31'),
-(55, 'BAH7376', NULL, '2024-06-23', 2, 'pengeluaran', 'Penjualan barang tes- Minyak goreng', 2, '', '0000-00-00 00:00:00'),
-(56, 'OBA4331', '2024-07-01', NULL, 10, 'masuk', 'Penambahan stok.', 10, '', '0000-00-00 00:00:00'),
-(57, 'OBA4331', NULL, '2024-07-04', 1, 'pengeluaran', 'Penjualan barang tes- Madu', 1, '', '0000-00-00 00:00:00'),
-(58, 'BAH9438', '2024-07-08', NULL, 10, 'masuk', 'Penambahan stok.', 10, '', '0000-00-00 00:00:00'),
-(59, 'SNA5565', '2024-07-08', NULL, 20, 'masuk', 'Penambahan stok.', 20, '', '0000-00-00 00:00:00'),
-(60, 'BAH9438', NULL, '2024-07-08', 1, 'pengeluaran', 'Penjualan barang tes- Sabun', 1, '', '0000-00-00 00:00:00'),
-(61, 'BAH9438', NULL, '2024-07-11', 9, 'pengeluaran', 'Penjualan barang tes- Sabun', 9, '', '0000-00-00 00:00:00'),
-(62, 'OBA4331', NULL, '2024-07-11', 10, 'pengeluaran', 'Penjualan barang tes- Madu', 10, '', '0000-00-00 00:00:00'),
-(63, 'SNA5565', NULL, '2024-07-11', 20, 'pengeluaran', 'Penjualan barang tes- Chitato', 20, '', '0000-00-00 00:00:00'),
-(64, 'BAH9438', NULL, '2024-07-11', 23, 'pengeluaran', 'Penjualan barang tes- Sabun', 23, '', '0000-00-00 00:00:00'),
-(65, 'OBA4331', NULL, '2024-07-11', 2, 'pengeluaran', 'Penjualan barang tes- Madu', 2, '', '0000-00-00 00:00:00'),
-(66, 'BAH9438', NULL, '2024-07-14', 77, 'pengeluaran', 'Penjualan barang tes- Sabun', 77, '', '0000-00-00 00:00:00'),
-(67, 'BAH9438', NULL, '2024-07-14', 1, 'pengeluaran', 'Penjualan barang tes- Sabun', 1, '', '0000-00-00 00:00:00'),
-(68, 'OBA4331', NULL, '2024-07-17', 4, 'pengeluaran', 'Penjualan barang tes- Madu', 4, '', '0000-00-00 00:00:00'),
-(69, 'BAH9438', NULL, '2024-07-21', 5, 'pengeluaran', 'Penjualan barang tes- Sabun', 5, '', '0000-00-00 00:00:00'),
-(70, 'SEM2861', '2024-07-21', NULL, 88, 'masuk', 'Penambahan stok.', 88, '', '0000-00-00 00:00:00'),
-(71, 'OBA4331', NULL, '2024-07-22', 3, 'pengeluaran', 'Penjualan barang tes- Madu', 3, '', '0000-00-00 00:00:00'),
-(72, 'OBA4331', NULL, '2024-07-22', 1, 'pengeluaran', 'Penjualan barang tes- Madu', 1, '', '0000-00-00 00:00:00'),
-(73, 'SEM2861', NULL, '2024-07-22', 30, 'pengeluaran', 'Penjualan barang tes- Mie Instan', 30, '', '0000-00-00 00:00:00'),
-(74, 'ALA3949', '2024-07-22', NULL, 50, 'masuk', 'Penambahan stok.', 50, '', '0000-00-00 00:00:00'),
-(75, 'TES8321', '2024-07-22', NULL, 10, 'masuk', 'Penambahan stok.', 10, '', '2024-07-22 10:46:26'),
-(76, 'SEM6779', '2024-07-22', NULL, 30, 'masuk', 'Penambahan stok.', 30, '', '0000-00-00 00:00:00'),
-(77, 'ALA7205', '2024-07-22', NULL, 20, 'masuk', 'Penambahan stok.', 20, '', '0000-00-00 00:00:00'),
-(78, 'AA2070', '2024-07-22', NULL, 30, 'masuk', 'Penambahan stok.', 30, '', '2024-07-22 11:08:06'),
-(79, 'MIN3023', '2024-07-22', NULL, 12, 'masuk', 'Penambahan stok.', 12, '', '2024-07-22 11:08:00'),
-(80, 'SEM8794', '2024-07-22', NULL, 10, 'masuk', 'Penambahan stok.', 10, '', '0000-00-00 00:00:00'),
-(81, 'ALA7205', NULL, '2024-07-22', 2, 'pengeluaran', 'Penjualan barang tes- TipeX', 2, '', '0000-00-00 00:00:00'),
-(82, 'BAH9438', NULL, '2024-07-22', 1, 'pengeluaran', 'Penjualan barang tes- Sabun', 1, '', '0000-00-00 00:00:00'),
-(83, 'SEM8794', NULL, '2024-07-22', 1, 'pengeluaran', 'Penjualan barang tes- beras', 1, '', '0000-00-00 00:00:00'),
-(84, 'ALA3949', NULL, '2024-07-22', 13, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 13, '', '0000-00-00 00:00:00'),
-(85, 'ALA7205', NULL, '2024-07-22', 6, 'pengeluaran', 'Penjualan barang tes- TipeX', 6, '', '0000-00-00 00:00:00'),
-(86, 'SEM2861', NULL, '2024-07-22', 10, 'pengeluaran', 'Penjualan barang tes- Mie Instan', 10, '', '0000-00-00 00:00:00'),
-(87, 'SEM6779', NULL, '2024-07-22', 10, 'pengeluaran', 'Penjualan barang tes- Mie Aceh Goreng', 10, '', '0000-00-00 00:00:00'),
-(88, 'SEM8794', NULL, '2024-07-22', 3, 'pengeluaran', 'Penjualan barang tes- beras', 3, '', '0000-00-00 00:00:00'),
-(89, 'ALA3949', NULL, '2024-07-22', 6, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 6, '', '0000-00-00 00:00:00'),
-(90, 'ALA3949', NULL, '2024-07-22', 7, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 7, '', '0000-00-00 00:00:00'),
-(91, 'SEM6779', NULL, '2024-07-22', 4, 'pengeluaran', 'Penjualan barang tes- Mie Aceh Goreng', 4, '', '0000-00-00 00:00:00'),
-(92, 'SEM2861', NULL, '2024-07-22', 8, 'pengeluaran', 'Penjualan barang tes- Mie Instan', 8, '', '0000-00-00 00:00:00'),
-(93, 'OBA4331', NULL, '2024-07-22', 1, 'pengeluaran', 'Penjualan barang tes- Madu', 1, '', '0000-00-00 00:00:00'),
-(94, 'BAH9438', NULL, '2024-07-22', 1, 'pengeluaran', 'Penjualan barang tes- Sabun', 1, '', '0000-00-00 00:00:00'),
-(95, 'ALA7205', NULL, '2024-07-22', 1, 'pengeluaran', 'Penjualan barang tes- TipeX', 1, '', '0000-00-00 00:00:00'),
-(96, 'OBA4331', NULL, '2024-07-22', 1, 'pengeluaran', 'Penjualan barang tes- Madu', 1, '', '0000-00-00 00:00:00'),
-(97, 'BAH9438', NULL, '2024-07-22', 1, 'pengeluaran', 'Penjualan barang tes- Sabun', 1, '', '0000-00-00 00:00:00'),
-(98, 'OBA4331', NULL, '2024-07-22', 5, 'pengeluaran', 'Penjualan barang tes- Madu', 5, '', '0000-00-00 00:00:00'),
-(99, 'ALA3949', NULL, '2024-07-22', 1, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 1, '', '0000-00-00 00:00:00'),
-(100, 'BAH9438', NULL, '2024-07-22', 1, 'pengeluaran', 'Penjualan barang tes- Sabun', 1, '', '0000-00-00 00:00:00'),
-(101, 'OBA4331', NULL, '2024-07-22', 12, 'pengeluaran', 'Penjualan barang tes- Madu', 12, '', '0000-00-00 00:00:00'),
-(102, 'SEM2861', NULL, '2024-07-22', 14, 'pengeluaran', 'Penjualan barang tes- Mie Instan', 14, '', '0000-00-00 00:00:00'),
-(103, 'ALA7608', '2024-07-22', NULL, 20, 'masuk', 'Penambahan stok.', 20, '', '0000-00-00 00:00:00'),
-(104, 'T4180', '2024-07-22', NULL, 20, 'masuk', 'Penambahan stok.', 20, '', '2024-07-22 19:41:01'),
-(105, 'ALA7608', NULL, '2024-07-22', 5, 'pengeluaran', 'Penjualan barang tes- Pensil ', 5, '', '0000-00-00 00:00:00'),
-(106, 'OBA2271', '2024-07-22', NULL, 28, 'masuk', 'Penambahan stok.', 28, '', '0000-00-00 00:00:00'),
-(107, 'OBA2271', NULL, '2024-07-22', 2, 'pengeluaran', 'Penjualan barang tes- Frescare', 2, '', '0000-00-00 00:00:00'),
-(108, 'MIN0819', '2024-07-23', NULL, 50, 'masuk', 'Penambahan stok.', 50, '', '0000-00-00 00:00:00'),
-(109, 'MIN0819', NULL, '2024-07-23', 5, 'pengeluaran', 'Penjualan barang tes- Susu Fullcream', 5, '', '0000-00-00 00:00:00'),
-(110, 'OBA4331', NULL, '2024-07-23', 9, 'pengeluaran', 'Penjualan barang tes- Madu', 9, '', '0000-00-00 00:00:00'),
-(111, 'OBA4331', NULL, '2024-07-23', 9, 'pengeluaran', 'Penjualan barang tes- Madu', 9, '', '0000-00-00 00:00:00'),
-(112, 'MIN8777', '2024-07-23', NULL, 50, 'masuk', 'Penambahan stok.', 50, '', '0000-00-00 00:00:00'),
-(113, 'MIN1327', '2024-07-23', NULL, 50, 'masuk', 'Penambahan stok.', 50, '', '0000-00-00 00:00:00'),
-(114, 'MIN4944', '2024-07-23', NULL, 30, 'masuk', 'Penambahan stok.', 30, '', '0000-00-00 00:00:00'),
-(115, 'MIN0819', NULL, '2024-07-23', 5, 'pengeluaran', 'Penjualan barang tes- Susu Fullcream', 5, '', '0000-00-00 00:00:00'),
-(116, 'MIN1327', NULL, '2024-07-23', 5, 'pengeluaran', 'Penjualan barang tes- Susu Strawberry', 5, '', '0000-00-00 00:00:00'),
-(117, 'MIN4944', NULL, '2024-07-23', 7, 'pengeluaran', 'Penjualan barang tes- Susu LowFat', 7, '', '0000-00-00 00:00:00'),
-(118, 'MIN8777', NULL, '2024-07-23', 10, 'pengeluaran', 'Penjualan barang tes- Susu Coklat', 10, '', '0000-00-00 00:00:00'),
-(119, 'SEM6779', NULL, '2024-07-23', 5, 'pengeluaran', 'Penjualan barang tes- Mie Aceh Goreng', 5, '', '0000-00-00 00:00:00'),
-(120, 'SEM2861', NULL, '2024-07-23', 5, 'pengeluaran', 'Penjualan barang tes- Mie Instan', 5, '', '0000-00-00 00:00:00'),
-(121, 'OBA4331', NULL, '2024-07-23', 5, 'pengeluaran', 'Penjualan barang tes- Madu', 5, '', '0000-00-00 00:00:00'),
-(122, 'HH8267', '2024-08-07', NULL, 7, 'masuk', 'Penambahan stok.', 7, '', '2024-08-07 12:32:09'),
-(123, 'MIN8777', NULL, '2024-08-07', 10, 'pengeluaran', 'Penjualan barang tes- Susu Coklat', 10, '', '0000-00-00 00:00:00'),
-(124, 'MIN1327', NULL, '2024-08-07', 5, 'pengeluaran', 'Penjualan barang tes- Susu Strawberry', 5, '', '0000-00-00 00:00:00'),
-(125, 'SEM2861', NULL, '2024-08-07', 3, 'pengeluaran', 'Penjualan barang tes- Mie Instan', 3, '', '0000-00-00 00:00:00'),
-(126, 'BAH9438', NULL, '2024-08-08', 13, 'pengeluaran', 'Penjualan barang tes- Sabun', 13, '', '0000-00-00 00:00:00'),
-(127, 'OBA4331', NULL, '2024-08-08', 9, 'pengeluaran', 'Penjualan barang tes- Madu', 9, '', '0000-00-00 00:00:00'),
-(128, 'OBA4331', NULL, '2024-08-08', 5, 'pengeluaran', 'Penjualan barang tes- Madu', 5, '', '0000-00-00 00:00:00'),
-(129, 'SEM6779', NULL, '2024-08-08', 2, 'pengeluaran', 'Penjualan barang tes- Mie Aceh Goreng', 2, '', '0000-00-00 00:00:00'),
-(130, 'BAH9438', NULL, '2024-08-08', 3, 'pengeluaran', 'Penjualan barang tes- Sabun', 3, '', '0000-00-00 00:00:00'),
-(131, 'MIN0819', NULL, '2024-08-08', 1, 'pengeluaran', 'Penjualan barang tes- Susu Fullcream', 1, '', '0000-00-00 00:00:00'),
-(132, 'ALA3949', NULL, '2024-08-08', 2, 'pengeluaran', 'Penjualan barang tes- Bolpoint', 2, '', '0000-00-00 00:00:00');
+(8, 11, 'PKG8971', '2024-12-18', '120000', 'Dibayar'),
+(9, 12, 'PKG8971', '2024-11-21', '120000', 'Dibayar'),
+(10, 12, 'PKG8971', '2024-12-21', '120000', 'Belum Dibayar'),
+(11, 12, 'PKG8971', '2024-11-01', '120000', 'Belum Dibayar'),
+(12, 11, 'PKG8971', '2024-12-18', '120000', 'Belum Dibayar');
 
 -- --------------------------------------------------------
 
@@ -2306,7 +1426,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `username`, `fullname`, `foto`, `password_hash`, `reset_hash`, `reset_at`, `reset_expires`, `activate_hash`, `status`, `status_message`, `active`, `force_pass_reset`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'admin@gmail.com', 'admin', 'Anda', 'AdminFOTOadmin.jpeg', '$2y$10$PVlRaK5qKEom7DkgtqdL.ucmoo4EwbD7JPC3zW5s0ghL2D9/V1CQy', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-10-02 17:15:56', '2024-04-17 19:56:48', NULL),
+(1, 'admin@gmail.com', 'admin', 'Nandar', 'AdminFOTOadmin.jpeg', '$2y$10$PVlRaK5qKEom7DkgtqdL.ucmoo4EwbD7JPC3zW5s0ghL2D9/V1CQy', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-10-02 17:15:56', '2024-04-17 19:56:48', NULL),
 (14, 'kasir@gmail.com', 'Hikmah', 'Hikmah', 'AdminFOTOkasir.jpeg', '$2y$10$jIuMCnNMFZpU.2esnrYJL.HkfnNqpMXRtVE8HuE/un0K8rSzGmpae', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2024-01-09 15:53:39', '2024-07-22 16:51:17', NULL),
 (15, 'pemilik@gmail.com', 'Ragil', 'Ragil', 'PemilikFOTOpemilik.jpeg', '$2y$10$tBpr.1YSP4J..061PlRORe0IWlXY0WX04x.anXQVg0FHDA5hFEJq2', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2024-01-09 15:56:41', '2024-06-06 21:16:01', NULL),
 (16, 'administrator@gmail.com', 'administrator', NULL, 'profil.svg', '$2y$10$fB0zLIk541Tn4UiPE7c84OVeJJrQw43jMR/w00kZlUZxHNyFkO6s2', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2024-02-19 06:36:43', '2024-02-19 06:36:43', NULL);
@@ -2383,39 +1503,6 @@ ALTER TABLE `auth_users_permissions`
   ADD KEY `user_id_permission_id` (`user_id`,`permission_id`);
 
 --
--- Indexes for table `barang`
---
-ALTER TABLE `barang`
-  ADD PRIMARY KEY (`kode_barang`),
-  ADD KEY `id_master_barang` (`nama_brg`),
-  ADD KEY `id_satuan` (`id_satuan`);
-
---
--- Indexes for table `detail_master`
---
-ALTER TABLE `detail_master`
-  ADD PRIMARY KEY (`detail_master_id`),
-  ADD KEY `master_barang` (`master_barang`);
-
---
--- Indexes for table `detail_penjualan_barang`
---
-ALTER TABLE `detail_penjualan_barang`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_permintaan_barang_barang` (`kode_barang`),
-  ADD KEY `id_permintaan_barang` (`id_penjualan_barang`),
-  ADD KEY `fk_kas` (`id_kas`),
-  ADD KEY `fk_transaksi` (`id_transaksi`);
-
---
--- Indexes for table `detail_restok`
---
-ALTER TABLE `detail_restok`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_restok` (`id_restok`),
-  ADD KEY `kode_barang` (`kode_barang`);
-
---
 -- Indexes for table `hutang`
 --
 ALTER TABLE `hutang`
@@ -2434,12 +1521,6 @@ ALTER TABLE `inventaris`
 --
 ALTER TABLE `kas_toko`
   ADD PRIMARY KEY (`id_kas`);
-
---
--- Indexes for table `master_barang`
---
-ALTER TABLE `master_barang`
-  ADD PRIMARY KEY (`kode_brg`);
 
 --
 -- Indexes for table `migrations`
@@ -2498,21 +1579,6 @@ ALTER TABLE `pengeluaran`
   ADD KEY `fk_pengeluaran_kas` (`id_kas`);
 
 --
--- Indexes for table `penjualan_barang`
---
-ALTER TABLE `penjualan_barang`
-  ADD PRIMARY KEY (`penjualan_barang_id`),
-  ADD KEY `id_pelanggan` (`id_pelanggan`);
-
---
--- Indexes for table `perkiraan_penjualan`
---
-ALTER TABLE `perkiraan_penjualan`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `perkiraan_penjualan_ibfk_1` (`kode_barang`),
-  ADD KEY `id_satuan` (`id_satuan`);
-
---
 -- Indexes for table `piutang`
 --
 ALTER TABLE `piutang`
@@ -2521,23 +1587,10 @@ ALTER TABLE `piutang`
   ADD KEY `piutang_ibfk_2` (`id_pelanggan`);
 
 --
--- Indexes for table `restok`
---
-ALTER TABLE `restok`
-  ADD PRIMARY KEY (`restok_id`),
-  ADD KEY `id_supplier` (`id_supplier`);
-
---
 -- Indexes for table `satuan`
 --
 ALTER TABLE `satuan`
   ADD PRIMARY KEY (`satuan_id`);
-
---
--- Indexes for table `supplier`
---
-ALTER TABLE `supplier`
-  ADD PRIMARY KEY (`id_supplier`);
 
 --
 -- Indexes for table `tagihan`
@@ -2546,14 +1599,6 @@ ALTER TABLE `tagihan`
   ADD PRIMARY KEY (`id`),
   ADD KEY `pelanggan_id` (`pelanggan_id`),
   ADD KEY `kode_paket` (`kode_paket`);
-
---
--- Indexes for table `transaksi_barang`
---
-ALTER TABLE `transaksi_barang`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_kode_barang` (`kode_barang`),
-  ADD KEY `idx_id` (`id`);
 
 --
 -- Indexes for table `users`
@@ -2589,7 +1634,7 @@ ALTER TABLE `auth_groups`
 -- AUTO_INCREMENT for table `auth_logins`
 --
 ALTER TABLE `auth_logins`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=827;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=832;
 
 --
 -- AUTO_INCREMENT for table `auth_permissions`
@@ -2610,24 +1655,6 @@ ALTER TABLE `auth_tokens`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `detail_master`
---
-ALTER TABLE `detail_master`
-  MODIFY `detail_master_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
-
---
--- AUTO_INCREMENT for table `detail_penjualan_barang`
---
-ALTER TABLE `detail_penjualan_barang`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
-
---
--- AUTO_INCREMENT for table `detail_restok`
---
-ALTER TABLE `detail_restok`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
 -- AUTO_INCREMENT for table `hutang`
 --
 ALTER TABLE `hutang`
@@ -2637,7 +1664,7 @@ ALTER TABLE `hutang`
 -- AUTO_INCREMENT for table `kas_toko`
 --
 ALTER TABLE `kas_toko`
-  MODIFY `id_kas` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=448;
+  MODIFY `id_kas` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -2667,7 +1694,7 @@ ALTER TABLE `pelanggan_wifi`
 -- AUTO_INCREMENT for table `pemasukan`
 --
 ALTER TABLE `pemasukan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pembayaran_piutang`
@@ -2679,13 +1706,7 @@ ALTER TABLE `pembayaran_piutang`
 -- AUTO_INCREMENT for table `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
-
---
--- AUTO_INCREMENT for table `perkiraan_penjualan`
---
-ALTER TABLE `perkiraan_penjualan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `piutang`
@@ -2700,32 +1721,14 @@ ALTER TABLE `satuan`
   MODIFY `satuan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT for table `supplier`
---
-ALTER TABLE `supplier`
-  MODIFY `id_supplier` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
 -- AUTO_INCREMENT for table `tagihan`
 --
 ALTER TABLE `tagihan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `transaksi_barang`
---
-ALTER TABLE `transaksi_barang`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `detail_penjualan_barang`
---
-ALTER TABLE `detail_penjualan_barang`
-  ADD CONSTRAINT `fk_kas` FOREIGN KEY (`id_kas`) REFERENCES `kas_toko` (`id_kas`);
 
 --
 -- Constraints for table `pelanggan_wifi`
