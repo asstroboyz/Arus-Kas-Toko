@@ -19,4 +19,23 @@ class pelangganWifiModel extends Model
         }
         return $this->where(['id' => $id])->first();
     }
+    public function countPelangganAktif()
+    {
+        return $this->where('status_pelanggan', 'aktif')
+                    ->countAllResults();
+    }
+
+    // Method untuk menghitung pelanggan tidak aktif
+    public function countPelangganTidakAktif()
+    {
+        return $this->where('status_pelanggan', 'tidak aktif')
+             
+        ->countAllResults();
+    }
+    public function countPelangganByStatus()
+    {
+        $this->select('status_pelanggan, COUNT(*) AS total')
+             ->groupBy('status_pelanggan');
+        return $this->get()->getResult();
+    }
 }

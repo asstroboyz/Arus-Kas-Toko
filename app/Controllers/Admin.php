@@ -148,18 +148,16 @@ class Admin extends BaseController
         // ->where('jenis_transaksi', 'penerimaan')
         // ->get()
         // ->getRow()->jumlah_akhir;
+        // Kas Masuk
         $totalKasMasuk = $this->db->table('kas_toko')
-            ->select('SUM(jumlah_akhir - jumlah_awal) AS total_masuk', false)
+            ->select('SUM(jumlah_akhir) - SUM(jumlah_awal) AS total_masuk', false)
             ->where('jenis_transaksi', 'penerimaan')
             ->get()
             ->getRow()->total_masuk;
-        // $totalKasMasuk = $this->db->query("
-        //     SELECT SUM(jumlah_akhir - jumlah_awal) AS total_masuk
-        //     FROM kas_toko
-        //     WHERE jenis_transaksi = 'penerimaan'
-        // ")->getRow()->total_masuk;
+
+// Kas Keluar (Menggunakan ABS untuk memastikan hasilnya selalu positif)
         $totalKasKeluar = $this->db->table('kas_toko')
-            ->select('SUM(jumlah_awal - jumlah_akhir) AS total_keluar', false)
+            ->select('SUM(ABS(jumlah_awal - jumlah_akhir)) AS total_keluar', false)
             ->where('jenis_transaksi', 'pengeluaran')
             ->get()
             ->getRow()->total_keluar;
@@ -171,6 +169,17 @@ class Admin extends BaseController
         // ")->getRow()->total_keluar;
         $dataPenjualan = $this->PenjualanBarangModel->getAllSales(); // Mengambil semua data penjualan
         // dd($dataPenjualan);
+        $pelangganWifiModel = new pelangganWifiModel();
+
+        // Hitung pelanggan aktif
+        $totalPelangganAktif = $pelangganWifiModel->countPelangganAktif();
+
+        // Hitung pelanggan tidak aktif
+        $totalPelangganTidakAktif = $pelangganWifiModel->countPelangganTidakAktif();
+
+        // Hitung pelanggan berdasarkan status
+        $totalByStatus = $pelangganWifiModel->countPelangganByStatus();
+
         $data = [
             'title' => 'Toko Hera - Home',
             'saldo_terakhir' => $saldoTerakhir,
@@ -179,6 +188,9 @@ class Admin extends BaseController
             'totalKasKeluar' => $totalKasKeluar,
             'totalPenjualan24Jam' => $totalPenjualan24Jam,
             'dataPenjualan' => $dataPenjualan,
+            'totalPelangganAktif' => $totalPelangganAktif,
+            'totalPelangganTidakAktif' => $totalPelangganTidakAktif,
+            'totalByStatus' => $totalByStatus,
         ];
 
         return view('Admin/Home/Index', $data);
@@ -2289,7 +2301,7 @@ class Admin extends BaseController
         $db = \Config\Database::connect();
         $kasModel = new KasModel();
         $pengeluaranModel = new PengeluaranModel();
-    
+
         // Total pemasukan
         $totalPemasukan = $kasModel
             ->selectSum('jumlah_awal') // Sesuaikan kolom pemasukan
@@ -2297,7 +2309,7 @@ class Admin extends BaseController
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
             ->first()['jumlah_awal'] ?? 0;
-    
+
         // Total pengeluaran berdasarkan keterangan
         $bayarTeknisi = $pengeluaranModel
             ->selectSum('jumlah')
@@ -2305,39 +2317,37 @@ class Admin extends BaseController
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
             ->first()['jumlah'] ?? 0;
-    
+
         $listrik = $pengeluaranModel
             ->selectSum('jumlah')
             ->where('keterangan', 'listrik')
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
             ->first()['jumlah'] ?? 0;
-    
+
         $air = $pengeluaranModel
             ->selectSum('jumlah')
             ->where('keterangan', 'air')
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
             ->first()['jumlah'] ?? 0;
-    
+
         $lainnya = $pengeluaranModel
             ->selectSum('jumlah')
             ->where('keterangan', 'lainnya')
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
             ->first()['jumlah'] ?? 0;
-    
+
         // Total pengeluaran
         $totalPengeluaran = $bayarTeknisi + $listrik + $air + $lainnya;
-    
+
         // Hitung laba kotor dan laba bersih
         $labaKotor = $totalPemasukan - $totalPengeluaran;
         $labaBersih = $labaKotor; // Sesuaikan jika ada biaya tambahan lain
-    
-        // Data untuk view
-       
 
-       
+        // Data untuk view
+
         $builder = $db->table('users');
         $builder->select('users.fullname');
         $builder->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
@@ -3979,10 +3989,10 @@ class Admin extends BaseController
         // Mengirimkan data ke view
         $data = [
             'saldo_terakhir' => $saldo_terakhir,
-           'kas' => $this->KasModel
-    ->where('jenis_transaksi', 'penerimaan')
-    ->orderBy('id_kas', 'ASC')
-    ->findAll(),
+            'kas' => $this->KasModel
+                ->where('jenis_transaksi', 'penerimaan')
+                ->orderBy('id_kas', 'ASC')
+                ->findAll(),
 
             'title' => 'Data Pemasukan',
         ];
@@ -4006,10 +4016,10 @@ class Admin extends BaseController
         // Mengirimkan data ke view
         $data = [
             'saldo_terakhir' => $saldo_terakhir,
-         'kas' => $this->KasModel
-    ->where('jenis_transaksi', 'pengeluaran')
-    ->orderBy('id_kas', 'ASC')
-    ->findAll(),
+            'kas' => $this->KasModel
+                ->where('jenis_transaksi', 'pengeluaran')
+                ->orderBy('id_kas', 'ASC')
+                ->findAll(),
 
             'title' => 'Data Pemasukan',
         ];
@@ -4060,7 +4070,7 @@ class Admin extends BaseController
         }
         // Ambil data dari request
         $data = [
-            'tanggal' => $formattedTanggal, 
+            'tanggal' => $formattedTanggal,
             'jenis_transaksi' => $this->request->getPost('jenis_transaksi'),
             'keterangan' => $this->request->getPost('keterangan'),
         ];
