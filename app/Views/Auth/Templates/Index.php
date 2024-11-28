@@ -31,16 +31,7 @@
         rel="stylesheet">
     <link rel="stylesheet" type="text/css"
         href="<?= base_url(); ?>/vendor/datatables/dataTables.bootstrap4.min.css">
-    <style>
-        body {
-            background-image: url('<?=base_url()?>/img/lb/lb.jpeg');
 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-    </style>
 </head>
 
 <body>
