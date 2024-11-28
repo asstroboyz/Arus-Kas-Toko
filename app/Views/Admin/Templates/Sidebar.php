@@ -4,7 +4,7 @@
 
     <!-- Sidebar Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center"
-        href="<?= base_url(); ?>">
+        href="<?=base_url();?>">
         <div class="sidebar-brand-icon">
             <i class="fas fa-user-cog"></i>
         </div>
@@ -12,10 +12,9 @@
     </a>
 
 
-    <!-- Dashboard -->
-   <!-- Dashboard -->
+
 <li class="nav-item">
-    <a class="nav-link" href="<?= base_url(); ?>">
+    <a class="nav-link" href="<?=base_url();?>">
         <i class="fas fa-home"></i>
         <span style="font-size: 16px;">Dashboard</span>
     </a>
@@ -23,57 +22,86 @@
 
 <!-- Data Pelanggan -->
 <li class="nav-item">
-    <a class="nav-link" href="<?= base_url('Admin/pelanggan'); ?>">
+    <a class="nav-link" href="<?=base_url('Admin/pelanggan');?>">
         <i class="fas fa-users"></i>
         <span>Data Pelanggan</span>
     </a>
 </li>
 
-<!-- Keuangan -->
-<!-- Keuangan -->
+
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#keuanganMenu" aria-expanded="false"
         aria-controls="keuanganMenu">
-        <i class="fas fa-wallet"></i>
+        <i class="fas fa-money-bill-wave"></i> <!-- Updated Icon -->
         <span>Keuangan</span>
     </a>
+
     <div id="keuanganMenu" class="collapse" aria-labelledby="headingKeuangan" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-            
-            <!-- Sub-menu Data Tagihan -->
-            <a class="collapse-item collapsed" href="#" data-toggle="collapse" data-target="#tagihanMenu"
-                aria-expanded="false" aria-controls="tagihanMenu">
-                <i class="fas fa-file-invoice-dollar"></i> Data Tagihan
-            </a>
-            <div id="tagihanMenu" class="collapse pl-3" aria-labelledby="headingTagihan" data-parent="#keuanganMenu">
-                <a class="collapse-item" href="<?= base_url('Admin/tagihan'); ?>">
-                    <i class="fas fa-check-circle"></i> Semua Tagihan
+
+            <!-- Menu Data Tagihan -->
+            <div class="submenu">
+                <a class="collapse-item collapsed" href="#" data-toggle="collapse" data-target="#tagihanMenu"
+                    aria-expanded="false" aria-controls="tagihanMenu">
+                    <i class="fas fa-file-invoice"></i> <!-- Updated Icon -->
+                    Data Tagihan
                 </a>
-                <a class="collapse-item" href="<?= base_url('Admin/tagihanbelumbayar'); ?>">
-                    <i class="fas fa-times-circle"></i> Belum Bayar
-                </a>
-                <a class="collapse-item" href="<?= base_url('Admin/tagihandibayar'); ?>">
-                    <i class="fas fa-check-circle"></i> Di Bayar
+                <div id="tagihanMenu" class="collapse pl-3" aria-labelledby="headingTagihan" data-parent="#keuanganMenu">
+                    <a class="collapse-item" href="<?=base_url('Admin/tagihan');?>">
+                        <i class="fas fa-check"></i> <!-- Updated Icon -->
+                        Semua Tagihan
+                    </a>
+                    <a class="collapse-item" href="<?=base_url('Admin/tagihanbelumbayar');?>">
+                        <i class="fas fa-ban"></i> <!-- Updated Icon -->
+                        Belum Bayar
+                    </a>
+                    <a class="collapse-item" href="<?=base_url('Admin/tagihandibayar');?>">
+                        <i class="fas fa-check-circle"></i> <!-- Updated Icon -->
+                        Di Bayar
+                    </a>
+                </div>
+            </div>
+
+
+           
+
+            <!-- Menu Data Saldo -->
+            <div class="submenu">
+                <a class="collapse-item" href="<?=base_url('Admin/saldo');?>">
+                    <i class="fas fa-wallet"></i> <!-- Updated Icon -->
+                    Data Saldo
                 </a>
             </div>
-            
-            <!-- Pengeluaran -->
-            <a class="collapse-item" href="<?= base_url('Admin/pengeluaran'); ?>">
-                <i class="fas fa-wallet"></i> Data Pengeluaran
-            </a>
-            
-            <!-- Pemasukan -->
-            <a class="collapse-item" href="<?= base_url('Admin/pemasukan'); ?>">
-                <i class="fas fa-hand-holding-usd"></i> Data Pemasukan
-            </a>
+
+            <!-- Menu Data Pemasukan -->
+            <div class="submenu">
+                <a class="collapse-item" href="<?=base_url('Admin/pemasukan');?>">
+                    <i class="fas fa-money-bill-wave-alt"></i> <!-- Updated Icon -->
+                    Data Pemasukan
+                </a>
+            </div>
+
+            <!-- Menu Pengeluaran Saldo -->
+            <div class="submenu">
+                <a class="collapse-item" href="<?=base_url('Admin/pengeluaran');?>">
+                    <i class="fas fa-money-check-alt"></i> <!-- Updated Icon -->
+                    Data Pengeluaran
+                </a>
+            </div>
         </div>
     </div>
 </li>
 
 
-<!-- Paket & Layanan -->
+
 <li class="nav-item">
-    <a class="nav-link" href="<?= base_url('Admin/paket'); ?>">
+    <a class="nav-link" href="<?=base_url('Admin/lap_laba_rugi');?>">
+        <i class="fas fa-box-open"></i>
+        <span>Laporan</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="<?=base_url('Admin/paket');?>">
         <i class="fas fa-box-open"></i>
         <span>Master Paket</span>
     </a>
@@ -92,19 +120,19 @@
         <div id="keuanganMenu" class="collapse" aria-labelledby="headingKeuangan" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/aset'); ?>">Aset
+                    href="<?=base_url('Admin/aset');?>">Aset
                     Penjualan</a>
                 <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/hutang'); ?>">Hutang
+                    href="<?=base_url('Admin/hutang');?>">Hutang
                 </a>
                 <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('PenjualanBarangCont/piutang'); ?>">Piutang
+                    href="<?=base_url('PenjualanBarangCont/piutang');?>">Piutang
                 </a>
                 <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/modal'); ?>">Modal
+                    href="<?=base_url('Admin/modal');?>">Modal
                 </a>
                 <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/kas'); ?>">Kas
+                    href="<?=base_url('Admin/kas');?>">Kas
                     Toko
                 </a>
 
@@ -113,7 +141,7 @@
     </li>
 
 
-   
+
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#transaksiMenu" aria-expanded="true"
             aria-controls="transaksiMenu">
@@ -122,14 +150,14 @@
         </a>
         <div id="transaksiMenu" class="collapse" aria-labelledby="headingTransaksi" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-               
+
                 <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('PenjualanBarangCont'); ?>">Penjualan
+                    href="<?=base_url('PenjualanBarangCont');?>">Penjualan
                     Barang</a>
                 <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/pengeluaran'); ?>">Pengeluaran</a>
+                    href="<?=base_url('Admin/pengeluaran');?>">Pengeluaran</a>
                 <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/restok'); ?>">Restok</a>
+                    href="<?=base_url('Admin/restok');?>">Restok</a>
             </div>
         </div>
     </li> -->
@@ -137,12 +165,12 @@
     <!-- Perkiraan Penjualan -->
     <!-- <li class="nav-item">
         <a class="nav-link"
-            href="<?= base_url('Admin/perkiraan'); ?>">
+            href="<?=base_url('Admin/perkiraan');?>">
             <i class="fas fa-chart-line"></i>
             <span>Perkiraan Penjualan</span>
         </a>
     </li>-->
-
+<!--
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#laporanMenu" aria-expanded="true"
             aria-controls="laporanMenu">
@@ -151,26 +179,26 @@
         </a>
         <div id="laporanMenu" class="collapse" aria-labelledby="headingLaporan" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <!-- <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/lap_barang'); ?>">Laporan
-                    Persediaan</a> -->
+             <a class="collapse-item" style="font-size: 16px;"
+                    href="<?=base_url('Admin/lap_barang');?>">Laporan
+                    Persediaan</a>
                 <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/lap_arus_kas'); ?>">Laporan
+                    href="<?=base_url('Admin/lap_arus_kas');?>">Laporan
                     Arus Kas</a>
                 <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/lap_laba_rugi'); ?>">Laporan
+                    href="<?=base_url('Admin/lap_laba_rugi');?>">Laporan
                     Laba Rugi</a>
-                <!-- <a class="collapse-item" style="font-size: 16px;"
-                    href="<?= base_url('Admin/lap_analisa_arus_kas'); ?>">Laporan
-                    Analisa Arus Kas</a> -->
+             <a class="collapse-item" style="font-size: 16px;"
+                    href="<?=base_url('Admin/lap_analisa_arus_kas');?>">Laporan
+                    Analisa Arus Kas</a>
             </div>
         </div>
-    </li> 
+    </li>  -->
 
     <!-- Logout -->
     <li class="nav-item">
         <a class="nav-link"
-            href="<?= base_url('logout'); ?>">
+            href="<?=base_url('logout');?>">
             <i class="fas fa-sign-out-alt"></i>
             <span style="font-size: 16px;">Logout</span>
         </a>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Laba Rugi - TOKO HERA</title>
+    <title>Laporan VIP NET</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -91,25 +91,25 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
+        <!-- Header Section -->
         <table style="width: 100%; border: none;">
             <tr style="border: none;">
                 <td class="logo-container">
-                    <img src="assets/img/hera.png" width="10%" height="10%" alt="Logo BPS Kota A">
+
                 </td>
                 <td style="text-align: center; border: none;">
                     <div class="header-content">
-                        <h3 class="kop" style="font-size: 25px; font-weight: bold; margin: 0; width: fit-content;">
-                            TOKO HERA NOLOKERTO
+                        <h3 style="font-size: 25px; font-weight: bold; margin: 0; width: fit-content;">
+                            VIP NET
                         </h3>
-                        <h4 class="kop" style="font-size: 25px; font-weight: bold; margin: 0; width: fit-content;">
+                        <h4 style="font-size: 25px; font-weight: bold; margin: 0; width: fit-content;">
                             LAPORAN LABA RUGI
                         </h4>
                         <br>
-                        <p class="kop" style="font-size: 16px; margin: 0;">
-                            27J4+CJ7 Bukit Jabal, Penjor, Nolokerto, Kec. Kaliwungu, Kabupaten Kendal, Jawa Tengah 50244
+                        <p style="font-size: 16px; margin: 0;">
+                        Jl. KKO Usman No.9, Pekuncen, Karangasem Utara, Kec. Batang, Kabupaten Batang, Jawa Tengah 51216
                         </p>
                     </div>
                 </td>
@@ -117,100 +117,91 @@
         </table>
         <hr class="hr-custom">
 
+        <!-- Periode Section -->
         <p style="margin-bottom: 20px;">
             <span style="width: 200px; display: inline-block;">Periode :</span>
-           
+            <?=$tanggalMulai?> s/d <?=$tanggalAkhir?>
         </p>
+
+        <!-- Pendapatan Section -->
         <table>
             <tr>
                 <th colspan="2">Pendapatan</th>
             </tr>
             <tr>
-                <td>Penjualan Bersih</td>
-                <td class="text-right">Rp.
-                    <?= number_format($totalPenjualan, 0, ',', '.'); ?>
-                </td>
+                <td>Pendapatn Bersih</td>
+                <td class="text-right">Rp. <?=number_format($totalPemasukan ?: 0, 0, ',', '.');?></td>
             </tr>
             <tr class="total">
                 <td>Total Pendapatan</td>
-                <td class="text-right">Rp.
-                    <?= number_format($totalPenjualan, 0, ',', '.'); ?>
-                </td>
+                <td class="text-right">Rp. <?=number_format($totalPemasukan ?: 0, 0, ',', '.');?></td>
             </tr>
         </table>
 
+        <!-- Beban Section -->
+        <?php if ($bayarTeknisi > 0 || $listrik > 0 || $air > 0 || $lainnya > 0): ?>
         <table>
             <tr>
                 <th colspan="2">Beban</th>
             </tr>
+            <?php if ($bayarTeknisi > 0): ?>
             <tr>
-                <td>Beban Penjualan</td>
-                <td class="text-right">Rp.
-                    <?= number_format($totalHPP, 0, ',', '.'); ?>
-                </td>
+                <td>Beban Bayar Teknisi</td>
+                <td class="text-right">Rp. <?=number_format($bayarTeknisi, 0, ',', '.');?></td>
             </tr>
-            <tr>
-                <td>Beban Gaji</td>
-                <td class="text-right">Rp.
-                    <?= number_format($gaji, 0, ',', '.'); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>Beban Air</td>
-                <td class="text-right">Rp.
-                    <?= number_format($air, 0, ',', '.'); ?>
-                </td>
-            </tr>
+            <?php endif;?>
+            <?php if ($listrik > 0): ?>
             <tr>
                 <td>Beban Listrik</td>
-                <td class="text-right">Rp.
-                    <?= number_format($listrik, 0, ',', '.'); ?>
-                </td>
+                <td class="text-right">Rp. <?=number_format($listrik, 0, ',', '.');?></td>
             </tr>
+            <?php endif;?>
+            <?php if ($air > 0): ?>
             <tr>
-                <td>Beban Lain Lain</td>
-                <td class="text-right">Rp.
-                    <?= number_format($beliDanRestok, 0, ',', '.'); ?>
-                </td>
+                <td>Beban Air</td>
+                <td class="text-right">Rp. <?=number_format($air, 0, ',', '.');?></td>
             </tr>
+            <?php endif;?>
+            <?php if ($lainnya > 0): ?>
+            <tr>
+                <td>Beban Lainnya</td>
+                <td class="text-right">Rp. <?=number_format($lainnya, 0, ',', '.');?></td>
+            </tr>
+            <?php endif;?>
             <tr class="total">
                 <td>Total Beban</td>
-                <td class="text-right">Rp.
-                    <?= number_format($totalHPP + $gaji + $air + $listrik + $beliDanRestok, 0, ',', '.'); ?>
-                </td>
+                <td class="text-right">Rp. <?=number_format($totalPengeluaran, 0, ',', '.');?></td>
             </tr>
         </table>
+        <?php endif;?>
 
+        <!-- Laba Section -->
         <table>
             <tr>
                 <th colspan="2">Laba</th>
             </tr>
-
             <tr class="total">
-                <td></td>
-                <td class="text-right">Rp.
-                    <?= number_format($totalPenjualan - ($totalHPP + $gaji + $air + $listrik + $beliDanRestok), 0, ',', '.'); ?>
-
-                </td>
+                <td>Laba Kotor</td>
+                <td class="text-right">Rp. <?=number_format($labaKotor, 0, ',', '.');?></td>
+            </tr>
+            <tr class="total">
+                <td>Laba Bersih</td>
+                <td class="text-right">Rp. <?=number_format($labaBersih, 0, ',', '.');?></td>
             </tr>
         </table>
 
+        <!-- Footer Section -->
         <table class="footer-table">
             <tr>
                 <td class="footer-left">
-                    Dicetak Oleh: <?= user()->fullname; ?> (Admin)
+                    Dicetak Oleh: <?=user()->fullname;?>
                     <br>
-                    <p>Kaliwungu,
-                        <?= date('d/m/Y H:i:s'); ?>
-                    </p>
+                    <p>Batang, <?=date('d/m/Y H:i:s');?></p>
                 </td>
                 <td class="footer-right">
-                    Pemilik : <?= esc($pemilikName); ?>
-
+                    Pemilik: Heri
                     <br>
-                    <p>Kaliwungu,
-                        <?= date('d/m/Y H:i:s'); ?>
-                    </p>
+                    <p>Batang, <?=date('d/m/Y H:i:s');?></p>
                 </td>
             </tr>
         </table>

@@ -5,9 +5,9 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <?php if (session()->has('pesanBerhasil')) : ?>
-    <div class="alert alert-success" role="alert">
-        <?= session('pesanBerhasil') ?>
-    </div>
+        <div class="alert alert-success" role="alert">
+            <?= session('pesanBerhasil') ?>
+        </div>
     <?php endif; ?>
 
     <div class="row">
@@ -20,14 +20,14 @@
                                 Saldo Saat Ini
                             </div>
                             <?php if (isset($saldo_terakhir)) : ?>
-                            <div class="h5 mb-0 font-weight-bold text-black">
-                                Rp.
-                                <?= number_format($saldo_terakhir, 0, ',', '.'); ?>
-                            </div>
+                                <div class="h5 mb-0 font-weight-bold text-black">
+                                    Rp.
+                                    <?= number_format($saldo_terakhir, 0, ',', '.'); ?>
+                                </div>
                             <?php else : ?>
-                            <div class="h5 mb-0 font-weight-bold text-danger">
-                                Saldo Tidak Tersedia
-                            </div>
+                                <div class="h5 mb-0 font-weight-bold text-danger">
+                                    Saldo Tidak Tersedia
+                                </div>
                             <?php endif; ?>
                         </div>
                         <div class="col-auto">
@@ -51,7 +51,7 @@
                                     <th width="10%">Tanggal</th>
                                     <th>Jenis Transaksi</th>
                                     <th>Keterangan</th>
-                                    <th>Saldo Awal</th>
+                                    <!-- <th>Saldo Awal</th> -->
                                     <th>Transaksi</th>
                                     <th>Saldo Terakhir</th>
                                     <!-- <th width="10%">Aksi</th> -->
@@ -63,7 +63,7 @@
                                     <th width="10%">Tanggal</th>
                                     <th>Jenis Transaksi</th>
                                     <th>Keterangan</th>
-                                    <th>Saldo Awal</th>
+                                    <!-- <th>Saldo Awal</th> -->
                                     <th>Transaksi</th>
                                     <th>Saldo Terakhir</th>
                                     <!-- <th width="10%">Aksi</th> -->
@@ -71,26 +71,26 @@
                             </tfoot>
                             <tbody>
                                 <?php if ($kas) : ?>
-                                <?php foreach ($kas as $index => $data) : ?>
-                                <tr>
-                                    <td><?= $index + 1; ?></td>
-                                       <td><?= format_tanggal($data['tanggal']); ?></td>
-                                 
-                                    <td><?= $data['jenis_transaksi']; ?>
-                                    </td>
-                                    <td><?= $data['keterangan']; ?>
-                                    </td>
-                                    <td>Rp.
-                                        <?= number_format(floatval($data['jumlah_awal']), 0, ',', '.'); ?>
-                                    </td>
-                                   <td>Rp.
-    <?= number_format(abs(floatval($data['jumlah_akhir']) - floatval($data['jumlah_awal'])), 0, ',', '.'); ?>
-</td>
+                                    <?php foreach ($kas as $index => $data) : ?>
+                                        <tr>
+                                            <td><?= $index + 1; ?></td>
+                                            <td><?= format_tanggal($data['tanggal']); ?></td>
 
-                                    <td>Rp.
-                                        <?= number_format(floatval($data['saldo_terakhir']), 0, ',', '.'); ?>
-                                    </td>
-                                    <!-- <td style="text-align : center">
+                                            <td><?= $data['jenis_transaksi']; ?>
+                                            </td>
+                                            <td><?= $data['keterangan']; ?>
+                                            </td>
+                                            <!-- <td>Rp.
+                                        <?= number_format(floatval($data['jumlah_awal']), 0, ',', '.'); ?>
+                                    </td> -->
+                                            <td>Rp.
+                                                <?= number_format(abs(floatval($data['saldo_terakhir']) - floatval($data['jumlah_awal'])), 0, ',', '.'); ?>
+                                            </td>
+
+                                            <td>Rp.
+                                                <?= number_format(floatval($data['saldo_terakhir']), 0, ',', '.'); ?>
+                                            </td>
+                                            <!-- <td style="text-align : center">
                                         <a href="/Admin/editKas/<?= $data['id_kas']; ?>"
                                             class="btn btn-sm btn-warning">
                                             <i class="fas fa-edit"></i>
@@ -101,14 +101,14 @@
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </td> -->
-                                </tr>
-                                <?php endforeach; ?>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 <?php else : ?>
-                                <tr>
-                                    <td colspan="8">
-                                        <h3 class="text-center text-muted">Data belum ada.</h3>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="8">
+                                            <h3 class="text-center text-muted">Data belum ada.</h3>
+                                        </td>
+                                    </tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
@@ -137,7 +137,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 <!-- Tombol delete yang memanggil fungsi deleteKas() -->
-              
+
             </div>
         </div>
     </div>

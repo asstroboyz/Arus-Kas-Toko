@@ -11,7 +11,9 @@ use App\Models\hutangModel;
 use App\Models\KasModel;
 use App\Models\masterBarangModel;
 use App\Models\modalTokoModel;
+use App\Models\paketModel;
 use App\Models\PelangganModel;
+use App\Models\pelangganWifiModel;
 use App\Models\PemasukanModel;
 use App\Models\pembayaranPiutangModel;
 use App\Models\pengecekanModel;
@@ -25,12 +27,9 @@ use App\Models\riwayatSaldo;
 use App\Models\SaldoModel;
 use App\Models\satuanModel;
 use App\Models\supplierModel;
+use App\Models\tagihanModel;
 use App\Models\tipeBarangModel;
 use App\Models\TransaksiBarangModel;
-use App\Models\paketModel;
-use App\Models\pelangganWifiModel;
-use App\Models\tagihanModel;
-use Mpdf\Mpdf;
 use Myth\Auth\Entities\User;
 use Myth\Auth\Models\GroupModel;
 use Myth\Auth\Models\UserModel;
@@ -419,8 +418,8 @@ class Admin extends BaseController
 
             'pelanggan' => $this->pelangganWifiModel
 
-                ->select('pelanggan_wifi.*, paket.nama_paket, paket.harga')  // Selecting fields you want
-                ->join('paket', 'paket.kode_paket = pelanggan_wifi.kode_paket', 'left')  // Perform LEFT JOIN
+                ->select('pelanggan_wifi.*, paket.nama_paket, paket.harga') // Selecting fields you want
+                ->join('paket', 'paket.kode_paket = pelanggan_wifi.kode_paket', 'left') // Perform LEFT JOIN
                 ->findAll(),
         ];
         // dd($data);
@@ -487,65 +486,65 @@ class Admin extends BaseController
     {
         $id = $this->request->getPost('id_pelanggan');
 
-    // Validasi input
-    if (!$this->validate([
-        'nama' => 'required',
-        'alamat' => 'required',
-        'no_hp' => 'required',
-        'foto_ktp' => [
-            'rules' => 'is_image[foto_ktp]|mime_in[foto_ktp,image/jpg,image/jpeg,image/png]|max_size[foto_ktp,2048]',
-            'errors' => [
-                'is_image' => 'File harus berupa gambar.',
-                'mime_in' => 'Format file harus jpg, jpeg, atau png.',
-                'max_size' => 'Ukuran file maksimal 2MB.',
+        // Validasi input
+        if (!$this->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'no_hp' => 'required',
+            'foto_ktp' => [
+                'rules' => 'is_image[foto_ktp]|mime_in[foto_ktp,image/jpg,image/jpeg,image/png]|max_size[foto_ktp,2048]',
+                'errors' => [
+                    'is_image' => 'File harus berupa gambar.',
+                    'mime_in' => 'Format file harus jpg, jpeg, atau png.',
+                    'max_size' => 'Ukuran file maksimal 2MB.',
+                ],
             ],
-        ],
-    ])) {
-        return redirect()->to("/admin/pelanggan/edit/$id")->withInput()->with('validation', $this->validator);
-    }
-
-    // Ambil data pelanggan lama
-    $pelanggan = $this->pelangganWifiModel->find($id);
-
-    if (!$pelanggan) {
-        session()->setFlashdata('pesan', 'Data pelanggan tidak ditemukan.');
-        return redirect()->to('/admin/pelanggan');
-    }
-
-    // Jika ada file baru
-    $fotoKTP = $this->request->getFile('foto_ktp');
-    if ($fotoKTP && $fotoKTP->isValid()) {
-        $namaFile = $fotoKTP->getRandomName();
-        $fotoKTP->move('uploads/foto_ktp', $namaFile);
-
-        // Hapus foto KTP lama jika ada
-        if ($pelanggan['foto_ktp'] && file_exists('uploads/foto_ktp/' . $pelanggan['foto_ktp'])) {
-            unlink('uploads/foto_ktp/' . $pelanggan['foto_ktp']);
+        ])) {
+            return redirect()->to("/admin/pelanggan/edit/$id")->withInput()->with('validation', $this->validator);
         }
-    } else {
-        $namaFile = $pelanggan['foto_ktp']; // Tetap gunakan file lama
-    }
 
-    // Update data sesuai allowedFields
-    $data = [
-        'nama' => $this->request->getPost('nama'),
-        'alamat' => $this->request->getPost('alamat'),
-        'no_hp' => $this->request->getPost('no_hp'),
-        'nik' => $this->request->getPost('nik'),
-        'foto_ktp' => $namaFile,
-        'kode_paket' => $this->request->getPost('kode_paket'),
-        'tgl_pasang' => $this->request->getPost('tgl_pasang'),
-        'status_pelanggan' => $this->request->getPost('status_pelanggan'),
-        'updated_at' => date('Y-m-d H:i:s'),
-    ];
+        // Ambil data pelanggan lama
+        $pelanggan = $this->pelangganWifiModel->find($id);
 
-    if ($this->pelangganWifiModel->update($id, $data)) {
-        session()->setFlashdata('pesan', 'Data pelanggan berhasil diubah.');
-    } else {
-        session()->setFlashdata('pesan', 'Gagal mengubah data pelanggan.');
-    }
+        if (!$pelanggan) {
+            session()->setFlashdata('pesan', 'Data pelanggan tidak ditemukan.');
+            return redirect()->to('/admin/pelanggan');
+        }
 
-    return redirect()->to('/admin/pelanggan');
+        // Jika ada file baru
+        $fotoKTP = $this->request->getFile('foto_ktp');
+        if ($fotoKTP && $fotoKTP->isValid()) {
+            $namaFile = $fotoKTP->getRandomName();
+            $fotoKTP->move('uploads/foto_ktp', $namaFile);
+
+            // Hapus foto KTP lama jika ada
+            if ($pelanggan['foto_ktp'] && file_exists('uploads/foto_ktp/' . $pelanggan['foto_ktp'])) {
+                unlink('uploads/foto_ktp/' . $pelanggan['foto_ktp']);
+            }
+        } else {
+            $namaFile = $pelanggan['foto_ktp']; // Tetap gunakan file lama
+        }
+
+        // Update data sesuai allowedFields
+        $data = [
+            'nama' => $this->request->getPost('nama'),
+            'alamat' => $this->request->getPost('alamat'),
+            'no_hp' => $this->request->getPost('no_hp'),
+            'nik' => $this->request->getPost('nik'),
+            'foto_ktp' => $namaFile,
+            'kode_paket' => $this->request->getPost('kode_paket'),
+            'tgl_pasang' => $this->request->getPost('tgl_pasang'),
+            'status_pelanggan' => $this->request->getPost('status_pelanggan'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+
+        if ($this->pelangganWifiModel->update($id, $data)) {
+            session()->setFlashdata('pesan', 'Data pelanggan berhasil diubah.');
+        } else {
+            session()->setFlashdata('pesan', 'Gagal mengubah data pelanggan.');
+        }
+
+        return redirect()->to('/admin/pelanggan');
     }
 
     public function pelanggan_delete($id)
@@ -912,7 +911,7 @@ class Admin extends BaseController
 
                 $dataPemasukan = [
                     'cek_sub' => $sub_total,
-                    'tanggal' =>  date('Y-m-d H:i:s'),
+                    'tanggal' => date('Y-m-d H:i:s'),
                     'jenis_transaksi' => 'penerimaan',
                     'keterangan' => 'Penjualan barang - ' . $barang['nama_brg'],
                     'jumlah_awal' => $jumlah_awal,
@@ -1025,7 +1024,7 @@ class Admin extends BaseController
         $data['kas'] = $model->findAll(); // Mengambil semua data pengeluaran dari tabel pengeluaran
 
         $saldoModel = new SaldoModel();
-        $data['kas'] = $saldoModel->orderBy('id', 'DESC')->first(); 
+        $data['kas'] = $saldoModel->orderBy('id', 'DESC')->first();
 
         $data['riwayat_saldo'] = $this->db->table('riwayat_saldo')->get()->getResultArray(); // Mengambil semua data dari tabel riwayat saldo
 
@@ -1099,7 +1098,7 @@ class Admin extends BaseController
 
         // Menyimpan riwayat transaksi pengeluaran
         $pengeluaranData = [
-            'tanggal' =>  date('Y-m-d H:i:s'),
+            'tanggal' => date('Y-m-d H:i:s'),
             'keterangan' => $this->request->getPost('keterangan'),
             'jumlah' => $jumlah_pengeluaran,
         ];
@@ -1108,7 +1107,7 @@ class Admin extends BaseController
 
         // Mengupdate saldo terakhir
         $kasData = [
-            'tanggal' =>  date('Y-m-d H:i:s'),
+            'tanggal' => date('Y-m-d H:i:s'),
             'jenis_transaksi' => 'pengeluaran',
             'keterangan' => $this->request->getPost('keterangan'),
             'jumlah_awal' => $lastBalance,
@@ -1492,7 +1491,7 @@ class Admin extends BaseController
         $dataRestok = [
             'jumlah' => $totalNilai, // Simpan total nilai sebagai jumlah pengeluaran
             'keterangan' => 'Restok barang',
-            'tanggal' =>  date('Y-m-d H:i:s'), // Tanggal pemasukan, bisa diubah sesuai kebutuhan
+            'tanggal' => date('Y-m-d H:i:s'), // Tanggal pemasukan, bisa diubah sesuai kebutuhan
         ];
         $PengeluaranModel->insert($dataRestok); // Menggunakan model PengeluaranModel
 
@@ -2288,71 +2287,57 @@ class Admin extends BaseController
         // Query untuk mendapatkan total harga beli barang yang terjual dari model detailPenjualanBarangModel dan BarangModel
 
         $db = \Config\Database::connect();
-        $builder = $db->table('detail_penjualan_barang');
-        $totalHPP = $builder
-            ->select('SUM(barang.harga_beli * detail_penjualan_barang.jumlah) AS total_hpp')
-            ->join('barang', 'barang.kode_barang = detail_penjualan_barang.kode_barang')
-            ->join('penjualan_barang', 'penjualan_barang.penjualan_barang_id = detail_penjualan_barang.id_penjualan_barang')
-            ->where('penjualan_barang.tanggal_penjualan >=', $tanggalMulai)
-            ->where('penjualan_barang.tanggal_penjualan <=', $tanggalAkhir)
-            ->get()
-            ->getRow()
-            ->total_hpp;
-        // Query untuk mendapatkan total biaya operasional dari model PengeluaranModel
+        $kasModel = new KasModel();
         $pengeluaranModel = new PengeluaranModel();
-        $totalBiayaOperasional = $pengeluaranModel
-            ->selectSum('jumlah')
+    
+        // Total pemasukan
+        $totalPemasukan = $kasModel
+            ->selectSum('jumlah_awal') // Sesuaikan kolom pemasukan
+            ->where('jenis_transaksi', 'penerimaan')
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
-            ->first()['jumlah'];
-
-
-        $gaji = $pengeluaranModel
+            ->first()['jumlah_awal'] ?? 0;
+    
+        // Total pengeluaran berdasarkan keterangan
+        $bayarTeknisi = $pengeluaranModel
             ->selectSum('jumlah')
+            ->where('keterangan', 'bayar teknisi')
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
-            ->where('keterangan', 'gaji')
-            ->first()['jumlah'];
-
-
+            ->first()['jumlah'] ?? 0;
+    
         $listrik = $pengeluaranModel
             ->selectSum('jumlah')
+            ->where('keterangan', 'listrik')
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
-            ->where('keterangan', 'listrik')
-            ->first()['jumlah'];
-
-
+            ->first()['jumlah'] ?? 0;
+    
         $air = $pengeluaranModel
             ->selectSum('jumlah')
-            ->where('tanggal >=', $tanggalMulai)
-            ->where('tanggal <=', $tanggalAkhir)
             ->where('keterangan', 'air')
-            ->first()['jumlah'];
-
-
-        // $pembelian_restok = $pengeluaranModel
-        //     ->selectSum('jumlah')
-        //     ->where('tanggal >=', $tanggalMulai)
-        //     ->where('tanggal <=', $tanggalAkhir)
-        //     ->where(function($builder) {
-        //         $builder->like('keterangan', 'Pembelian', 'both'); // Mengandung kata 'Pembelian'
-        //         $builder->orLike('keterangan', 'Restok', 'both'); // Atau mengandung kata 'Restok'
-        //     })
-        //     ->first()['jumlah'];
-        $beliDanRestok = $pengeluaranModel
-            ->selectSum('jumlah')
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
-            ->groupStart()
-            ->like('keterangan', 'Pembelian')
-            ->orLike('keterangan', 'Restok')
-            ->orLike('keterangan', 'lainnya')
-            ->groupEnd()
-            ->first()['jumlah'];
+            ->first()['jumlah'] ?? 0;
+    
+        $lainnya = $pengeluaranModel
+            ->selectSum('jumlah')
+            ->where('keterangan', 'lainnya')
+            ->where('tanggal >=', $tanggalMulai)
+            ->where('tanggal <=', $tanggalAkhir)
+            ->first()['jumlah'] ?? 0;
+    
+        // Total pengeluaran
+        $totalPengeluaran = $bayarTeknisi + $listrik + $air + $lainnya;
+    
+        // Hitung laba kotor dan laba bersih
+        $labaKotor = $totalPemasukan - $totalPengeluaran;
+        $labaBersih = $labaKotor; // Sesuaikan jika ada biaya tambahan lain
+    
+        // Data untuk view
+       
 
-        $labaKotor = $totalPenjualan - $totalHPP;
-        $labaBersih = $labaKotor - $totalBiayaOperasional;
+       
         $builder = $db->table('users');
         $builder->select('users.fullname');
         $builder->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
@@ -2362,18 +2347,19 @@ class Admin extends BaseController
         $pemilikName = $pemilikData ? $pemilikData->fullname : 'Nama Pemilik Tidak Ditemukan';
 
         // Menyiapkan data untuk dikirim ke view
-        $data['pemilikName'] = $pemilikName;
-        $data['listrik'] = $listrik;
-        $data['air'] = $air;
-        $data['beliDanRestok'] = $beliDanRestok;
-        $data['gaji'] = $gaji;
-        $data['tanggalMulai'] = $tanggalMulai;
-        $data['tanggalAkhir'] = $tanggalAkhir;
-        $data['totalPenjualan'] = $totalPenjualan;
-        $data['totalHPP'] = $totalHPP;
-        $data['totalBiayaOperasional'] = $totalBiayaOperasional;
-        $data['labaKotor'] = $labaKotor;
-        $data['labaBersih'] = $labaBersih;
+        $data = [
+            'tanggalMulai' => $tanggalMulai,
+            'tanggalAkhir' => $tanggalAkhir,
+            'totalPemasukan' => $totalPemasukan,
+            'bayarTeknisi' => $bayarTeknisi,
+            'listrik' => $listrik,
+            'air' => $air,
+            'pemilikName' => $pemilikName,
+            'lainnya' => $lainnya,
+            'totalPengeluaran' => $totalPengeluaran,
+            'labaKotor' => $labaKotor,
+            'labaBersih' => $labaBersih,
+        ];
         // dd($data);
         // Load view dan generate PDF
         $mpdf = new \Mpdf\Mpdf();
@@ -3296,7 +3282,6 @@ class Admin extends BaseController
         // Data hutang
         $hutangs = $this->hutangModel->orderBy('created_at', 'DESC')->findAll();
 
-
         // Calculate total hutang
         $total_hutang = 0;
         foreach ($hutangs as $hutang) {
@@ -3379,7 +3364,6 @@ class Admin extends BaseController
             }
             return redirect()->back()->withInput()->with('errors', $errors);
         }
-
 
         // Jika berhasil, set flash message dan redirect ke halaman yang tepat
         session()->setFlashdata('message', 'Data piutang berhasil ditambahkan');
@@ -3483,7 +3467,7 @@ class Admin extends BaseController
 
         // Lakukan proses pembayaran hutang penuh
         $data_pembayaran = [
-            'tanggal' =>  date('Y-m-d H:i:s'),
+            'tanggal' => date('Y-m-d H:i:s'),
             'jenis_transaksi' => 'pengeluaran',
             'keterangan' => 'Pembayaran hutang: ' . $hutang['keterangan'],
             'jumlah_awal' => $saldo_terakhir,
@@ -3503,7 +3487,7 @@ class Admin extends BaseController
         $this->hutangModel->update($id_hutang, $data_hutang);
 
         $data_pengeluaran = [
-            'tanggal' =>  date('Y-m-d H:i:s'),
+            'tanggal' => date('Y-m-d H:i:s'),
             'keterangan' => 'Pembayaran Hutang', // Keterangan transaksi
             'jumlah' => $total_hutang, // Jumlah pembayaran hutang
         ];
@@ -3663,7 +3647,7 @@ class Admin extends BaseController
         $data_restok = [
             'restok_id' => $kode_restok,
             'id_supplier' => $id_supplier,
-            'tanggal' =>  date('Y-m-d H:i:s'),
+            'tanggal' => date('Y-m-d H:i:s'),
             'jumlah_pembayaran' => filter_var($this->request->getPost('jumlah_pembayaran'), FILTER_SANITIZE_NUMBER_INT),
             'jumlah_uang' => $jumlah_uang, // Simpan jumlah uang yang dibayarkan
             'kembalian' => filter_var($this->request->getPost('kembalian'), FILTER_SANITIZE_NUMBER_INT),
@@ -3701,7 +3685,7 @@ class Admin extends BaseController
                 $data_hutang = [
                     'keterangan' => 'Hutang Restok ' . $kode_restok . '(' . $barang['nama_brg'] . ')',
                     'jumlah' => $hutang,
-                    'tanggal' =>  date('Y-m-d H:i:s'),
+                    'tanggal' => date('Y-m-d H:i:s'),
                 ];
                 $hutangModel->insert($data_hutang);
             }
@@ -3709,7 +3693,7 @@ class Admin extends BaseController
 
         // Menyimpan data ke dalam tabel kas
         $data_pengeluaran = [
-            'tanggal' =>  date('Y-m-d H:i:s'),
+            'tanggal' => date('Y-m-d H:i:s'),
 
             'keterangan' => 'Restok barang', // Keterangan transaksi
             'jumlah' => filter_var($this->request->getPost('jumlah_pembayaran'), FILTER_SANITIZE_NUMBER_INT), // Saldo sebelum restok
@@ -3720,7 +3704,7 @@ class Admin extends BaseController
         $PengeluaranModel->insert($data_pengeluaran);
 
         $data_pengeluaran = [
-            'tanggal' =>  date('Y-m-d H:i:s'),
+            'tanggal' => date('Y-m-d H:i:s'),
             'jenis_transaksi' => 'pengeluaran', // Misalnya, restok barang
             'keterangan' => 'Restok barang', // Keterangan transaksi
             'jumlah_awal' => $saldo_terakhir, // Saldo sebelum restok
@@ -3957,7 +3941,7 @@ class Admin extends BaseController
     }
 
     //kas
-    public function pemasukan()
+    public function saldo()
     {
         // Mendapatkan data kas terbaru
         $latest_kas = $this->KasModel->orderBy('id_kas', 'DESC')->first();
@@ -3976,10 +3960,62 @@ class Admin extends BaseController
             'kas' => $this->KasModel->orderBy('id_kas', 'ASC')->findAll(),
             'title' => 'Data Pemasukan',
         ];
+        // dd($data);
+        return view('Admin/Kas/Index', $data);
+    }
+    public function pemasukan()
+    {
+        // Mendapatkan data kas terbaru
+        $latest_kas = $this->KasModel->orderBy('id_kas', 'DESC')->first();
 
+        // Memeriksa apakah data kas kosong
+        if ($latest_kas === null) {
+            $saldo_terakhir = 0; // Nilai default jika tidak ada data
+        } else {
+            // Mendapatkan saldo terakhir dari data kas terbaru
+            $saldo_terakhir = $latest_kas['saldo_terakhir'];
+        }
+
+        // Mengirimkan data ke view
+        $data = [
+            'saldo_terakhir' => $saldo_terakhir,
+           'kas' => $this->KasModel
+    ->where('jenis_transaksi', 'penerimaan')
+    ->orderBy('id_kas', 'ASC')
+    ->findAll(),
+
+            'title' => 'Data Pemasukan',
+        ];
+        // dd($data);
         return view('Admin/Kas/Index', $data);
     }
 
+    public function pengeluaran_saldo()
+    {
+        // Mendapatkan data kas terbaru
+        $latest_kas = $this->KasModel->orderBy('id_kas', 'DESC')->first();
+
+        // Memeriksa apakah data kas kosong
+        if ($latest_kas === null) {
+            $saldo_terakhir = 0; // Nilai default jika tidak ada data
+        } else {
+            // Mendapatkan saldo terakhir dari data kas terbaru
+            $saldo_terakhir = $latest_kas['saldo_terakhir'];
+        }
+
+        // Mengirimkan data ke view
+        $data = [
+            'saldo_terakhir' => $saldo_terakhir,
+         'kas' => $this->KasModel
+    ->where('jenis_transaksi', 'pengeluaran')
+    ->orderBy('id_kas', 'ASC')
+    ->findAll(),
+
+            'title' => 'Data Pemasukan',
+        ];
+        // dd($data);
+        return view('Admin/Kas/Index', $data);
+    }
 
     public function tambahKas()
     {
@@ -4013,10 +4049,18 @@ class Admin extends BaseController
         // Ambil saldo terakhir dari transaksi kas terbaru
         $latest_kas = $this->KasModel->orderBy('id_kas', 'DESC')->first();
         $saldo_terakhir = $latest_kas ? floatval($latest_kas['saldo_terakhir']) : 0;
-
+        $tanggal = $this->request->getPost('tanggal');
+        if ($tanggal) {
+            // Misalnya, $tanggal berasal dari input dalam format 'YYYY-MM-DD'
+            // Kita bisa menggunakan DateTime untuk memastikan format yang benar
+            $tanggalObj = new \DateTime($tanggal); // Membuat objek DateTime dari input
+            $formattedTanggal = $tanggalObj->format('Y-m-d H:i:s'); // Format ke 'YYYY-MM-DD HH:MM:SS'
+        } else {
+            $formattedTanggal = null; // Jika tidak ada tanggal, set null
+        }
         // Ambil data dari request
         $data = [
-            'tanggal' => $this->request->getPost('tanggal'),
+            'tanggal' => $formattedTanggal, 
             'jenis_transaksi' => $this->request->getPost('jenis_transaksi'),
             'keterangan' => $this->request->getPost('keterangan'),
         ];
@@ -4040,7 +4084,7 @@ class Admin extends BaseController
         $this->KasModel->insert($data);
 
         // Redirect ke halaman daftar kas dengan pesan sukses
-        return redirect()->to('/Admin/kas')->with('pesanBerhasil', 'Data kas berhasil ditambahkan.');
+        return redirect()->to('/Admin/saldo')->with('pesanBerhasil', 'Data kas berhasil ditambahkan.');
     }
 
     // Fungsi untuk menghitung saldo terakhir
@@ -4277,7 +4321,7 @@ class Admin extends BaseController
         // Prepare data for pembayaran_piutang table
         $insertData = [
             'id_piutang' => $id_piutang,
-            'tanggal_pembayaran' =>  date('Y-m-d H:i:s'), // Tanggal pembayaran saat ini
+            'tanggal_pembayaran' => date('Y-m-d H:i:s'), // Tanggal pembayaran saat ini
             'jumlah_pembayaran' => $jumlahUang,
         ];
 
@@ -4337,7 +4381,7 @@ class Admin extends BaseController
         // Prepare data for pembayaran_piutang table
         $insertData = [
             'id_piutang' => $id_piutang,
-            'tanggal_pembayaran' =>  date('Y-m-d H:i:s'), // Tanggal pembayaran saat ini
+            'tanggal_pembayaran' => date('Y-m-d H:i:s'), // Tanggal pembayaran saat ini
             'jumlah_pembayaran' => $sisaPiutang,
         ];
 
@@ -4365,7 +4409,7 @@ class Admin extends BaseController
         $saldo_terakhir = $latest_kas ? $latest_kas['saldo_terakhir'] : 0;
 
         $data_pembayaran = [
-            'tanggal' =>  date('Y-m-d H:i:s'),
+            'tanggal' => date('Y-m-d H:i:s'),
             'jenis_transaksi' => 'penerimaan', // Tipe transaksi, misalnya penerimaan
             'keterangan' => 'Pembayaran piutang', // Keterangan transaksi
             'jumlah_awal' => $saldo_terakhir,
@@ -4416,7 +4460,7 @@ class Admin extends BaseController
         // menambahkan ke pembayaran piutang
         $insertData = [
             'id_piutang' => $id_piutang,
-            'tanggal_pembayaran' =>  date('Y-m-d H:i:s'), // Tanggal pembayaran saat ini
+            'tanggal_pembayaran' => date('Y-m-d H:i:s'), // Tanggal pembayaran saat ini
             'jumlah_pembayaran' => $sisaPiutang, // Jumlah pembayaran yang dilakukan
         ];
 
@@ -4445,7 +4489,7 @@ class Admin extends BaseController
         $saldo_terakhir = $latest_kas ? $latest_kas['saldo_terakhir'] : 0;
 
         $data_pembayaran = [
-            'tanggal' =>  date('Y-m-d H:i:s'),
+            'tanggal' => date('Y-m-d H:i:s'),
             'jenis_transaksi' => 'penerimaan', // Tipe transaksi, misalnya penerimaan
             'keterangan' => 'Pembayaran piutang', // Keterangan transaksi
             'jumlah_awal' => $saldo_terakhir,
@@ -4464,7 +4508,6 @@ class Admin extends BaseController
         // Redirect to view or another page after payment
         return redirect()->to('/PenjualanBarangCont/piutang');
     }
-
 
     // PAKET
     public function paket()
@@ -4505,7 +4548,7 @@ class Admin extends BaseController
             $kodePaket = $prefix . $randomNumber;
             // Cek apakah kode sudah ada di database
             $exists = $this->paketModel->where('kode_paket', $kodePaket)->first();
-        } while ($exists);  // Ulangi jika kode sudah ada
+        } while ($exists); // Ulangi jika kode sudah ada
 
         // Data yang akan disimpan
         $data = [
@@ -4593,7 +4636,7 @@ class Admin extends BaseController
         return redirect()->to('/Admin/paket');
     }
 
-    //pelanggan 
+    //pelanggan
     public function tambah_pelanggan()
     {
         $data = [
@@ -4685,7 +4728,6 @@ class Admin extends BaseController
         // Pindahkan file foto KTP ke folder yang ditentukan
         $fotoKTP->move('uploads/foto_ktp', $namaFile);
 
-
         $kodePaket = $this->request->getPost('kode_paket');
         $tglPasang = $this->request->getPost('tgl_pasang');
         $statusPelanggan = $this->request->getPost('status_pelanggan');
@@ -4727,7 +4769,7 @@ class Admin extends BaseController
                     'status_tagihan' => 'Belum Dibayar',
                 ];
 
-                // dd($dataTagihan);    
+                // dd($dataTagihan);
                 $this->tagihanModel->insert($dataTagihan);
             }
 
@@ -4756,7 +4798,6 @@ class Admin extends BaseController
     //         'tagihan' => $query->getResultArray(),
     //     ];
 
-
     //     // dd($data['tagihan']);
     //     return view('Admin/Tagihan/Index', $data);
     // }
@@ -4777,7 +4818,7 @@ class Admin extends BaseController
 
         // Siapkan data yang akan dikirim ke view untuk laporan
         $data = [
-            'title'   => 'Laporan Tagihan',
+            'title' => 'Laporan Tagihan',
             'tagihan' => $tagihanData, // Mengirim data tagihan ke view
         ];
         // dd($data);
@@ -4804,27 +4845,27 @@ class Admin extends BaseController
     public function cetakTagihanById($id)
     {
         $tagihanModel = new tagihanModel();
-    
+
         $query = $tagihanModel->builder()
             ->select('tagihan.*, pelanggan_wifi.nama, pelanggan_wifi.alamat, pelanggan_wifi.no_hp, pelanggan_wifi.nik, paket.nama_paket, paket.harga')
             ->join('pelanggan_wifi', 'tagihan.pelanggan_id = pelanggan_wifi.id', 'left')
             ->join('paket', 'tagihan.kode_paket = paket.kode_paket', 'left')
             ->where('tagihan.id', $id)
             ->get();
-    
+
         $tagihanData = $query->getRowArray();
-    
+
         if (!$tagihanData) {
             return redirect()->to('/admin/tagihan')->with('error', 'Tagihan tidak ditemukan.');
         }
-    
+
         $data = [
-            'title'   => 'Nota Tagihan',
+            'title' => 'Nota Tagihan',
             'tagihan' => $tagihanData,
         ];
-    
+
         $html = view('Admin/Tagihan/Nota_tagihan', $data);
-    
+
         // $mpdf = new \Mpdf\Mpdf([
         //     'format' => [105, 105],  // Ukuran kertas 10.5 cm x 10.5 cm
         //     'orientation' => 'P',
@@ -4834,24 +4875,23 @@ class Admin extends BaseController
         //     'margin_right' => 2, // Margin kanan minimal
         // ]);
         $mpdf = new \Mpdf\Mpdf([
-            'format' => [58, 50],  // Ukuran kertas 58 mm x 50 mm
+            'format' => [58, 50], // Ukuran kertas 58 mm x 50 mm
             'orientation' => 'P',
-            'margin_top' => 1,  // Margin atas minimal
+            'margin_top' => 1, // Margin atas minimal
             'margin_bottom' => 1, // Margin bawah minimal
             'margin_left' => 1, // Margin kiri minimal
             'margin_right' => 1, // Margin kanan minimal
         ]);
         $mpdf->showImageErrors = true;
-    
+
         // Menulis HTML ke file PDF
         $mpdf->WriteHtml($html);
-    
+
         // Mengirimkan file PDF ke browser
         $this->response->setHeader('Content-Type', 'application/pdf');
         $mpdf->Output('Nota_Tagihan_' . $id . '.pdf', 'I');
     }
-    
-    
+
     public function tagihan()
     {
         // Membuat instance model tagihan
@@ -4877,7 +4917,6 @@ class Admin extends BaseController
             ->where('tagihan.tanggal_tagihan <=', date('Y-m-d')) // Hari ini
             ->get();
 
-
         $pelanggan = $queryForNewTagihan->getResultArray();
 
         // Periksa apakah ada pelanggan yang perlu dibuatkan tagihan baru
@@ -4889,14 +4928,14 @@ class Admin extends BaseController
                     ->where('status_tagihan', 'Belum Dibayar')
                     ->first(); // Mengambil data pertama yang ditemukan
 
-                if (!$existingTagihan) {  // Jika tagihan belum ada
+                if (!$existingTagihan) { // Jika tagihan belum ada
                     // Pastikan harga sudah ada dalam hasil query
                     $dataTagihanBaru = [
-                        'pelanggan_id'    => $p['pelanggan_id'],
-                        'kode_paket'      => $p['kode_paket'],
+                        'pelanggan_id' => $p['pelanggan_id'],
+                        'kode_paket' => $p['kode_paket'],
                         'tanggal_tagihan' => date('Y-m-d', strtotime('+30 days', strtotime($p['tanggal_tagihan']))),
-                        'jumlah_tagihan'  => $p['harga'],  // Pastikan harga dari paket digunakan
-                        'status_tagihan'  => 'Belum Dibayar',
+                        'jumlah_tagihan' => $p['harga'], // Pastikan harga dari paket digunakan
+                        'status_tagihan' => 'Belum Dibayar',
                     ];
 
                     // Simpan tagihan baru
@@ -4910,7 +4949,7 @@ class Admin extends BaseController
 
         // Kirimkan data ke view
         $data = [
-            'title'   => 'Paket Wifi',
+            'title' => 'Paket Wifi',
             'tagihan' => $tagihanData, // Pastikan variabelnya konsisten
         ];
 // dd($data);
@@ -4936,7 +4975,7 @@ class Admin extends BaseController
 
         // Kirimkan data ke view
         $data = [
-            'title'   => 'Paket Wifi',
+            'title' => 'Paket Wifi',
             'tagihan' => $tagihanData,
         ];
 
@@ -4961,7 +5000,7 @@ class Admin extends BaseController
 
         // Kirimkan data ke view
         $data = [
-            'title'   => 'Paket Wifi',
+            'title' => 'Paket Wifi',
             'tagihan' => $tagihanData,
         ];
 

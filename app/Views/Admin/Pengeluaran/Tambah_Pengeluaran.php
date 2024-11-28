@@ -70,7 +70,7 @@ $lastBalance = $KasModel->getLastBalance(); // Misalnya Anda punya fungsi untuk 
                                 <div id="selectKeterangan">
                                     <select id="keterangan" class="form-control" required>
                                         <option value="">Pilih Keterangan</option>
-                                        <option value="gaji">Gaji</option>
+                                        <option value="bayar teknisi">Bayar Teknisi</option>
                                         <option value="listrik">Listrik</option>
                                         <option value="air">Air</option>
                                         <option value="lainnya">Lainnya</option>
@@ -117,7 +117,7 @@ $lastBalance = $KasModel->getLastBalance(); // Misalnya Anda punya fungsi untuk 
                 // Sembunyikan select dan tampilkan input
                 $('#selectKeterangan').hide();
                 $('#inputKeterangan').show();
-                $('#keteranganInput').val(' '); // Awalan
+                $('#keteranganInput').val('lainnya : '); // Awalan
             } else {
                 // Pastikan select tetap terlihat jika bukan "Lainnya"
                 $('#selectKeterangan').show();

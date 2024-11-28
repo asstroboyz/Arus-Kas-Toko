@@ -5,23 +5,23 @@
 
 
     <!-- Flash Message -->
-    <?php if (session()->getFlashdata('error-msg')) : ?>
-    <div class="row">
-        <div class="col-12">
-            <div class="alert alert-danger" role="alert">
-                <?= session()->getFlashdata('error-msg'); ?>
+    <?php if (session()->getFlashdata('error-msg')): ?>
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    <?= session()->getFlashdata('error-msg'); ?>
+                </div>
             </div>
         </div>
-    </div>
     <?php endif; ?>
-    <?php if (session()->getFlashdata('msg')) : ?>
-    <div class="row">
-        <div class="col-12">
-            <div class="alert alert-success" role="alert">
-                <?= session()->getFlashdata('msg'); ?>
+    <?php if (session()->getFlashdata('msg')): ?>
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-success" role="alert">
+                    <?= session()->getFlashdata('msg'); ?>
+                </div>
             </div>
         </div>
-    </div>
     <?php endif; ?>
 
     <div class="row">
@@ -38,9 +38,10 @@
 
                             <!-- Tanggal -->
                             <div class="form-group">
-                                <label for="tanggal">Tanggal</label>
-                                <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                                <label for="tanggal">Tanggal dan Waktu</label>
+                                <input type="datetime-local" class="form-control" id="tanggal" name="tanggal" required>
                             </div>
+
 
                             <!-- Jenis Transaksi -->
                             <div class="form-group">

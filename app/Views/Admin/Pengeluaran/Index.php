@@ -37,7 +37,8 @@
                                 <tr>
                                     <td><?= $index + 1; ?></td>
                                     <td><?= date('d M Y', strtotime($data['tanggal'])); ?></td>
-                                    <td><?= $data['keterangan']; ?></td>
+                                    <td><?= str_ireplace('lainnya :', '', $data['keterangan']); ?></td>
+
                                     <td><?= "Rp " . number_format($data['jumlah'], 0, ',', '.'); ?></td>
                                 </tr>
                                 <?php endforeach; ?>
