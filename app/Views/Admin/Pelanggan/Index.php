@@ -1,20 +1,20 @@
-<?= $this->extend('Admin/Templates/Index') ?>
-<?= $this->section('page-content'); ?>
+<?=$this->extend('Admin/Templates/Index')?>
+<?=$this->section('page-content');?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-900"></h1>
 
 
-    <?php if (session()->has('PesanBerhasil')) : ?>
+    <?php if (session()->has('PesanBerhasil')): ?>
         <div class="alert alert-success" role="alert">
-            <?= session('PesanBerhasil') ?>
+            <?=session('PesanBerhasil')?>
         </div>
-    <?php elseif (session()->has('PesanGagal')) : ?>
+    <?php elseif (session()->has('PesanGagal')): ?>
         <div class="alert alert-danger" role="alert">
-            <?= session('PesanGagal') ?>
+            <?=session('PesanGagal')?>
         </div>
-    <?php endif; ?>
+    <?php endif;?>
 
 
     <div class="row">
@@ -53,47 +53,68 @@
                 </tr>
             </tfoot>
             <tbody>
-                <?php if ($pelanggan) { ?>
-                    <?php foreach ($pelanggan as $num => $data) { ?>
+                <?php if ($pelanggan) {?>
+                    <?php foreach ($pelanggan as $num => $data) {?>
                         <tr>
                             <td style="text-align:center;">
-                                <?= $num + 1; ?>
+                                <?=$num + 1;?>
                             </td>
                             <td style="white-space: nowrap;">
-                                <?= $data['nama']; ?>
+                                <?=$data['nama'];?>
                             </td>
                             <td>
-                                <?= $data['no_hp']; ?>
+                                <?=$data['no_hp'];?>
                             </td>
                             <td>
-                                <?= $data['alamat']; ?>
+                                <?=$data['alamat'];?>
                             </td>
                             <td>
-                                <?= $data['nik']; ?>
+                                <?=$data['nik'];?>
                             </td>
                             <td>
-                                <img src="<?= base_url('uploads/foto_ktp/' . $data['foto_ktp']); ?>" alt="Foto KTP" style="width: 100px; height: auto;">
+                             <!-- Link untuk membuka modal -->
+                    <a href="#" data-toggle="modal" data-target="#modalFoto<?=$data['id'];?>">
+                       <img src="<?= base_url('uploads/foto_ktp/' . $data['foto_ktp']); ?>" alt="Foto KTP" style="width: 100px; height: auto;">
+                   
+                    <!-- Modal dengan ID dinamis -->
+                    <div class="modal fade" id="modalFoto<?=$data['id'];?>" tabindex="-1" role="dialog" aria-labelledby="modalFotoLabel<?=$data['id'];?>" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalFotoLabel<?=$data['id'];?>">Foto KTP</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body p-0">
+                                    <img src="<?=base_url('uploads/foto_ktp/' . $data['foto_ktp']);?>"
+                                         class="img-fluid w-100 rounded"
+                                         alt="Foto KTP <?=$data['nama'];?>" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                             </td>
                             <td>
-                                <?= $data['nama_paket']; ?>
+                                <?=$data['nama_paket'];?>
                             </td>
                             <td style="text-align:center;">
-                                <a href="/Admin/pelanggan_edit/<?= $data['id'] ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                <a href="/Admin/pelanggan_edit/<?=$data['id']?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                 <a href="#" class="btn btn-danger btn-delete" data-toggle="modal"
                                     data-target="#modalKonfirmasiDelete"
-                                    data-delete-url="<?= site_url('/Admin/pelanggan_delete/' . $data['id']) ?>">
+                                    data-delete-url="<?=site_url('/Admin/pelanggan_delete/' . $data['id'])?>">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
-                    <?php } ?>
-                <?php } else { ?>
+                    <?php }?>
+                <?php } else {?>
                     <tr>
                         <td colspan="8">
                             <h3 class="text-gray-900 text-center">Data belum ada.</h3>
                         </td>
                     </tr>
-                <?php } ?>
+                <?php }?>
             </tbody>
         </table>
     </div>
@@ -126,8 +147,8 @@
         </div>
     </div>
 </div>
-<?= $this->endSection(); ?>
-<?= $this->section('additional-js'); ?>
+<?=$this->endSection();?>
+<?=$this->section('additional-js');?>
 <script>
     window.setTimeout(function() {
         $(".alert").fadeTo(500, 0).slideUp(500, function() {
@@ -142,4 +163,4 @@
         $('#modalKonfirmasiDelete').modal('show');
     });
 </script>
-<?= $this->endSection(); ?>
+<?=$this->endSection();?>

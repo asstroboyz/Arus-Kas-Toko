@@ -1,0 +1,56 @@
+CRITICAL - 2024-11-26 13:25:33 --> number_format(): Argument #1 ($num) must be of type float, string given
+#0 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Views\Admin\Paket\Index.php(55): number_format('', 0, ',', '.')
+#1 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\View\View.php(210): include('C:\\Users\\E-RM7\\...')
+#2 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Common.php(1089): CodeIgniter\View\View->render('Admin/Paket/Ind...', Array, true)
+#4 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Controllers\Admin.php(4421): view('Admin/Paket/Ind...', Array)
+#5 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(832): App\Controllers\Admin->paket()
+#6 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
+#10 {main}
+CRITICAL - 2024-11-26 13:25:38 --> number_format(): Argument #1 ($num) must be of type float, string given
+#0 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Views\Admin\Paket\Index.php(55): number_format('', 0, ',', '.')
+#1 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\View\View.php(210): include('C:\\Users\\E-RM7\\...')
+#2 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Common.php(1089): CodeIgniter\View\View->render('Admin/Paket/Ind...', Array, true)
+#4 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Controllers\Admin.php(4421): view('Admin/Paket/Ind...', Array)
+#5 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(832): App\Controllers\Admin->paket()
+#6 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
+#10 {main}
+CRITICAL - 2024-11-26 16:53:16 --> Invalid file: Admin/Tagihan/Lap_tagihan.php
+#0 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('Admin/Tagihan/L...')
+#1 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Common.php(1089): CodeIgniter\View\View->render('Admin/Tagihan/L...', Array, true)
+#2 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Controllers\Admin.php(4730): view('Admin/Tagihan/L...', Array)
+#3 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(832): App\Controllers\Admin->cetakTagihan()
+#4 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#5 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
+#8 {main}
+CRITICAL - 2024-11-26 17:21:41 --> Invalid file: Admin/Tagihan/Lap_tagihan.php
+#0 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('Admin/Tagihan/L...')
+#1 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Common.php(1089): CodeIgniter\View\View->render('Admin/Tagihan/L...', Array, true)
+#2 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Controllers\Admin.php(4730): view('Admin/Tagihan/L...', Array)
+#3 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(832): App\Controllers\Admin->cetakTagihan()
+#4 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#5 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
+#8 {main}
+CRITICAL - 2024-11-26 17:28:40 --> Undefined array key "id"
+#0 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Views\Admin\Tagihan\Index.php(129): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array...', 'C:\\Users\\E-RM7\\...', 129)
+#1 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\View\View.php(210): include('C:\\Users\\E-RM7\\...')
+#2 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Common.php(1089): CodeIgniter\View\View->render('Admin/Tagihan/I...', Array, true)
+#4 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Controllers\Admin.php(4860): view('Admin/Tagihan/I...', Array)
+#5 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(832): App\Controllers\Admin->tagihan()
+#6 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
+#10 {main}

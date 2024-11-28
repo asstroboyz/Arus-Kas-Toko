@@ -1,0 +1,64 @@
+ERROR - 2024-08-12 20:48:30 --> Table 'toko_hera.kas' doesn't exist
+CRITICAL - 2024-08-12 20:48:30 --> Table 'toko_hera.kas' doesn't exist
+#0 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\MySQLi\Connection.php(292): mysqli->query('SELECT SUM(`jum...', 0)
+#1 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseConnection.php(670): CodeIgniter\Database\MySQLi\Connection->execute('SELECT SUM(`jum...')
+#2 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseConnection.php(598): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT SUM(`jum...')
+#3 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT SUM(`jum...', Array, false)
+#4 C:\Users\ganda\Documents\GitHub\Hera After sidang\app\Controllers\Admin.php(141): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(832): App\Controllers\Admin->index()
+#6 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\Users\ganda\Documents\GitHub\Hera After sidang\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\ganda\\...')
+#10 {main}
+ERROR - 2024-08-12 20:48:56 --> Unknown column 'jumlah' in 'field list'
+CRITICAL - 2024-08-12 20:48:56 --> Unknown column 'jumlah' in 'field list'
+#0 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\MySQLi\Connection.php(292): mysqli->query('SELECT SUM(`jum...', 0)
+#1 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseConnection.php(670): CodeIgniter\Database\MySQLi\Connection->execute('SELECT SUM(`jum...')
+#2 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseConnection.php(598): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT SUM(`jum...')
+#3 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT SUM(`jum...', Array, false)
+#4 C:\Users\ganda\Documents\GitHub\Hera After sidang\app\Controllers\Admin.php(141): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(832): App\Controllers\Admin->index()
+#6 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\Users\ganda\Documents\GitHub\Hera After sidang\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\ganda\\...')
+#10 {main}
+ERROR - 2024-08-12 20:51:20 --> Unknown column 'jumlah' in 'field list'
+CRITICAL - 2024-08-12 20:51:20 --> Unknown column 'jumlah' in 'field list'
+#0 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\MySQLi\Connection.php(292): mysqli->query('SELECT SUM(`jum...', 0)
+#1 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseConnection.php(670): CodeIgniter\Database\MySQLi\Connection->execute('SELECT SUM(`jum...')
+#2 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseConnection.php(598): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT SUM(`jum...')
+#3 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT SUM(`jum...', Array, false)
+#4 C:\Users\ganda\Documents\GitHub\Hera After sidang\app\Controllers\Admin.php(148): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(832): App\Controllers\Admin->index()
+#6 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\Users\ganda\Documents\GitHub\Hera After sidang\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\ganda\\...')
+#10 {main}
+ERROR - 2024-08-12 20:57:30 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`jumlah_akhir`) AS `total_keluar`
+FROM `kas_toko`
+WHERE `jenis_transaksi` = '...' at line 1
+CRITICAL - 2024-08-12 20:57:30 --> You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`jumlah_akhir`) AS `total_keluar`
+FROM `kas_toko`
+WHERE `jenis_transaksi` = '...' at line 1
+#0 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\MySQLi\Connection.php(292): mysqli->query('SELECT SUM(`jum...', 0)
+#1 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseConnection.php(670): CodeIgniter\Database\MySQLi\Connection->execute('SELECT SUM(`jum...')
+#2 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseConnection.php(598): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT SUM(`jum...')
+#3 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT SUM(`jum...', Array, false)
+#4 C:\Users\ganda\Documents\GitHub\Hera After sidang\app\Controllers\Admin.php(148): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(832): App\Controllers\Admin->index()
+#6 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\Users\ganda\Documents\GitHub\Hera After sidang\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\ganda\\...')
+#10 {main}
+CRITICAL - 2024-08-12 21:02:03 --> syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING)
+#0 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Router\Router.php(175): CodeIgniter\Router\Router->autoRoute('admin')
+#1 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(726): CodeIgniter\Router\Router->handle('admin')
+#2 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(368): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\Users\ganda\Documents\GitHub\Hera After sidang\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\Users\ganda\Documents\GitHub\Hera After sidang\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\ganda\\...')
+#6 {main}
