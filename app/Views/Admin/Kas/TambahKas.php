@@ -28,7 +28,7 @@
         <div class="col-lg-6">
             <div class="card shadow">
                 <div class="card-header">
-                    <a href="/Admin/kas">&laquo; Kembali ke daftar kas</a>
+                    <a href="/Admin/pemasukan">&laquo; Kembali ke daftar pemasukan</a>
                 </div>
                 <div class="card-body">
                     <!-- Form Tambah Kas -->

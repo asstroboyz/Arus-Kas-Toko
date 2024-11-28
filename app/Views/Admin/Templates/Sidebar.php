@@ -141,7 +141,7 @@
             <i class="fas fa-chart-line"></i>
             <span>Perkiraan Penjualan</span>
         </a>
-    </li>
+    </li>-->
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#laporanMenu" aria-expanded="true"
@@ -151,21 +151,21 @@
         </a>
         <div id="laporanMenu" class="collapse" aria-labelledby="headingLaporan" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" style="font-size: 16px;"
+                <!-- <a class="collapse-item" style="font-size: 16px;"
                     href="<?= base_url('Admin/lap_barang'); ?>">Laporan
-                    Persediaan</a>
+                    Persediaan</a> -->
                 <a class="collapse-item" style="font-size: 16px;"
                     href="<?= base_url('Admin/lap_arus_kas'); ?>">Laporan
                     Arus Kas</a>
                 <a class="collapse-item" style="font-size: 16px;"
                     href="<?= base_url('Admin/lap_laba_rugi'); ?>">Laporan
                     Laba Rugi</a>
-                <a class="collapse-item" style="font-size: 16px;"
+                <!-- <a class="collapse-item" style="font-size: 16px;"
                     href="<?= base_url('Admin/lap_analisa_arus_kas'); ?>">Laporan
-                    Analisa Arus Kas</a>
+                    Analisa Arus Kas</a> -->
             </div>
         </div>
-    </li> -->
+    </li> 
 
     <!-- Logout -->
     <li class="nav-item">

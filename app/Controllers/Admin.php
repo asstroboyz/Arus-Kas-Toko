@@ -1019,13 +1019,13 @@ class Admin extends BaseController
         return view('Admin/Barang/Index', $data);
     }
 
-    public function pemasukan()
+    public function pemasukana()
     {
         $model = new KasModel();
         $data['kas'] = $model->findAll(); // Mengambil semua data pengeluaran dari tabel pengeluaran
 
         $saldoModel = new SaldoModel();
-        $data['kas'] = $saldoModel->orderBy('id', 'DESC')->first(); // Mengambil saldo terakhir dari tabel saldo
+        $data['kas'] = $saldoModel->orderBy('id', 'DESC')->first(); 
 
         $data['riwayat_saldo'] = $this->db->table('riwayat_saldo')->get()->getResultArray(); // Mengambil semua data dari tabel riwayat saldo
 
@@ -3957,7 +3957,7 @@ class Admin extends BaseController
     }
 
     //kas
-    public function kas()
+    public function pemasukan()
     {
         // Mendapatkan data kas terbaru
         $latest_kas = $this->KasModel->orderBy('id_kas', 'DESC')->first();
@@ -3974,7 +3974,7 @@ class Admin extends BaseController
         $data = [
             'saldo_terakhir' => $saldo_terakhir,
             'kas' => $this->KasModel->orderBy('id_kas', 'ASC')->findAll(),
-            'title' => 'Data Kas',
+            'title' => 'Data Pemasukan',
         ];
 
         return view('Admin/Kas/Index', $data);

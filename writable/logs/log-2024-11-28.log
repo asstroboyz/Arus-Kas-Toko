@@ -51,3 +51,46 @@ CRITICAL - 2024-11-28 08:10:41 --> Undefined array key "foto_ktp"
 #8 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
 #9 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
 #10 {main}
+ERROR - 2024-11-28 08:20:12 --> Table 'toko_hera.saldo' doesn't exist
+CRITICAL - 2024-11-28 08:20:12 --> Table 'toko_hera.saldo' doesn't exist
+#0 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\BaseConnection.php(670): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\BaseConnection.php(598): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Model.php(210): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\BaseModel.php(622): CodeIgniter\Model->doFirst()
+#6 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Controllers\Admin.php(1028): CodeIgniter\BaseModel->first()
+#7 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(832): App\Controllers\Admin->pemasukan()
+#8 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#11 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
+#12 {main}
+ERROR - 2024-11-28 08:21:04 --> Table 'toko_hera.saldo' doesn't exist
+CRITICAL - 2024-11-28 08:21:04 --> Table 'toko_hera.saldo' doesn't exist
+#0 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\BaseConnection.php(670): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\BaseConnection.php(598): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Model.php(210): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\BaseModel.php(622): CodeIgniter\Model->doFirst()
+#6 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Controllers\Admin.php(1028): CodeIgniter\BaseModel->first()
+#7 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(832): App\Controllers\Admin->pemasukan()
+#8 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#11 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
+#12 {main}
+ERROR - 2024-11-28 08:21:30 --> Table 'toko_hera.riwayat_saldo' doesn't exist
+CRITICAL - 2024-11-28 08:21:30 --> Table 'toko_hera.riwayat_saldo' doesn't exist
+#0 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\BaseConnection.php(670): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\BaseConnection.php(598): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Controllers\Admin.php(1030): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(832): App\Controllers\Admin->pemasukan()
+#6 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
+#10 {main}

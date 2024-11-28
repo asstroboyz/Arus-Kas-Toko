@@ -17,7 +17,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-black text-uppercase mb-1">
-                                Kas Saat Ini
+                                Saldo Saat Ini
                             </div>
                             <?php if (isset($saldo_terakhir)) : ?>
                             <div class="h5 mb-0 font-weight-bold text-black">
@@ -40,7 +40,7 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                     <h3 class="m-0 font-weight-bold text-primary">Daftar Kas</h3>
-                    <a href="/Admin/tambahKas" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Kas</a>
+                    <a href="/Admin/tambahKas" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Pemasukan</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
