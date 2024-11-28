@@ -123,7 +123,7 @@ class Admin extends BaseController
     //     $totalPenjualan24Jam = $this->db->table('penjualan_barang')->where('tanggal_penjualan >=', $waktu24JamYangLalu)->countAllResults();
 
     //     $data = [
-    //         'title' => 'Toko Hera - Home',
+    //         'title' => 'VIP NET - Home',
     //         'saldo_terakhir' => $saldoTerakhir,
     //         'stokdibawah10' => $stokdibawah10,
     //         'totalPenjualan24Jam' => $totalPenjualan24Jam,
@@ -137,11 +137,9 @@ class Admin extends BaseController
         $latestKas = $this->KasModel->orderBy('id_kas', 'DESC')->first();
         $saldoTerakhir = $latestKas ? $latestKas['saldo_terakhir'] : 0;
 
-        $queryBarangStokDibawah10 = $this->db->table('barang')->where('stok <', 10)->get()->getResult();
-        $stokdibawah10 = count($queryBarangStokDibawah10);
 
         $waktu24JamYangLalu = date('Y-m-d H:i:s', strtotime('-24 hours'));
-        $totalPenjualan24Jam = $this->db->table('penjualan_barang')->where('tanggal_penjualan >=', $waktu24JamYangLalu)->countAllResults();
+
 
         // $totalKasMasuk = $this->db->table('kas_toko')
         // ->selectSum('jumlah_akhir')
@@ -155,7 +153,7 @@ class Admin extends BaseController
             ->get()
             ->getRow()->total_masuk;
 
-// Kas Keluar (Menggunakan ABS untuk memastikan hasilnya selalu positif)
+        // Kas Keluar (Menggunakan ABS untuk memastikan hasilnya selalu positif)
         $totalKasKeluar = $this->db->table('kas_toko')
             ->select('SUM(ABS(jumlah_awal - jumlah_akhir)) AS total_keluar', false)
             ->where('jenis_transaksi', 'pengeluaran')
@@ -167,8 +165,7 @@ class Admin extends BaseController
         //     FROM kas_toko
         //     WHERE jenis_transaksi = 'pengeluaran'
         // ")->getRow()->total_keluar;
-        $dataPenjualan = $this->PenjualanBarangModel->getAllSales(); // Mengambil semua data penjualan
-        // dd($dataPenjualan);
+
         $pelangganWifiModel = new pelangganWifiModel();
 
         // Hitung pelanggan aktif
@@ -181,13 +178,11 @@ class Admin extends BaseController
         $totalByStatus = $pelangganWifiModel->countPelangganByStatus();
 
         $data = [
-            'title' => 'Toko Hera - Home',
+            'title' => 'VIP NET - Home',
             'saldo_terakhir' => $saldoTerakhir,
-            'stokdibawah10' => $stokdibawah10,
             'totalKasMasuk' => $totalKasMasuk,
             'totalKasKeluar' => $totalKasKeluar,
-            'totalPenjualan24Jam' => $totalPenjualan24Jam,
-            'dataPenjualan' => $dataPenjualan,
+
             'totalPelangganAktif' => $totalPelangganAktif,
             'totalPelangganTidakAktif' => $totalPelangganTidakAktif,
             'totalByStatus' => $totalByStatus,
@@ -214,7 +209,7 @@ class Admin extends BaseController
 
     public function detail($id = 0)
     {
-        $data['title'] = 'Toko Hera - Detail Pengguna';
+        $data['title'] = 'VIP NET - Detail Pengguna';
 
         $this->builder->select('users.id as userid, username, email, foto, name,created_at');
         $this->builder->join('auth_groups_users', 'auth_groups_users.user_id = users.id');
@@ -273,7 +268,7 @@ class Admin extends BaseController
         $data = [
             // 'semua' => $semua,
             'user' => $query->getRow(),
-            'title' => 'Profil - Toko Hera',
+            'title' => 'Profil - VIP NET',
             'role' => $role_echo,
 
         ];
@@ -954,7 +949,7 @@ class Admin extends BaseController
         $barangList = $this->BarangModel->getBarang();
 
         $data = [
-            'title' => "Toko Hera Ubah Data Permintaan",
+            'title' => "VIP NET Ubah Data Permintaan",
             'validation' => \Config\Services::validation(),
             'barangList' => $barangList,
             'permintaan' => $this->detailPermintaanModel->getDetailPermintaan($id),
@@ -1141,7 +1136,7 @@ class Admin extends BaseController
         });
 
         $data = [
-            'title' => 'Toko Hera - Barang',
+            'title' => 'VIP NET - Barang',
             'barangs' => $barangsNotRestored,
         ];
 
@@ -1636,7 +1631,7 @@ class Admin extends BaseController
     {
         $data = [
             // 'user'=> $query->getResult(),
-            'title' => 'Toko Hera - Laporan',
+            'title' => 'VIP NET - Laporan',
 
         ];
 
@@ -2031,7 +2026,7 @@ class Admin extends BaseController
     {
         $data = [
             // 'user'=> $query->getResult(),
-            'title' => 'Toko Hera - Laporan',
+            'title' => 'VIP NET - Laporan',
 
         ];
 
@@ -2042,7 +2037,7 @@ class Admin extends BaseController
     {
         $data = [
             // 'user'=> $query->getResult(),
-            'title' => 'Toko Hera - Laporan',
+            'title' => 'VIP NET - Laporan',
 
         ];
 
@@ -2052,7 +2047,7 @@ class Admin extends BaseController
     {
         $data = [
             // 'user'=> $query->getResult(),
-            'title' => 'Toko Hera - Laporan',
+            'title' => 'VIP NET - Laporan',
 
         ];
 
@@ -2065,7 +2060,7 @@ class Admin extends BaseController
     public function lap_barang()
     {
         $data = [
-            'title' => 'Toko Hera - Laporan Barang',
+            'title' => 'VIP NET - Laporan Barang',
         ];
 
         return view('Admin/Laporan/Home_barang', $data);
@@ -2073,7 +2068,7 @@ class Admin extends BaseController
     public function lap_arus_kas()
     {
         $data = [
-            'title' => 'Toko Hera - Laporan Arus Kas',
+            'title' => 'VIP NET - Laporan Arus Kas',
         ];
 
         return view('Admin/Laporan/Home_arus', $data);
@@ -2081,7 +2076,7 @@ class Admin extends BaseController
     public function lap_analisa_arus_kas()
     {
         $data = [
-            'title' => 'Toko Hera - Laporan Analisa arus kas',
+            'title' => 'VIP NET - Laporan Analisa arus kas',
         ];
 
         return view('Admin/Laporan/Home_analisa', $data);
@@ -2089,7 +2084,7 @@ class Admin extends BaseController
     public function lap_laba_rugi()
     {
         $data = [
-            'title' => 'Toko Hera - Laporan Laba rugi',
+            'title' => 'VIP NET - Laporan Laba rugi',
         ];
 
         return view('Admin/Laporan/Home_laba', $data);
@@ -3035,7 +3030,7 @@ class Admin extends BaseController
     {
 
         $data = [
-            'title' => 'Toko Hera - Tambah Users',
+            'title' => 'VIP NET - Tambah Users',
         ];
         return view('/Admin/User/Tambah', $data);
     }
@@ -4962,7 +4957,7 @@ class Admin extends BaseController
             'title' => 'Paket Wifi',
             'tagihan' => $tagihanData, // Pastikan variabelnya konsisten
         ];
-// dd($data);
+        // dd($data);
         // Tampilkan halaman dengan data tagihan
         return view('Admin/Tagihan/Index', $data);
     }
@@ -5017,4 +5012,118 @@ class Admin extends BaseController
         // Tampilkan halaman dengan data tagihan
         return view('Admin/Tagihan/Index', $data);
     }
+
+    // public function bayarTagihan($id)
+    // {
+    //     // Load the models
+    //     $tagihanModel = new TagihanModel();
+    //     $kasTokoModel = new KasModel();
+
+    //     // Start a transaction to ensure that both updates happen together
+    //     // Start a transaction to ensure that both updates happen together
+    //     $this->db->transStart();
+
+    //     // Fetch the tagihan data first
+    //     $tagihan = $tagihanModel->find($id);
+
+    //     if (!$tagihan) {
+    //         // If no tagihan is found, show an error message
+    //         return redirect()->to('/Admin/tagihan')->with('error', 'Tagihan tidak ditemukan');
+    //     }
+
+    //     // Fetch the latest 'kas_toko' record to get the saldo_terakhir
+    //     $latest_kas = $kasTokoModel->orderBy('id_kas', 'DESC')->first();
+    //     $saldo_terakhir = $latest_kas ? $latest_kas['saldo_terakhir'] : 0;
+    //     //   dd($saldo_terakhir);
+    //     // Prepare data for the 'kas_toko' insert
+    //     $dataKas = [
+    //         'tanggal' => date('Y-m-d'), // Current date
+    //         'jenis_transaksi' => 'Penerimaan', // Transaction type
+    //         'keterangan' => 'Pembayaran Tagihan ID ' . $id,
+    //         'jumlah_awal' => $saldo_terakhir, // Set the previous saldo_terakhir as jumlah_awal
+    //         'jumlah_akhir' => $saldo_terakhir + $tagihan['jumlah_tagihan'], // Add the tagihan amount to saldo_terakhir
+    //         'saldo_terakhir' => $saldo_terakhir + $tagihan['jumlah_tagihan'], // Update saldo_terakhir after payment
+    //     ];
+
+    //     // Perform dd() to inspect the data before processing
+    //     //   dd($dataKas); // This will dump the kas_toko data and stop execution
+
+    //     // 1. Update the status of the tagihan to "Di Bayar"
+    //     $tagihanModel->update($id, ['status_tagihan' => 'DiBayar']);
+
+    //     // 2. Insert the payment record into kas_toko
+    //     $kasTokoModel->save($dataKas);
+
+    //     // Commit the transaction
+    //     $this->db->transComplete();
+
+    //     // Check if the transaction was successful
+    //     if ($this->db->transStatus() === FALSE) {
+    //         return redirect()->to('/Admin/tagihan')->with('error', 'Gagal membayar tagihan');
+    //     }
+
+    //     // If everything is successful, redirect to the tagihan page with a success message
+    //     return redirect()->to('/Admin/tagihan')->with('success', 'Tagihan berhasil dibayar');
+    // }
+    public function bayarTagihan($id)
+{
+    // Load the models
+    $tagihanModel = new TagihanModel();
+    $kasTokoModel = new KasModel();
+    $pelangganWifiModel = new pelangganWifiModel(); // Load pelangganWifiModel
+
+    // Start a transaction to ensure that both updates happen together
+    $this->db->transStart();
+
+    // Fetch the tagihan data first
+    $tagihan = $tagihanModel->find($id);
+
+    if (!$tagihan) {
+        // If no tagihan is found, show an error message
+        return redirect()->to('/Admin/tagihan')->with('error', 'Tagihan tidak ditemukan');
+    }
+
+    // Fetch the pelanggan data based on pelangganid from the tagihan
+    $pelanggan = $pelangganWifiModel->find($tagihan['pelanggan_id']); // Assuming pelangganid is available in tagihan table
+
+    if (!$pelanggan) {
+        // If no pelanggan is found, show an error message
+        return redirect()->to('/Admin/tagihan')->with('error', 'Pelanggan tidak ditemukan');
+    }
+
+    // Now you can use $pelanggan['nama'] to get the customer's name
+    $namaPelanggan = $pelanggan['nama'];
+
+    // Fetch the latest 'kas_toko' record to get the saldo_terakhir
+    $latest_kas = $kasTokoModel->orderBy('id_kas', 'DESC')->first();
+    $saldo_terakhir = $latest_kas ? $latest_kas['saldo_terakhir'] : 0;
+
+    // Prepare data for the 'kas_toko' insert
+    $dataKas = [
+        'tanggal' => date('Y-m-d'), // Current date
+        'jenis_transaksi' => 'Penerimaan', // Transaction type
+        'keterangan' => 'Pembayaran Wifi dengan ID Tagihan ' . $id . ' oleh ' . $namaPelanggan, // Add customer name to the description
+        'jumlah_awal' => $saldo_terakhir, // Set the previous saldo_terakhir as jumlah_awal
+        'jumlah_akhir' => $saldo_terakhir + $tagihan['jumlah_tagihan'], // Add the tagihan amount to saldo_terakhir
+        'saldo_terakhir' => $saldo_terakhir + $tagihan['jumlah_tagihan'], // Update saldo_terakhir after payment
+    ];
+
+    // Update the status of the tagihan to "Di Bayar"
+    $tagihanModel->update($id, ['status_tagihan' => 'DiBayar']);
+
+    // Insert the payment record into kas_toko
+    $kasTokoModel->save($dataKas);
+
+    // Commit the transaction
+    $this->db->transComplete();
+
+    // Check if the transaction was successful
+    if ($this->db->transStatus() === FALSE) {
+        return redirect()->to('/Admin/tagihan')->with('error', 'Gagal membayar tagihan');
+    }
+
+    // If everything is successful, redirect to the tagihan page with a success message
+    return redirect()->to('/Admin/tagihan')->with('success', 'Tagihan berhasil dibayar');
+}
+
 }

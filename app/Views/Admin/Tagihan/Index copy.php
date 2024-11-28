@@ -80,7 +80,26 @@ $tagihanModel = new TagihanModel();
                             </tfoot>
                             <tbody>
                                 <?php if ($tagihan) { ?>
-                                    <?php foreach ($tagihan as $num => $data): ?>
+                                    <?php
+                                    // Mendapatkan bulan dan tahun saat ini
+                                    $currentMonth = date('m');
+                                    $currentYear = date('Y');
+
+                                    // Mendapatkan bulan sebelumnya
+                                    $previousMonth = ($currentMonth == 1) ? 12 : $currentMonth - 1;
+                                    $previousYear = ($currentMonth == 1) ? $currentYear - 1 : $currentYear;
+
+                                    foreach ($tagihan as $num => $data):
+                                        // Mengecek apakah tagihan bulan ini atau bulan mendatang
+                                        $tagihanDate = strtotime($data['tanggal_tagihan']);
+                                        $tagihanMonth = date('m', $tagihanDate);
+                                        $tagihanYear = date('Y', $tagihanDate);
+
+                                        // Hanya tampilkan tagihan bulan sebelumnya, jangan tampilkan bulan mendatang
+                                        if (($tagihanMonth == $previousMonth && $tagihanYear == $previousYear) || $data['status_tagihan'] == 'Belum Dibayar') {
+                                            continue; // Skip tagihan yang sudah dibayar untuk bulan ini
+                                        }
+                                    ?>
                                         <tr>
                                             <td><?= $num + 1; ?></td>
                                             <td><?= $data['nama']; ?></td> <!-- Nama Pelanggan -->
