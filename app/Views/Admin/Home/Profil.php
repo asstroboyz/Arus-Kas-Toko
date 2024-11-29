@@ -44,40 +44,47 @@
 
             <div class="card shadow px-5 py-4">
                 <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-12">
-                        <img class="card-img-top p-2"
-                            src="<?= empty(user()->foto) ? '/sbassets/img/undraw_profile.svg' : '/uploads/profile/' . user()->foto; ?>"
-                            alt="Image profile" height="290">
-                    </div>
-                    <div class="col-lg-8 col-md-8 col-sm-12">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><span class="badge badge-info">
-                                    <?= $role; ?></span></li>
-                            <li class="list-group-item "><i
-                                    class="fa fa-user mr-2 "></i><?= user()->username; ?>
-                            </li>
-                            <li class="list-group-item "><i
-                                    class="fa fa-user mr-2 "></i> <?= $user->fullname ?>
-                            </li>
-                            <li class="list-group-item"><i class="fa fa-envelope mr-1"></i>
-                                <?= $user->email ?>
-                            </li>
-                            <li class="list-group-item"><i class="fa fa-calendar mr-1"></i> terdaftar sejak.
-                                <?php $date = date_create($user->created_at);
-echo (date_format($date, "d F Y H:i:s")) ?>
-                            </li>
-
-                        </ul>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <button data-toggle="modal" data-target="#edit-profile" type="button"
-                                    class="d-inline btn btn-success btn-block edit-password" data-id="<"><i
-                                        class="fas fa-key"></i> Ubah Profile</button>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <button data-toggle="modal" data-target="#edit-password" type="button"
-                                    class="d-inline btn btn-primary btn-block edit-password" data-id="<"><i
-                                        class="fas fa-key"></i> Ubah Password</button>
+                    <div class="col-12">
+                        <div style="background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 20px;">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-12">
+                                    <img style="width: 100%; border-radius: 8px; object-fit: cover;"
+                                        src="<?= empty(user()->foto) ? '/sbassets/img/undraw_profile_1.svg' : '/uploads/profile/' . user()->foto; ?>"
+                                        alt="Image profile" height="290">
+                                </div>
+                                <div class="col-lg-10 col-md-8 col-sm-12">
+                                    <ul style="list-style: none; padding: 0; margin: 0; line-height: 1.6;">
+                                        <li style="display: flex; align-items: center; padding: 10px; background-color: #fff; border-radius: 5px; margin-bottom: 10px;">
+                                            <i class="fa fa-user" style="color: #007bff; font-size: 1.2em; margin-right: 15px;"></i>
+                                            <span style="width: 150px;"><strong>Username:</strong></span>
+                                            <span><?= user()->username; ?></span>
+                                        </li>
+                                        <li style="display: flex; align-items: center; padding: 10px; background-color: #fff; border-radius: 5px; margin-bottom: 10px;">
+                                            <i class="fa fa-address-card" style="color: #007bff; font-size: 1.2em; margin-right: 15px;"></i>
+                                            <span style="width: 150px;"><strong>Nama Lengkap:</strong></span>
+                                            <span><?= $user->fullname ?></span>
+                                        </li>
+                                        <li style="display: flex; align-items: center; padding: 10px; background-color: #fff; border-radius: 5px; margin-bottom: 10px;">
+                                            <i class="fa fa-envelope" style="color: #007bff; font-size: 1.2em; margin-right: 15px;"></i>
+                                            <span style="width: 150px;"><strong>Email:</strong></span>
+                                            <span><?= $user->email ?></span>
+                                        </li>
+                                    </ul>
+                                    <div class="row mt-4">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <button data-toggle="modal" data-target="#edit-profile" type="button"
+                                                style="background-color: #28a745; color: white; padding: 10px; border: none; border-radius: 5px; width: 100%; cursor: pointer;">
+                                                <i class="fas fa-user-edit"></i> Ubah Profile
+                                            </button>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <button data-toggle="modal" data-target="#edit-password" type="button"
+                                                style="background-color: #007bff; color: white; padding: 10px; border: none; border-radius: 5px; width: 100%; cursor: pointer;">
+                                                <i class="fas fa-lock"></i> Ubah Password
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
