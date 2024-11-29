@@ -137,9 +137,7 @@ class Admin extends BaseController
         $latestKas = $this->KasModel->orderBy('id_kas', 'DESC')->first();
         $saldoTerakhir = $latestKas ? $latestKas['saldo_terakhir'] : 0;
 
-
         $waktu24JamYangLalu = date('Y-m-d H:i:s', strtotime('-24 hours'));
-
 
         // $totalKasMasuk = $this->db->table('kas_toko')
         // ->selectSum('jumlah_akhir')
@@ -554,12 +552,30 @@ class Admin extends BaseController
         return redirect()->to('/admin/pelanggan');
     }
 
-    public function pelanggan_delete($id)
+   
+    public function deletePelanggan($id)
     {
-        $this->PelangganModel->delete($id);
-        session()->setFlashdata('pesan', 'Data berhasil dihapus');
-        return redirect()->to('/admin/pelanggan');
+        // 1. Ambil data pelanggan berdasarkan ID
+        $pelangganModel = new pelangganWifiModel();
+        $pelanggan = $pelangganModel->find($id);
+    
+        if ($pelanggan) {
+            // 2. Hapus foto KTP jika ada
+            if ($pelanggan['foto_ktp'] && file_exists('uploads/foto_ktp/' . $pelanggan['foto_ktp'])) {
+                unlink('uploads/foto_ktp/' . $pelanggan['foto_ktp']);
+            }
+    
+            // 3. Hapus data pelanggan
+            $pelangganModel->delete($id);
+    
+            // 4. Redirect atau tampilkan pesan sukses
+            return redirect()->to('/admin/pelanggan')->with('success', 'Pelanggan berhasil dihapus');
+        } else {
+            // Jika pelanggan tidak ditemukan
+            return redirect()->to('/admin/pelanggan')->with('error', 'Pelanggan tidak ditemukan');
+        }
     }
+    
     // last pelanggan
 
     // master barang
@@ -2284,12 +2300,6 @@ class Admin extends BaseController
         }
 
         // Query untuk mendapatkan data penjualan bersih dari model PenjualanBarangModel
-        $penjualanModel = new PenjualanBarangModel();
-        $totalPenjualan = $penjualanModel
-            ->selectSum('total_penjualan')
-            ->where('tanggal_penjualan >=', $tanggalMulai)
-            ->where('tanggal_penjualan <=', $tanggalAkhir)
-            ->first()['total_penjualan'];
 
         // Query untuk mendapatkan total harga beli barang yang terjual dari model detailPenjualanBarangModel dan BarangModel
 
@@ -2298,48 +2308,72 @@ class Admin extends BaseController
         $pengeluaranModel = new PengeluaranModel();
 
         // Total pemasukan
-        $totalPemasukan = $kasModel
-            ->selectSum('jumlah_awal') // Sesuaikan kolom pemasukan
-            ->where('jenis_transaksi', 'penerimaan')
-            ->where('tanggal >=', $tanggalMulai)
-            ->where('tanggal <=', $tanggalAkhir)
-            ->first()['jumlah_awal'] ?? 0;
+        // $totalPemasukan = $kasModel
+        //     ->selectSum('jumlah_awal') // Sesuaikan kolom pemasukan
+        //     ->where('jenis_transaksi', 'penerimaan')
+        //     ->where('tanggal >=', $tanggalMulai)
+        //     ->where('tanggal <=', $tanggalAkhir)
+        //     ->first()['jumlah_awal'] ?? 0;
 
-        // Total pengeluaran berdasarkan keterangan
+        // $totalPembayaranWifi = $kasModel
+        //     ->select('SUM(jumlah_akhir) - SUM(jumlah_awal) AS selisih_pembayaran_wifi') // Menghitung selisih
+        //     ->where('jenis_transaksi', 'penerimaan')
+        //     ->where('tanggal >=', $tanggalMulai)
+        //     ->where('tanggal <=', $tanggalAkhir)
+        //     ->like('keterangan', 'Pembayaran Wifi') // Menggunakan LIKE untuk mencocokkan kata-kata dalam keterangan
+        //     ->first()['selisih_pembayaran_wifi'] ?? 0;
+        $totalPemasukan = $kasModel
+            ->select('SUM(jumlah_akhir - jumlah_awal) AS total_pemasukan') // Correct way to sum the difference
+            ->where('jenis_transaksi', 'penerimaan') // Filter by 'penerimaan' transaction type
+            ->where('tanggal >=', $tanggalMulai) // Filter by start date
+            ->where('tanggal <=', $tanggalAkhir) // Filter by end date
+            ->groupStart() // Start OR group
+            ->like('keterangan', 'Pembayaran Wifi') // Match keterangan with 'Pembayaran Wifi'
+            ->orWhere('keterangan', 'Biaya Pasang') // Match keterangan with 'Biaya Pasang'
+            ->orWhere('keterangan', 'pengembalian')
+            ->orWhere('keterangan', '') // Pencocokan dengan keterangan kosong
+            ->orWhere('keterangan IS NULL') // Pencocokan dengan keterangan NULL
+            ->orWhere('keterangan !=', '') // Pencocokan dengan keterangan yang tidak kosong
+            ->orWhere('keterangan IS NOT NULL') // Match keterangan with 'Biaya Pasang'
+            ->groupEnd()
+            ->first()['total_pemasukan'] ?? 0; // Fetch the result or default to 0 if no result
+        // Ambil hasil pertama, atau 0 jika tidak ada hasil
+
+        // Menghitung Total Pengeluaran
         $bayarTeknisi = $pengeluaranModel
-            ->selectSum('jumlah')
+            ->selectSum('jumlah', 'total_bayar_teknisi') // Menjumlahkan kolom jumlah untuk 'bayar teknisi'
             ->where('keterangan', 'bayar teknisi')
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
-            ->first()['jumlah'] ?? 0;
+            ->first()['total_bayar_teknisi'] ?? 0;
 
         $listrik = $pengeluaranModel
-            ->selectSum('jumlah')
+            ->selectSum('jumlah', 'total_listrik') // Menjumlahkan kolom jumlah untuk 'listrik'
             ->where('keterangan', 'listrik')
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
-            ->first()['jumlah'] ?? 0;
+            ->first()['total_listrik'] ?? 0;
 
         $air = $pengeluaranModel
-            ->selectSum('jumlah')
+            ->selectSum('jumlah', 'total_air') // Menjumlahkan kolom jumlah untuk 'air'
             ->where('keterangan', 'air')
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
-            ->first()['jumlah'] ?? 0;
+            ->first()['total_air'] ?? 0;
 
         $lainnya = $pengeluaranModel
-            ->selectSum('jumlah')
+            ->selectSum('jumlah', 'total_lainnya') // Menjumlahkan kolom jumlah untuk 'lainnya'
             ->where('keterangan', 'lainnya')
             ->where('tanggal >=', $tanggalMulai)
             ->where('tanggal <=', $tanggalAkhir)
-            ->first()['jumlah'] ?? 0;
+            ->first()['total_lainnya'] ?? 0;
 
-        // Total pengeluaran
+        // Total Pengeluaran
         $totalPengeluaran = $bayarTeknisi + $listrik + $air + $lainnya;
 
-        // Hitung laba kotor dan laba bersih
+        // Menghitung Laba Kotor dan Laba Bersih
         $labaKotor = $totalPemasukan - $totalPengeluaran;
-        $labaBersih = $labaKotor; // Sesuaikan jika ada biaya tambahan lain
+        $labaBersih = $labaKotor;
 
         // Data untuk view
 
@@ -2355,15 +2389,16 @@ class Admin extends BaseController
         $data = [
             'tanggalMulai' => $tanggalMulai,
             'tanggalAkhir' => $tanggalAkhir,
-            'totalPemasukan' => $totalPemasukan,
-            'bayarTeknisi' => $bayarTeknisi,
-            'listrik' => $listrik,
-            'air' => $air,
-            'pemilikName' => $pemilikName,
-            'lainnya' => $lainnya,
-            'totalPengeluaran' => $totalPengeluaran,
-            'labaKotor' => $labaKotor,
-            'labaBersih' => $labaBersih,
+            'totalPemasukan' => $totalPemasukan, //
+            'bayarTeknisi' => $bayarTeknisi, //
+            'listrik' => $listrik, //
+            'air' => $air, //
+            'pemilikName' => $pemilikName, //
+            'lainnya' => $lainnya, //
+            'totalPengeluaran' => $totalPengeluaran, //
+            'labaKotor' => $labaKotor, //
+            'labaBersih' => $labaBersih, //
+            // 'totalPembayaranWifi' => $totalPembayaranWifi,
         ];
         // dd($data);
         // Load view dan generate PDF
@@ -2374,6 +2409,7 @@ class Admin extends BaseController
         // Mengatur header dan footer
         $mpdf->SetFooter('Halaman {PAGENO} dari {nbpg}');
 
+        // Load view dan pass data
         $html = view('Admin/Laporan/Lap_labaRugi', $data);
 
         $mpdf->setAutoPageBreak(true);
@@ -2388,6 +2424,8 @@ class Admin extends BaseController
         $mpdf->AddPageByArray(['orientation' => 'P'] + $options);
 
         $mpdf->WriteHtml($html);
+
+        // Output PDF
         $this->response->setHeader('Content-Type', 'application/pdf');
         $mpdf->Output('Laporan Laba Rugi.pdf', 'I');
     }
@@ -4071,18 +4109,32 @@ class Admin extends BaseController
         ];
 
         // Tambahkan jumlah masuk atau jumlah keluar berdasarkan jenis transaksi
+        // if ($data['jenis_transaksi'] === 'penerimaan') {
+        //     $data['jumlah_awal'] = $saldo_terakhir;
+        //     $data['jumlah_akhir'] = '+' . $this->request->getPost('jumlah_masuk');
+        //     $data['jumlah_keluar'] = 0; // Atur jumlah keluar menjadi 0 untuk penerimaan
+        // } elseif ($data['jenis_transaksi'] === 'pengeluaran') {
+        //     $data['jumlah_awal'] = -$this->request->getPost('jumlah_keluar'); // Gunakan 'jumlah_keluar' untuk pengeluaran
+        //     $data['jumlah_akhir'] = '-' . $this->request->getPost('jumlah_keluar'); // Gunakan 'jumlah_keluar' untuk pengeluaran
+        //     $data['jumlah_masuk'] = 0; // Atur jumlah masuk menjadi 0 untuk pengeluaran
+        // }
+
+        // // Hitung saldo terakhir berdasarkan jumlah awal dan jumlah akhir
+        // $data['saldo_terakhir'] = $this->hitungSaldoTerakhir($data['jumlah_akhir']);
         if ($data['jenis_transaksi'] === 'penerimaan') {
             $data['jumlah_awal'] = $saldo_terakhir;
-            $data['jumlah_akhir'] = '+' . $this->request->getPost('jumlah_masuk');
+            $jumlah_masuk = $this->request->getPost('jumlah_masuk');
+            $data['jumlah_akhir'] = $saldo_terakhir + $jumlah_masuk; // Tambahkan jumlah masuk ke saldo terakhir
             $data['jumlah_keluar'] = 0; // Atur jumlah keluar menjadi 0 untuk penerimaan
         } elseif ($data['jenis_transaksi'] === 'pengeluaran') {
-            $data['jumlah_awal'] = -$this->request->getPost('jumlah_keluar'); // Gunakan 'jumlah_keluar' untuk pengeluaran
-            $data['jumlah_akhir'] = '-' . $this->request->getPost('jumlah_keluar'); // Gunakan 'jumlah_keluar' untuk pengeluaran
+            $data['jumlah_awal'] = $saldo_terakhir;
+            $jumlah_keluar = $this->request->getPost('jumlah_keluar');
+            $data['jumlah_akhir'] = $saldo_terakhir - $jumlah_keluar; // Kurangi jumlah keluar dari saldo terakhir
             $data['jumlah_masuk'] = 0; // Atur jumlah masuk menjadi 0 untuk pengeluaran
         }
 
-        // Hitung saldo terakhir berdasarkan jumlah awal dan jumlah akhir
-        $data['saldo_terakhir'] = $this->hitungSaldoTerakhir($data['jumlah_akhir']);
+        // Hitung saldo terakhir berdasarkan jumlah akhir yang baru
+        $data['saldo_terakhir'] = $data['jumlah_akhir']; // Saldo terakhir diupdate dengan jumlah_akhir
 
         // Insert data ke database
         // dd($data);
@@ -4573,51 +4625,49 @@ class Admin extends BaseController
         // Redirect kembali ke halaman paket
         return redirect()->to('/Admin/paket');
     }
-    public function updatePaket($kodePaket)
+    public function editPaket($kode_paket)
     {
+        $data = [
+            'title' => 'Ubah Paket',
+            'validation' => $this->validation,
+            'paket' => $this->paketModel->find($kode_paket),
+        ];
+
+        return view('Admin/Paket/Edit_paket', $data);
+    }
+    public function updatePaket()
+    {
+        $kode_paket = $this->request->getPost('kode_paket');
+
         // Validasi input
         if (!$this->validate([
-            'nama_paket' => [
-                'rules' => 'required|is_unique[paket.nama_paket, id,{id}]', // Pastikan untuk menghindari validasi ganda pada nama yang sama
-                'errors' => [
-                    'required' => 'Nama paket harus diisi.',
-                    'is_unique' => 'Nama paket sudah ada.',
-                ],
-            ],
-            'harga' => [
-                'rules' => 'required|numeric',
-                'errors' => [
-                    'required' => 'Harga harus diisi.',
-                    'numeric' => 'Harga harus berupa angka.',
-                ],
-            ],
+            'nama_paket' => 'required',
+            'harga' => 'required|numeric',
         ])) {
-            return redirect()->to('/admin/paket/edit/' . $kodePaket)->withInput();
+            return redirect()->to("/admin/paket/edit/$kode_paket")->withInput()->with('validation', $this->validator);
         }
 
-        // Cek apakah paket dengan kode tertentu ada
-        $paket = $this->paketModel->find($kodePaket);
+        // Ambil data paket lama
+        $paket = $this->paketModel->find($kode_paket);
 
-        if ($paket) {
-            // Data yang akan diperbarui
-            $data = [
-                'nama_paket' => $this->request->getPost('nama_paket'),
-                'harga' => $this->request->getPost('harga'),
-            ];
+        if (!$paket) {
+            session()->setFlashdata('pesan', 'Data paket tidak ditemukan.');
+            return redirect()->to('/admin/paket');
+        }
 
-            // Lakukan update
-            if ($this->paketModel->update($kodePaket, $data)) {
-                session()->setFlashdata('pesan', 'Data berhasil diperbarui.');
-            } else {
-                session()->setFlashdata('pesan', 'Gagal memperbarui data. Silakan coba lagi.');
-            }
+        // Update data paket sesuai allowedFields
+        $data = [
+            'nama_paket' => $this->request->getPost('nama_paket'),
+            'harga' => $this->request->getPost('harga'),
+        ];
+
+        if ($this->paketModel->update($kode_paket, $data)) {
+            session()->setFlashdata('pesan', 'Data paket berhasil diubah.');
         } else {
-            // Jika paket tidak ditemukan
-            session()->setFlashdata('pesan', 'Paket tidak ditemukan.');
+            session()->setFlashdata('pesan', 'Gagal mengubah data paket.');
         }
 
-        // Redirect kembali ke halaman paket
-        return redirect()->to('/Admin/paket');
+        return redirect()->to('/admin/paket');
     }
 
     public function deletePaket($kodePaket)
@@ -4728,7 +4778,8 @@ class Admin extends BaseController
 
         // Mengambil data dari form
         $fotoKTP = $this->request->getFile('foto_ktp');
-        $namaFile = $fotoKTP->getRandomName(); // Membuat nama file acak untuk foto KTP
+        $namaPelanggan = strtolower(str_replace(' ', '_', $this->request->getPost('nama'))); // Membuat nama file berdasarkan nama pelanggan
+        $namaFile = $namaPelanggan . '_ktp.' . $fotoKTP->getExtension();
 
         // Pindahkan file foto KTP ke folder yang ditentukan
         $fotoKTP->move('uploads/foto_ktp', $namaFile);
@@ -5066,64 +5117,63 @@ class Admin extends BaseController
     //     return redirect()->to('/Admin/tagihan')->with('success', 'Tagihan berhasil dibayar');
     // }
     public function bayarTagihan($id)
-{
-    // Load the models
-    $tagihanModel = new TagihanModel();
-    $kasTokoModel = new KasModel();
-    $pelangganWifiModel = new pelangganWifiModel(); // Load pelangganWifiModel
+    {
+        // Load the models
+        $tagihanModel = new TagihanModel();
+        $kasTokoModel = new KasModel();
+        $pelangganWifiModel = new pelangganWifiModel(); // Load pelangganWifiModel
 
-    // Start a transaction to ensure that both updates happen together
-    $this->db->transStart();
+        // Start a transaction to ensure that both updates happen together
+        $this->db->transStart();
 
-    // Fetch the tagihan data first
-    $tagihan = $tagihanModel->find($id);
+        // Fetch the tagihan data first
+        $tagihan = $tagihanModel->find($id);
 
-    if (!$tagihan) {
-        // If no tagihan is found, show an error message
-        return redirect()->to('/Admin/tagihan')->with('error', 'Tagihan tidak ditemukan');
+        if (!$tagihan) {
+            // If no tagihan is found, show an error message
+            return redirect()->to('/Admin/tagihan')->with('error', 'Tagihan tidak ditemukan');
+        }
+
+        // Fetch the pelanggan data based on pelangganid from the tagihan
+        $pelanggan = $pelangganWifiModel->find($tagihan['pelanggan_id']); // Assuming pelangganid is available in tagihan table
+
+        if (!$pelanggan) {
+            // If no pelanggan is found, show an error message
+            return redirect()->to('/Admin/tagihan')->with('error', 'Pelanggan tidak ditemukan');
+        }
+
+        // Now you can use $pelanggan['nama'] to get the customer's name
+        $namaPelanggan = $pelanggan['nama'];
+
+        // Fetch the latest 'kas_toko' record to get the saldo_terakhir
+        $latest_kas = $kasTokoModel->orderBy('id_kas', 'DESC')->first();
+        $saldo_terakhir = $latest_kas ? $latest_kas['saldo_terakhir'] : 0;
+
+        // Prepare data for the 'kas_toko' insert
+        $dataKas = [
+            'tanggal' => date('Y-m-d'), // Current date
+            'jenis_transaksi' => 'Penerimaan', // Transaction type
+            'keterangan' => 'Pembayaran Wifi dengan ID Tagihan ' . $id . ' oleh ' . $namaPelanggan, // Add customer name to the description
+            'jumlah_awal' => $saldo_terakhir, // Set the previous saldo_terakhir as jumlah_awal
+            'jumlah_akhir' => $saldo_terakhir + $tagihan['jumlah_tagihan'], // Add the tagihan amount to saldo_terakhir
+            'saldo_terakhir' => $saldo_terakhir + $tagihan['jumlah_tagihan'], // Update saldo_terakhir after payment
+        ];
+
+        // Update the status of the tagihan to "Di Bayar"
+        $tagihanModel->update($id, ['status_tagihan' => 'DiBayar']);
+
+        // Insert the payment record into kas_toko
+        $kasTokoModel->save($dataKas);
+
+        // Commit the transaction
+        $this->db->transComplete();
+
+        // Check if the transaction was successful
+        if ($this->db->transStatus() === false) {
+            return redirect()->to('/Admin/tagihan')->with('error', 'Gagal membayar tagihan');
+        }
+
+        // If everything is successful, redirect to the tagihan page with a success message
+        return redirect()->to('/Admin/tagihan')->with('success', 'Tagihan berhasil dibayar');
     }
-
-    // Fetch the pelanggan data based on pelangganid from the tagihan
-    $pelanggan = $pelangganWifiModel->find($tagihan['pelanggan_id']); // Assuming pelangganid is available in tagihan table
-
-    if (!$pelanggan) {
-        // If no pelanggan is found, show an error message
-        return redirect()->to('/Admin/tagihan')->with('error', 'Pelanggan tidak ditemukan');
-    }
-
-    // Now you can use $pelanggan['nama'] to get the customer's name
-    $namaPelanggan = $pelanggan['nama'];
-
-    // Fetch the latest 'kas_toko' record to get the saldo_terakhir
-    $latest_kas = $kasTokoModel->orderBy('id_kas', 'DESC')->first();
-    $saldo_terakhir = $latest_kas ? $latest_kas['saldo_terakhir'] : 0;
-
-    // Prepare data for the 'kas_toko' insert
-    $dataKas = [
-        'tanggal' => date('Y-m-d'), // Current date
-        'jenis_transaksi' => 'Penerimaan', // Transaction type
-        'keterangan' => 'Pembayaran Wifi dengan ID Tagihan ' . $id . ' oleh ' . $namaPelanggan, // Add customer name to the description
-        'jumlah_awal' => $saldo_terakhir, // Set the previous saldo_terakhir as jumlah_awal
-        'jumlah_akhir' => $saldo_terakhir + $tagihan['jumlah_tagihan'], // Add the tagihan amount to saldo_terakhir
-        'saldo_terakhir' => $saldo_terakhir + $tagihan['jumlah_tagihan'], // Update saldo_terakhir after payment
-    ];
-
-    // Update the status of the tagihan to "Di Bayar"
-    $tagihanModel->update($id, ['status_tagihan' => 'DiBayar']);
-
-    // Insert the payment record into kas_toko
-    $kasTokoModel->save($dataKas);
-
-    // Commit the transaction
-    $this->db->transComplete();
-
-    // Check if the transaction was successful
-    if ($this->db->transStatus() === FALSE) {
-        return redirect()->to('/Admin/tagihan')->with('error', 'Gagal membayar tagihan');
-    }
-
-    // If everything is successful, redirect to the tagihan page with a success message
-    return redirect()->to('/Admin/tagihan')->with('success', 'Tagihan berhasil dibayar');
-}
-
 }

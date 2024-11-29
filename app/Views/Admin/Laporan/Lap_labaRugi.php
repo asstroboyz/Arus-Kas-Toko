@@ -91,13 +91,14 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Header Section -->
         <table style="width: 100%; border: none;">
             <tr style="border: none;">
                 <td class="logo-container">
-
+                    <!-- Add Logo Here if needed -->
                 </td>
                 <td style="text-align: center; border: none;">
                     <div class="header-content">
@@ -109,7 +110,7 @@
                         </h4>
                         <br>
                         <p style="font-size: 16px; margin: 0;">
-                        Jl. KKO Usman No.9, Pekuncen, Karangasem Utara, Kec. Batang, Kabupaten Batang, Jawa Tengah 51216
+                            Jl. KKO Usman No.9, Pekuncen, Karangasem Utara, Kec. Batang, Kabupaten Batang, Jawa Tengah 51216
                         </p>
                     </div>
                 </td>
@@ -120,7 +121,7 @@
         <!-- Periode Section -->
         <p style="margin-bottom: 20px;">
             <span style="width: 200px; display: inline-block;">Periode :</span>
-            <?=$tanggalMulai?> s/d <?=$tanggalAkhir?>
+            <?= $tanggalMulai ?> s/d <?= $tanggalAkhir ?>
         </p>
 
         <!-- Pendapatan Section -->
@@ -129,51 +130,53 @@
                 <th colspan="2">Pendapatan</th>
             </tr>
             <tr>
-                <td>Pendapatn Bersih</td>
-                <td class="text-right">Rp. <?=number_format($totalPemasukan ?: 0, 0, ',', '.');?></td>
+                <td>Pendapatan Bersih</td>
+                <td class="text-right">Rp. <?= number_format((int)($totalPemasukan ?? 0), 0, ',', '.'); ?></td>
             </tr>
             <tr class="total">
                 <td>Total Pendapatan</td>
-                <td class="text-right">Rp. <?=number_format($totalPemasukan ?: 0, 0, ',', '.');?></td>
+                <td class="text-right">Rp. <?= number_format((int)($totalPemasukan ?? 0), 0, ',', '.'); ?></td>
             </tr>
         </table>
 
         <!-- Beban Section -->
         <?php if ($bayarTeknisi > 0 || $listrik > 0 || $air > 0 || $lainnya > 0): ?>
-        <table>
-            <tr>
-                <th colspan="2">Beban</th>
-            </tr>
-            <?php if ($bayarTeknisi > 0): ?>
-            <tr>
-                <td>Beban Bayar Teknisi</td>
-                <td class="text-right">Rp. <?=number_format($bayarTeknisi, 0, ',', '.');?></td>
-            </tr>
-            <?php endif;?>
-            <?php if ($listrik > 0): ?>
-            <tr>
-                <td>Beban Listrik</td>
-                <td class="text-right">Rp. <?=number_format($listrik, 0, ',', '.');?></td>
-            </tr>
-            <?php endif;?>
-            <?php if ($air > 0): ?>
-            <tr>
-                <td>Beban Air</td>
-                <td class="text-right">Rp. <?=number_format($air, 0, ',', '.');?></td>
-            </tr>
-            <?php endif;?>
-            <?php if ($lainnya > 0): ?>
-            <tr>
-                <td>Beban Lainnya</td>
-                <td class="text-right">Rp. <?=number_format($lainnya, 0, ',', '.');?></td>
-            </tr>
-            <?php endif;?>
-            <tr class="total">
-                <td>Total Beban</td>
-                <td class="text-right">Rp. <?=number_format($totalPengeluaran, 0, ',', '.');?></td>
-            </tr>
-        </table>
-        <?php endif;?>
+            <table>
+                <tr>
+                    <th colspan="2">Beban</th>
+                </tr>
+                <?php if ($bayarTeknisi > 0): ?>
+                    <tr>
+                        <td>Beban Bayar Teknisi</td>
+                        <td class="text-right">Rp. <?= number_format((int)$bayarTeknisi, 0, ',', '.'); ?></td>
+                    </tr>
+                <?php endif; ?>
+                <?php if ($listrik > 0): ?>
+                    <tr>
+                        <td>Beban Listrik</td>
+                        <td class="text-right">Rp. <?= number_format((int)$listrik, 0, ',', '.'); ?></td>
+                    </tr>
+                <?php endif; ?>
+                <?php if ($air > 0): ?>
+                    <tr>
+                        <td>Beban Air</td>
+                        <td class="text-right">Rp. <?= number_format((int)$air, 0, ',', '.'); ?></td>
+                    </tr>
+                <?php endif; ?>
+                <?php if ($lainnya > 0): ?>
+                    <tr>
+                        <td>Beban Lainnya</td>
+                        <td class="text-right">Rp. <?= number_format((int)$lainnya, 0, ',', '.'); ?></td>
+                    </tr>
+                <?php endif; ?>
+                <tr class="total">
+                    <td>Total Beban</td>
+                    <td class="text-right">Rp. <?= number_format((int)$totalPengeluaran, 0, ',', '.'); ?></td>
+                </tr>
+            </table>
+        <?php endif; ?>
+
+     
 
         <!-- Laba Section -->
         <table>
@@ -182,11 +185,11 @@
             </tr>
             <tr class="total">
                 <td>Laba Kotor</td>
-                <td class="text-right">Rp. <?=number_format($labaKotor, 0, ',', '.');?></td>
+                <td class="text-right">Rp. <?= number_format((int)$labaKotor, 0, ',', '.'); ?></td>
             </tr>
             <tr class="total">
                 <td>Laba Bersih</td>
-                <td class="text-right">Rp. <?=number_format($labaBersih, 0, ',', '.');?></td>
+                <td class="text-right">Rp. <?= number_format((int)$labaBersih, 0, ',', '.'); ?></td>
             </tr>
         </table>
 
@@ -194,18 +197,21 @@
         <table class="footer-table">
             <tr>
                 <td class="footer-left">
-                    Dicetak Oleh: <?=user()->fullname;?>
+                    Dicetak Oleh: <?= user()->fullname; ?>
                     <br>
-                    <p>Batang, <?=date('d/m/Y H:i:s');?></p>
+                    <p>Batang, <?= date('d/m/Y H:i:s'); ?></p>
                 </td>
                 <td class="footer-right">
-                    Pemilik: Heri
+                    Pemilik: <?= $pemilikName; ?>
                     <br>
-                    <p>Batang, <?=date('d/m/Y H:i:s');?></p>
+                    <p>Batang, <?= date('d/m/Y H:i:s'); ?></p>
                 </td>
             </tr>
         </table>
     </div>
 </body>
+
+
+
 
 </html>

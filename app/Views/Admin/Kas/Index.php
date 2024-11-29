@@ -160,6 +160,7 @@
 </script>
 <?php
 date_default_timezone_set("Asia/Jakarta");
+
 function format_tanggal($tanggal)
 {
     $bulan = array(
@@ -176,9 +177,22 @@ function format_tanggal($tanggal)
         'November',
         'Desember'
     );
-    $pecahkan = explode('-', $tanggal);
 
-    return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
+    // Pisahkan bagian tanggal dan waktu
+    $bagian = explode(' ', $tanggal);
+    $tanggal_hanya = $bagian[0]; // Bagian tanggal
+    $waktu = isset($bagian[1]) ? $bagian[1] : ''; // Bagian waktu (jika ada)
+
+    // Pisahkan tahun, bulan, dan hari
+    $pecahkan = explode('-', $tanggal_hanya);
+
+    // Validasi format tanggal
+    if (count($pecahkan) === 3) {
+        $hasil_tanggal = $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
+        return $hasil_tanggal;
+    } else {
+        return 'Format Tanggal Salah';
+    }
 }
 ?>
 <?= $this->endSection(); ?>

@@ -54,13 +54,9 @@
                                             <td><?= $data['nama_paket']; ?></td>
                                             <td>Rp <?= number_format($data['harga'], 0, ',', '.'); ?></td>
                                             <td style="text-align:center; width: 150px;">
-                                                <a href="#" class="btn btn-warning btn-edit" data-toggle="modal"
-                                                    data-target="#modalEditPaket"
-                                                    data-paketid="<?= $data['kode_paket'] ?>"
-                                                    data-nama="<?= esc($data['nama_paket']) ?>"
-                                                    data-harga="<?= esc($data['harga']) ?>">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
+                                            
+                                                <a href="/Admin/editPaket/<?= $data['kode_paket'] ?>"
+                                                class="  btn btn-warning"><i class="fa fa-edit"></i> </a>
                                                 <a href="#" class="btn btn-danger btn-delete" data-toggle="modal"
                                                     data-target="#modalKonfirmasiDelete"
                                                     data-delete-url="<?= site_url('/Admin/deletePaket/' . $data['kode_paket']) ?>">
@@ -119,37 +115,7 @@
     </div>
 </div>
 
-<!-- Modal Edit Paket -->
-<div class="modal fade" id="modalEditPaket" tabindex="-1" role="dialog" aria-labelledby="modalEditPaketLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalEditPaketLabel">Edit Paket</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="<?= site_url('/Admin/updatePaket/' . $data['kode_paket']) ?>"" method=" post">
-                <?= csrf_field() ?>
-                <input type="hidden" name="kode_paket" id="edit_kode_paket">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="edit_nama_paket">Nama Paket</label>
-                        <input type="text" class="form-control" id="edit_nama_paket" name="nama_paket" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit_harga">Harga</label>
-                        <input type="number" class="form-control" id="edit_harga" name="harga" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 <!-- Modal Konfirmasi Delete -->
 <div class="modal fade" id="modalKonfirmasiDelete" tabindex="-1" role="dialog" aria-labelledby="modalKonfirmasiDeleteLabel" aria-hidden="true">
