@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 28, 2024 at 07:31 AM
+-- Generation Time: Nov 29, 2024 at 03:52 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -982,7 +982,10 @@ INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `succ
 (828, '::1', 'admin', NULL, '2024-11-28 11:15:38', 0),
 (829, '::1', 'admin@gmail.com', 1, '2024-11-28 11:15:44', 1),
 (830, '::1', 'admin@gmail.com', 1, '2024-11-28 13:00:17', 1),
-(831, '::1', 'admin@gmail.com', 1, '2024-11-28 14:19:39', 1);
+(831, '::1', 'admin@gmail.com', 1, '2024-11-28 14:19:39', 1),
+(832, '::1', 'admin@gmail.com', 1, '2024-11-28 15:18:34', 1),
+(833, '::1', 'admin', NULL, '2024-11-29 07:47:15', 0),
+(834, '::1', 'admin@gmail.com', 1, '2024-11-29 07:47:23', 1);
 
 -- --------------------------------------------------------
 
@@ -1080,47 +1083,18 @@ INSERT INTO `hutang` (`id_hutang`, `keterangan`, `jumlah`, `tanggal`, `jumlah_si
 -- --------------------------------------------------------
 
 --
--- Table structure for table `inventaris`
---
-
-CREATE TABLE `inventaris` (
-  `kode_barang` varchar(255) NOT NULL,
-  `id_master_barang` int NOT NULL,
-  `kondisi` varchar(100) NOT NULL,
-  `spesifikasi` varchar(110) NOT NULL,
-  `id_satuan` int NOT NULL,
-  `lokasi` varchar(255) NOT NULL,
-  `tgl_perolehan` date NOT NULL,
-  `qrcode` text NOT NULL,
-  `file` text NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `deleted_at` datetime NOT NULL,
-  `detail` varchar(110) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `kas_toko`
 --
 
 CREATE TABLE `kas_toko` (
   `id_kas` int NOT NULL,
-  `tanggal` datetime NOT NULL,
+  `tanggal` date NOT NULL,
   `jenis_transaksi` enum('penerimaan','pengeluaran') NOT NULL,
   `keterangan` text NOT NULL,
   `jumlah_awal` varchar(255) NOT NULL,
   `jumlah_akhir` varchar(255) NOT NULL,
   `saldo_terakhir` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `kas_toko`
---
-
-INSERT INTO `kas_toko` (`id_kas`, `tanggal`, `jenis_transaksi`, `keterangan`, `jumlah_awal`, `jumlah_akhir`, `saldo_terakhir`) VALUES
-(1, '2024-11-28 07:29:04', 'penerimaan', '-', '0', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -1177,46 +1151,6 @@ CREATE TABLE `paket` (
   `harga` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `paket`
---
-
-INSERT INTO `paket` (`kode_paket`, `nama_paket`, `harga`) VALUES
-('PKG7782', '8 MBPS', '1500000'),
-('PKG8971', '5 MBPS', '120000');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pelanggan`
---
-
-CREATE TABLE `pelanggan` (
-  `id_pelanggan` int NOT NULL,
-  `nama` varchar(30) NOT NULL,
-  `kontak` char(14) NOT NULL,
-  `alamat` text NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `pelanggan`
---
-
-INSERT INTO `pelanggan` (`id_pelanggan`, `nama`, `kontak`, `alamat`, `created_at`, `updated_at`) VALUES
-(1, 'Dinda', '08132456757', 'Perum PKS', '2024-03-15 17:24:47', '2024-07-23 12:05:28'),
-(2, 'Gunadi', '08198989', 'Ps Pagi Kaliwungu', '2024-03-15 17:59:17', '2024-07-23 12:05:58'),
-(5, 'Aish', '08173622436', 'Perum Bukit Indah 1', '2024-07-22 00:00:22', '2024-08-08 09:00:21'),
-(6, 'Rozi', '08222847979', 'Perum Bukit Indah 1', '2024-07-22 00:00:38', '2024-07-22 00:23:04'),
-(7, 'Alexander', '08173622439', 'Perum Bukit Indah 2', '2024-07-22 00:00:54', '2024-07-22 20:07:12'),
-(8, 'Ayun', '08976432680', 'Perum Bukit Indah 2', '2024-07-22 00:01:30', '2024-07-22 20:17:55'),
-(9, 'Indah', '0897524588', 'Perum PKS', '2024-07-22 00:01:58', '2024-07-22 00:01:58'),
-(10, 'Yani', '08132579076', 'Perum PKS', '2024-07-22 20:06:39', '2024-07-22 20:06:39'),
-(11, 'Najib', '08587876765', 'Perum PKS', '2024-08-07 12:48:47', '2024-08-07 12:48:47'),
-(12, 'Kafa', '08542354557', 'Perum Bukit Indah 1', '2024-08-08 08:59:47', '2024-08-08 09:00:05'),
-(14, 'djuvhfd', '78589745649754', 't76t7', '2024-11-19 20:20:03', '2024-11-19 20:20:03');
-
 -- --------------------------------------------------------
 
 --
@@ -1236,14 +1170,6 @@ CREATE TABLE `pelanggan_wifi` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `pelanggan_wifi`
---
-
-INSERT INTO `pelanggan_wifi` (`id`, `nama`, `alamat`, `no_hp`, `nik`, `foto_ktp`, `kode_paket`, `tgl_pasang`, `status_pelanggan`, `created_at`, `updated_at`) VALUES
-(11, 'bidoi', '786876876', '6281973549727', '68768768', '1732756788_fcd028c4d0bb0f276b35.jpeg', 'PKG8971', '2024-11-25', 'aktif', NULL, '2024-11-28 08:19:48'),
-(12, 'Istiqomah', 'Pekalongan', '82135379961', '248783657635', '1732546579_b67b2a80c7e97cff9728.jpg', 'PKG8971', '2024-10-22', 'aktif', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1307,70 +1233,6 @@ CREATE TABLE `pengeluaran` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `piutang`
---
-
-CREATE TABLE `piutang` (
-  `id_piutang` int NOT NULL,
-  `id_penjualan_barang` varchar(255) NOT NULL,
-  `id_pelanggan` int NOT NULL,
-  `tanggal_piutang` date NOT NULL,
-  `jatuh_tempo` date NOT NULL,
-  `jumlah_piutang` varchar(255) NOT NULL,
-  `jumlah_terbayar` varchar(255) DEFAULT NULL,
-  `status_piutang` enum('belum_lunas','lunas') DEFAULT 'belum_lunas',
-  `created_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `piutang`
---
-
-INSERT INTO `piutang` (`id_piutang`, `id_penjualan_barang`, `id_pelanggan`, `tanggal_piutang`, `jatuh_tempo`, `jumlah_piutang`, `jumlah_terbayar`, `status_piutang`, `created_at`) VALUES
-(32, 'NHR-4684', 6, '2024-07-22', '2024-08-21', '0', '300000', 'lunas', '2024-07-22 00:21:03'),
-(33, 'NHR-5713', 8, '2024-07-22', '2024-08-21', '0', '100000', 'lunas', '2024-07-22 00:41:41'),
-(34, 'NHR-2242', 9, '2024-07-22', '2024-08-21', '0', '90000', 'lunas', '2024-07-22 00:53:44'),
-(35, 'NHR-3787', 5, '2024-07-22', '2024-08-21', '0', '12000', 'lunas', '2024-07-22 11:09:42'),
-(36, 'NHR-5340', 1, '2024-07-22', '2024-08-21', '24000', '12000', 'belum_lunas', '2024-07-22 16:53:40'),
-(37, 'NHR-5685', 8, '2024-07-22', '2024-08-21', '0', '3000', 'lunas', '2024-07-22 16:59:43'),
-(38, 'NHR-7474', 6, '2024-07-22', '2024-08-21', '0', '6000', 'lunas', '2024-07-22 17:01:17'),
-(39, 'NHR-7939', 5, '2024-07-22', '2024-08-21', '0', '100000', 'lunas', '2024-07-22 17:04:49'),
-(40, 'NHR-3067', 5, '2024-07-22', '2024-08-21', '0', '3000', 'lunas', '2024-07-22 17:06:35'),
-(41, 'NHR-4634', 5, '2024-07-22', '2024-08-07', '499992', '8', 'belum_lunas', '2024-07-22 17:07:36'),
-(42, 'NHR-1029', 2, '2024-07-22', '2024-08-21', '0', '2000', 'lunas', '2024-07-22 17:12:11'),
-(43, 'NHR-3559', 5, '2024-07-22', '2024-08-21', '0', '3000', 'lunas', '2024-07-22 17:19:09'),
-(44, 'NHR-9298', 6, '2024-07-22', '2024-08-21', '1199998', '2', 'belum_lunas', '2024-07-22 17:20:22'),
-(45, 'NHR-9849', 11, '2024-08-07', '2024-09-06', '14000', '100000', 'belum_lunas', '2024-08-07 12:56:17'),
-(46, 'NHR-6261', 7, '2024-08-08', '2024-09-07', '200000', '300000', 'belum_lunas', '2024-08-08 09:06:38');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `satuan`
---
-
-CREATE TABLE `satuan` (
-  `satuan_id` int NOT NULL,
-  `nama_satuan` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `satuan`
---
-
-INSERT INTO `satuan` (`satuan_id`, `nama_satuan`, `created_at`, `updated_at`) VALUES
-(20, 'PCS', '2024-06-11 22:04:21', '2024-07-22 20:05:41'),
-(21, 'PACK', '2024-06-11 22:17:02', '2024-06-14 19:57:37'),
-(23, 'LITERAN', '2024-07-14 21:04:53', '2024-07-22 20:05:53'),
-(24, 'BOX', '2024-07-21 23:34:02', '2024-07-22 20:06:03'),
-(27, 'KARTON', '2024-07-22 11:09:14', '2024-07-22 11:09:14'),
-(29, 'KG', '2024-08-08 08:58:28', '2024-08-08 08:58:28');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tagihan`
 --
 
@@ -1382,18 +1244,6 @@ CREATE TABLE `tagihan` (
   `jumlah_tagihan` varchar(100) NOT NULL,
   `status_tagihan` enum('Belum Dibayar','Dibayar') DEFAULT 'Belum Dibayar'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `tagihan`
---
-
-INSERT INTO `tagihan` (`id`, `pelanggan_id`, `kode_paket`, `tanggal_tagihan`, `jumlah_tagihan`, `status_tagihan`) VALUES
-(2, 11, 'PKG8971', '2024-11-18', '120000', 'Dibayar'),
-(8, 11, 'PKG8971', '2024-12-18', '120000', 'Dibayar'),
-(9, 12, 'PKG8971', '2024-11-21', '120000', 'Dibayar'),
-(10, 12, 'PKG8971', '2024-12-21', '120000', 'Belum Dibayar'),
-(11, 12, 'PKG8971', '2024-11-01', '120000', 'Belum Dibayar'),
-(12, 11, 'PKG8971', '2024-12-18', '120000', 'Belum Dibayar');
 
 -- --------------------------------------------------------
 
@@ -1509,14 +1359,6 @@ ALTER TABLE `hutang`
   ADD PRIMARY KEY (`id_hutang`);
 
 --
--- Indexes for table `inventaris`
---
-ALTER TABLE `inventaris`
-  ADD PRIMARY KEY (`kode_barang`),
-  ADD KEY `id_satuan` (`id_satuan`),
-  ADD KEY `id_master_barang` (`id_master_barang`);
-
---
 -- Indexes for table `kas_toko`
 --
 ALTER TABLE `kas_toko`
@@ -1539,13 +1381,6 @@ ALTER TABLE `modal_toko`
 --
 ALTER TABLE `paket`
   ADD PRIMARY KEY (`kode_paket`);
-
---
--- Indexes for table `pelanggan`
---
-ALTER TABLE `pelanggan`
-  ADD PRIMARY KEY (`id_pelanggan`),
-  ADD KEY `id_pelanggan` (`id_pelanggan`);
 
 --
 -- Indexes for table `pelanggan_wifi`
@@ -1577,20 +1412,6 @@ ALTER TABLE `pengeluaran`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_saldo` (`id_saldo`),
   ADD KEY `fk_pengeluaran_kas` (`id_kas`);
-
---
--- Indexes for table `piutang`
---
-ALTER TABLE `piutang`
-  ADD PRIMARY KEY (`id_piutang`),
-  ADD KEY `id_penjualan_barang` (`id_penjualan_barang`),
-  ADD KEY `piutang_ibfk_2` (`id_pelanggan`);
-
---
--- Indexes for table `satuan`
---
-ALTER TABLE `satuan`
-  ADD PRIMARY KEY (`satuan_id`);
 
 --
 -- Indexes for table `tagihan`
@@ -1634,7 +1455,7 @@ ALTER TABLE `auth_groups`
 -- AUTO_INCREMENT for table `auth_logins`
 --
 ALTER TABLE `auth_logins`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=832;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=835;
 
 --
 -- AUTO_INCREMENT for table `auth_permissions`
@@ -1664,7 +1485,7 @@ ALTER TABLE `hutang`
 -- AUTO_INCREMENT for table `kas_toko`
 --
 ALTER TABLE `kas_toko`
-  MODIFY `id_kas` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kas` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1679,16 +1500,10 @@ ALTER TABLE `modal_toko`
   MODIFY `id_modal` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `pelanggan`
---
-ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
 -- AUTO_INCREMENT for table `pelanggan_wifi`
 --
 ALTER TABLE `pelanggan_wifi`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `pemasukan`
@@ -1709,22 +1524,10 @@ ALTER TABLE `pengeluaran`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `piutang`
---
-ALTER TABLE `piutang`
-  MODIFY `id_piutang` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
-
---
--- AUTO_INCREMENT for table `satuan`
---
-ALTER TABLE `satuan`
-  MODIFY `satuan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
-
---
 -- AUTO_INCREMENT for table `tagihan`
 --
 ALTER TABLE `tagihan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -1741,12 +1544,6 @@ ALTER TABLE `pelanggan_wifi`
 --
 ALTER TABLE `pembayaran_piutang`
   ADD CONSTRAINT `pembayaran_piutang_ibfk_1` FOREIGN KEY (`id_piutang`) REFERENCES `piutang` (`id_piutang`);
-
---
--- Constraints for table `piutang`
---
-ALTER TABLE `piutang`
-  ADD CONSTRAINT `piutang_ibfk_2` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `tagihan`

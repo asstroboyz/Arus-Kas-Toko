@@ -1,0 +1,3 @@
+ubah db :
+Cari semua instance dari utf8mb4_0900_ai_ci di dalam file .sql.
+Ganti semua utf8mb4_0900_ai_ci dengan utf8mb4_unicode_ci atau utf8mb4_general_ci.
