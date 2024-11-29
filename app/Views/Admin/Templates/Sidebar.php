@@ -33,12 +33,12 @@
                 <div class="submenu">
                     <a class="collapse-item collapsed" href="#" data-toggle="collapse" data-target="#tagihanMenu" aria-expanded="false" aria-controls="tagihanMenu">
                         <i class="fas fa-file-invoice"></i>
-                        Data Tagihan
+                        Data Pembayaran Wifi
                     </a>
                     <div id="tagihanMenu" class="collapse pl-3" aria-labelledby="headingTagihan" data-parent="#keuanganMenu">
                         <a class="collapse-item" href="<?=base_url('Admin/tagihan');?>">
                             <i class="fas fa-list"></i>
-                            Semua Tagihan
+                            All Pembayaran
                         </a>
                         <a class="collapse-item" href="<?=base_url('Admin/tagihanbelumbayar');?>">
                             <i class="fas fa-exclamation-circle"></i>

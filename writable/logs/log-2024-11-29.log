@@ -457,3 +457,20 @@ CRITICAL - 2024-11-29 10:49:49 --> Table 'vip_net.pelanggan' doesn't exist
 #10 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
 #11 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
 #12 {main}
+CRITICAL - 2024-11-29 20:23:50 --> Undefined property: App\Controllers\Admin::$profil
+#0 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Controllers\Admin.php(305): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined prope...', 'C:\\Users\\E-RM7\\...', 305)
+#1 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(832): App\Controllers\Admin->simpanProfile('1')
+#2 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#3 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
+#6 {main}
+CRITICAL - 2024-11-29 20:29:42 --> unlink(uploads/profile/AdminFOTOadmin.jpeg): No such file or directory
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'unlink(uploads/...', 'C:\\Users\\E-RM7\\...', 298)
+#1 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\app\Controllers\Admin.php(298): unlink('uploads/profile...')
+#2 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(832): App\Controllers\Admin->simpanProfile('1')
+#3 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#4 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#6 C:\Users\E-RM7\Documents\GitHub\Arus-Kas-Toko\system\Commands\Server\rewrite.php(43): require_once('C:\\Users\\E-RM7\\...')
+#7 {main}
