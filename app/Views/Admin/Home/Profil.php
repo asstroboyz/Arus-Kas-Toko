@@ -47,12 +47,12 @@
                     <div class="col-12">
                         <div style="background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 20px;">
                             <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-12">
+                                <div class="col-lg-3 col-md-2 col-sm-12">
                                     <img style="width: 100%; border-radius: 8px; object-fit: cover;"
                                         src="<?= empty(user()->foto) ? '/sbassets/img/undraw_profile_1.svg' : '/uploads/profile/' . user()->foto; ?>"
                                         alt="Image profile" height="290">
                                 </div>
-                                <div class="col-lg-10 col-md-8 col-sm-12">
+                                <div class="col-lg-11 col-md-8 col-sm-12">
                                     <ul style="list-style: none; padding: 0; margin: 0; line-height: 1.6;">
                                         <li style="display: flex; align-items: center; padding: 10px; background-color: #fff; border-radius: 5px; margin-bottom: 10px;">
                                             <i class="fa fa-user" style="color: #007bff; font-size: 1.2em; margin-right: 15px;"></i>
