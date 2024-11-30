@@ -52,7 +52,7 @@
                                         src="<?= empty(user()->foto) ? '/sbassets/img/undraw_profile_1.svg' : '/uploads/profile/' . user()->foto; ?>"
                                         alt="Image profile" height="290">
                                 </div>
-                                <div class="col-lg-11 col-md-8 col-sm-12">
+                                <div class="col-lg-9 col-md-8 col-sm-12">
                                     <ul style="list-style: none; padding: 0; margin: 0; line-height: 1.6;">
                                         <li style="display: flex; align-items: center; padding: 10px; background-color: #fff; border-radius: 5px; margin-bottom: 10px;">
                                             <i class="fa fa-user" style="color: #007bff; font-size: 1.2em; margin-right: 15px;"></i>

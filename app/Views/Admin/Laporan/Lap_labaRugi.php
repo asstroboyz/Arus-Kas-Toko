@@ -202,7 +202,7 @@
                     <p>Batang, <?= date('d/m/Y H:i:s'); ?></p>
                 </td>
                 <td class="footer-right">
-                    Pemilik: <?= $pemilikName; ?>
+                    Pemilik: Heri
                     <br>
                     <p>Batang, <?= date('d/m/Y H:i:s'); ?></p>
                 </td>
