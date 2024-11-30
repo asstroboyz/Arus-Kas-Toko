@@ -12,7 +12,7 @@
     <title><?=$title;?></title>
 
     <!-- Custom fonts for this template-->
-    <link href="<?php echo base_url() ?>/assets/img/bps.ico"
+    <link href="<?php echo base_url() ?>/img/vip_net.png"
         rel="icon">
     <link
         href="<?=base_url()?>/vendor/fontawesome-free/css/all.min.css"
